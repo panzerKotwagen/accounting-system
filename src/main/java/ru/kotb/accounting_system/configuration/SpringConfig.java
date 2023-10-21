@@ -39,7 +39,7 @@ public class SpringConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("ru.kotb.accounting_system.rest.entity");
+        sessionFactory.setPackagesToScan("ru.kotb.accounting_system.entity");
 
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
