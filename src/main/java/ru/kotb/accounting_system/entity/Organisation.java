@@ -1,14 +1,19 @@
 package ru.kotb.accounting_system.entity;
 
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * The class that describes the contracting company.
  */
 @Entity
-@Table(name = "counterparty_organisations")
-public class CounterpartyOrganisation {
+@Table(name = "organisations")
+public class Organisation {
 
     /**
      * The entity primary key.
@@ -36,10 +41,10 @@ public class CounterpartyOrganisation {
     @Column(name = "TIN")
     private String TIN;
 
-    public CounterpartyOrganisation() {
+    public Organisation() {
     }
 
-    public CounterpartyOrganisation(String name, String address, String TIN) {
+    public Organisation(String name, String address, String TIN) {
         this.name = name;
         this.address = address;
         this.TIN = TIN;

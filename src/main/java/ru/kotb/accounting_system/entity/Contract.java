@@ -1,6 +1,15 @@
 package ru.kotb.accounting_system.entity;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
@@ -35,7 +44,7 @@ public class Contract {
      * The type of the contract.
      */
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="contract_type_id")
+    @JoinColumn(name = "contract_type_id")
     private ContractType contractType;
 
     /**
@@ -56,7 +65,6 @@ public class Contract {
     @Column(name = "planned_end_date")
     private String plannedEndDate;
 
-
     /**
      * Actual date when does the contract end.
      */
@@ -75,5 +83,8 @@ public class Contract {
      */
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_id")
-    private List<CounterpartyContract> counterpartyContracts;
+    private List<OrganisationContract> organisationContracts;
+
+    public Contract() {
+    }
 }

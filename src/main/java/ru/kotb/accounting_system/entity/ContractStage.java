@@ -60,13 +60,13 @@ public class ContractStage {
      * The planned material cost.
      */
     @Column(name = "planned_material_cost")
-    private int  plannedMaterialCost;
+    private int plannedMaterialCost;
 
     /**
      * The actual material cost.
      */
     @Column(name = "actual_material_cost")
-    private int  actualMaterialCost;
+    private int actualMaterialCost;
 
     /**
      * The planned salary cost.

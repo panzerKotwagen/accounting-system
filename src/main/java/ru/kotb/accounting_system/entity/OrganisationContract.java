@@ -1,14 +1,22 @@
 package ru.kotb.accounting_system.entity;
 
-import javax.persistence.*;
-import java.util.Calendar;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * The class that describes a contract with a counterparty company.
  */
 @Entity
-@Table(name = "counterparty_contracts")
-public class CounterpartyContract {
+@Table(name = "organisation_contracts")
+public class OrganisationContract {
 
     /**
      * The entity primary key.
@@ -28,15 +36,15 @@ public class CounterpartyContract {
      * The type of the contract.
      */
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="contract_type_id")
+    @JoinColumn(name = "contract_type_id")
     private ContractType contractType;
 
     /**
      * The counterparty with which the contract was concluded.
      */
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="counterparty_organisation_id")
-    private CounterpartyOrganisation counterpartyOrganisation;
+    @JoinColumn(name = "counterparty_organisation_id")
+    private Organisation organisation;
 
     /**
      * The contract amount.
@@ -67,4 +75,7 @@ public class CounterpartyContract {
      */
     @Column(name = "actual_end_date")
     private String actualEndDate;
+
+    public OrganisationContract() {
+    }
 }

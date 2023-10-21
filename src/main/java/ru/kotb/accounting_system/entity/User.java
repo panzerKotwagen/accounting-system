@@ -1,14 +1,19 @@
 package ru.kotb.accounting_system.entity;
 
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * The Entity class that describes the customer, which is linked
  * with the MySQL table "users".
  */
 @Entity
-@Table
+@Table(name = "users")
 public class User {
 
     /**
@@ -22,7 +27,7 @@ public class User {
     /**
      * The user full name.
      */
-    @Column(name = "fullname")
+    @Column(name = "full_name")
     private String fullName;
 
     /**
