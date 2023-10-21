@@ -33,13 +33,13 @@ public class User {
     /**
      * The user login.
      */
-    @Column(name = "login")
+    @Column(name = "login", unique = true)
     private String login;
 
     /**
      * The password which is required to log in.
      */
-    @Column(name = "password")
+    @Column(name = "password", unique = true)
     private String password;
 
     /**
