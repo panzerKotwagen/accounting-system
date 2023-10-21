@@ -1,35 +1,49 @@
+drop database if exists accounting_system;
+
 create database accounting_system;
 use accounting_system;
 
 create table users
 (
-    id        int,
+    id        int not null auto_increment,
     full_name varchar(50),
-    login     varchar(20),
-    password  varchar(20),
+    login     varchar(20) unique,
+    password  varchar(20) unique,
     end_date  date,
     primary key (id)
 );
 
 create table contract_types
 (
-    id   int,
+    id   int not null auto_increment,
     name varchar(30) unique,
     primary key (id)
 );
 
 create table organisations
 (
-    id      int,
+    id      int not null auto_increment,
     name    varchar(150),
     address varchar(150),
     TIN     varchar(10),
     primary key (id)
 );
 
+create table contracts
+(
+    id                 int not null auto_increment,
+    name               varchar(100),
+    amount             int,
+    planned_start_date date,
+    planned_end_date   date,
+    actual_start_date  date,
+    actual_end_date    date,
+    primary key (id)
+);
+
 create table organisation_contracts
 (
-    id                 int,
+    id                 int not null auto_increment,
     name               varchar(100),
     contract_type_id   int,
     organisation_id    int,
@@ -47,7 +61,7 @@ create table organisation_contracts
 
 create table contract_stages
 (
-    id                    int,
+    id                    int not null auto_increment,
     name                  varchar(100),
     contract_id           int,
     amount                int,
@@ -61,16 +75,4 @@ create table contract_stages
     actual_salary_cost    int,
     primary key (id),
     foreign key (contract_id) references contracts (id)
-);
-
-create table contracts
-(
-    id                 int,
-    name               varchar(100),
-    amount             int,
-    planned_start_date date,
-    planned_end_date   date,
-    actual_start_date  date,
-    actual_end_date    date,
-    primary key (id)
 );
