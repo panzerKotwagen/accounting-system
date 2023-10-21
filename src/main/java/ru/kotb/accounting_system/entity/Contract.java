@@ -26,6 +26,12 @@ public class Contract {
     private String name;
 
     /**
+     * The contract amount.
+     */
+    @Column(name = "amount")
+    private int amount;
+
+    /**
      * The type of the contract.
      */
     @ManyToOne(cascade = CascadeType.ALL)
@@ -58,20 +64,16 @@ public class Contract {
     private String actualEndDate;
 
     /**
-     * The contract amount.
-     */
-    @Column(name = "amount")
-    private int amount;
-
-    /**
      * The stages of the contract.
      */
-//    @OneToMany(mappedBy = cascade = CascadeType.ALL)
-//    private List<ContractStage> contractStages;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contract_id")
+    private List<ContractStage> contractStages;
 
     /**
      * The contract with the counterparty that included into the contract.
      */
-//    @Column(name = "")
-//    private List<CounterpartyContract> counterpartyContracts;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contract_id")
+    private List<CounterpartyContract> counterpartyContracts;
 }

@@ -27,7 +27,7 @@ create table organisations
     primary key (id)
 );
 
-create table organisation_contract
+create table organisation_contracts
 (
     id                 int,
     name               varchar(100),
@@ -42,7 +42,7 @@ create table organisation_contract
     primary key (id),
     foreign key (contract_type_id) references contract_types (id),
     foreign key (organisation_id) references organisations (id),
-    foreign key (contract_id) references contract (id)
+    foreign key (contract_id) references contracts (id)
 );
 
 create table contract_stages
@@ -60,10 +60,10 @@ create table contract_stages
     planned_salary_cost   int,
     actual_salary_cost    int,
     primary key (id),
-    foreign key (contract_id) references contract (id)
+    foreign key (contract_id) references contracts (id)
 );
 
-create table contract
+create table contracts
 (
     id                 int,
     name               varchar(100),
