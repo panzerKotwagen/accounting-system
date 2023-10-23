@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.OrganisationDAO;
+import ru.kotb.accounting_system.dao.GenericDAO;
 import ru.kotb.accounting_system.entity.Organisation;
 import ru.kotb.accounting_system.service.OrganisationService;
 
@@ -20,11 +20,12 @@ public class OrganisationServiceImpl implements OrganisationService {
     /**
      * The DAO object for getting access to the "organisations" table.
      */
-    private final OrganisationDAO organisationDAO;
+    private final GenericDAO<Organisation> organisationDAO;
 
     @Autowired
-    public OrganisationServiceImpl(OrganisationDAO organisationDAO) {
-        this.organisationDAO = organisationDAO;
+    public OrganisationServiceImpl(GenericDAO<Organisation> genericDAOImpl) {
+        this.organisationDAO = genericDAOImpl;
+        this.organisationDAO.setClass(Organisation.class);
     }
 
     /**
@@ -35,7 +36,7 @@ public class OrganisationServiceImpl implements OrganisationService {
     @Override
     @Transactional
     public List<Organisation> getAllOrganisations() {
-        return organisationDAO.getAllOrganisations();
+        return organisationDAO.getAll();
     }
 
     /**
@@ -46,7 +47,7 @@ public class OrganisationServiceImpl implements OrganisationService {
     @Override
     @Transactional
     public void saveOrganisation(Organisation organisation) {
-        organisationDAO.saveOrganisation(organisation);
+        organisationDAO.saveOrUpdate(organisation);
     }
 
     /**
@@ -58,7 +59,7 @@ public class OrganisationServiceImpl implements OrganisationService {
     @Override
     @Transactional
     public Organisation getOrganisation(int organisationId) {
-        return organisationDAO.getOrganisation(organisationId);
+        return organisationDAO.get(organisationId);
     }
 
     /**
@@ -69,6 +70,6 @@ public class OrganisationServiceImpl implements OrganisationService {
     @Override
     @Transactional
     public void deleteOrganisation(int organisationId) {
-        organisationDAO.deleteOrganisation(organisationId);
+        organisationDAO.delete(organisationId);
     }
 }

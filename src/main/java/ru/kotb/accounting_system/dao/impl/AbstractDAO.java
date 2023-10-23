@@ -22,7 +22,7 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
     /**
      * The SessionFactory object for working with database.
      */
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     /**
      * The entity class.

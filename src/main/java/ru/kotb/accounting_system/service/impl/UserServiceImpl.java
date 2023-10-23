@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.impl.UserDAOImpl;
+import ru.kotb.accounting_system.dao.GenericDAO;
 import ru.kotb.accounting_system.entity.User;
 import ru.kotb.accounting_system.service.UserService;
 
@@ -21,11 +21,12 @@ public class UserServiceImpl implements UserService {
     /**
      * The DAO object for getting access to the "users" table.
      */
-    private UserDAOImpl userDAO;
+    private final GenericDAO<User> userDAO;
 
     @Autowired
-    public UserServiceImpl(UserDAOImpl userDAO) {
-        this.userDAO = userDAO;
+    public UserServiceImpl(GenericDAO<User> genericDAOImpl) {
+        this.userDAO = genericDAOImpl;
+        this.userDAO.setClass(User.class);
     }
 
     /**
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
+        return userDAO.getAll();
     }
 
     /**
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void saveUser(User user) {
-        userDAO.saveUser(user);
+        userDAO.saveOrUpdate(user);
     }
 
     /**
@@ -59,7 +60,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User getUser(int userId) {
-        return userDAO.getUser(userId);
+        return userDAO.get(userId);
     }
 
     /**
@@ -70,6 +71,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void deleteUser(int userId) {
-        userDAO.deleteUser(userId);
+        userDAO.delete(userId);
     }
 }
