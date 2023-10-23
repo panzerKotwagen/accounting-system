@@ -11,11 +11,16 @@ import ru.kotb.accounting_system.service.UserService;
 import java.util.List;
 
 
+/**
+ * The implementation of the UserService interface.
+ */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
 public class UserServiceImpl implements UserService {
 
-
+    /**
+     * The DAO object for getting access to the "users" table.
+     */
     private UserDAOImpl userDAO;
 
     @Autowired
@@ -23,27 +28,48 @@ public class UserServiceImpl implements UserService {
         this.userDAO = userDAO;
     }
 
+    /**
+     * Returns list of all users in the table.
+     *
+     * @return list of all users in the table
+     */
     @Override
     @Transactional
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();
     }
 
+    /**
+     * Adds new user to the table.
+     *
+     * @param user new user
+     */
     @Override
     @Transactional
     public void saveUser(User user) {
         userDAO.saveUser(user);
     }
 
+    /**
+     * Returns the user with the specified ID.
+     *
+     * @param userId the ID of the user
+     * @return the user with the specified ID
+     */
     @Override
     @Transactional
-    public User getUser(int empId) {
-        return userDAO.getUser(empId);
+    public User getUser(int userId) {
+        return userDAO.getUser(userId);
     }
 
+    /**
+     * Deletes the user with the specified ID in the table.
+     *
+     * @param userId the ID of the user
+     */
     @Override
     @Transactional
-    public void deleteUser(int empId) {
-        userDAO.deleteUser(empId);
+    public void deleteUser(int userId) {
+        userDAO.deleteUser(userId);
     }
 }

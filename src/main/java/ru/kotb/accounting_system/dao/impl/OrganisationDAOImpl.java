@@ -41,7 +41,7 @@ public class OrganisationDAOImpl implements OrganisationDAO {
     }
 
     /**
-     * Saves the new or update the existing organisation in the table.
+     * Saves a new or update the existing organisation in the table.
      *
      * @param organisation new organisation object
      */
@@ -63,6 +63,11 @@ public class OrganisationDAOImpl implements OrganisationDAO {
         return session.get(Organisation.class, organisationId);
     }
 
+    /**
+     * Deletes the organisation with the specified ID.
+     *
+     * @param organisationId the ID of the organisation
+     */
     @Override
     public void deleteOrganisation(int organisationId) {
         Session session = sessionFactory.getCurrentSession();
