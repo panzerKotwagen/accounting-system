@@ -10,8 +10,13 @@ import java.util.List;
 
 
 /**
+ * The abstract service provides following operations with an entity:
+ * getting all records, getting a certain object by ID, adding a new
+ * one and deleting it by ID. Each class that extends it must specify
+ * the entity type in the parameter and set the entity class via
+ * setter in the constructor.
  *
- * @param <T>
+ * @param <T> the class of the entity
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
@@ -24,6 +29,7 @@ public abstract class AbstractEntityService<T> implements GenericEntityService<T
 
     /**
      * Links the specified DAO with the service.
+     *
      * @param genericDAOImpl the DAO of the specified entity class
      */
     public AbstractEntityService(GenericDAO<T> genericDAOImpl) {
