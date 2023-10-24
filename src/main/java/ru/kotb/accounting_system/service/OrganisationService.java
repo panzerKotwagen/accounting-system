@@ -2,40 +2,9 @@ package ru.kotb.accounting_system.service;
 
 import ru.kotb.accounting_system.entity.Organisation;
 
-import java.util.List;
-
 
 /**
- * The class that provides working with the organisations.
+ * The interface that provides working with the organisations.
  */
-public interface OrganisationService {
-
-    /**
-     * Returns list of all organisations in the table.
-     *
-     * @return list of all organisations in the table
-     */
-    List<Organisation> getAllOrganisations();
-
-    /**
-     * Adds new organisation to the table.
-     *
-     * @param organisation new organisation
-     */
-    void saveOrganisation(Organisation organisation);
-
-    /**
-     * Returns the organization with the specified ID.
-     *
-     * @param organisationId the ID of the organisation
-     * @return the organization with the specified ID
-     */
-    Organisation getOrganisation(int organisationId);
-
-    /**
-     * Deletes the organization with the specified ID in the table.
-     *
-     * @param organisationId the ID of the organisation
-     */
-    void deleteOrganisation(int organisationId);
+public interface OrganisationService extends GenericEntityService<Organisation> {
 }

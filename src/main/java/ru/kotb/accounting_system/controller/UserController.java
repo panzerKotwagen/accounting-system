@@ -21,32 +21,29 @@ public class UserController {
 
     @GetMapping("/users")
     public List<User> showAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return users;
+        return userService.getAll();
     }
 
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable("id") int empId) {
-        User user = userService.getUser(empId);
-
-        return user;
+    public User getUser(@PathVariable("id") int userId) {
+        return userService.get(userId);
     }
 
     @PostMapping("/users")
     public User addNewUser(@RequestBody User user) {
-        userService.saveUser(user);
+        userService.saveOrUpdate(user);
         return user;
     }
 
     @PutMapping("/users")
     public User updateUser(@RequestBody User user) {
-        userService.saveUser(user);
+        userService.saveOrUpdate(user);
         return user;
     }
 
     @DeleteMapping("/users/{id}")
-    public String deleteUser(@PathVariable("id") int empId) {
-        userService.deleteUser(empId);
-        return "User with ID = " + empId + " was deleted.";
+    public String deleteUser(@PathVariable("id") int userId) {
+        userService.delete(userId);
+        return "User with ID = " + userId + " was deleted.";
     }
 }

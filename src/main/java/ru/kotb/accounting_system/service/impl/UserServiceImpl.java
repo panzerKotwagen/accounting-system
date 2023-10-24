@@ -3,12 +3,9 @@ package ru.kotb.accounting_system.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.impl.UserDAOImpl;
+import ru.kotb.accounting_system.dao.GenericDAO;
 import ru.kotb.accounting_system.entity.User;
 import ru.kotb.accounting_system.service.UserService;
-
-import java.util.List;
 
 
 /**
@@ -16,60 +13,11 @@ import java.util.List;
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
-public class UserServiceImpl implements UserService {
-
-    /**
-     * The DAO object for getting access to the "users" table.
-     */
-    private UserDAOImpl userDAO;
+public class UserServiceImpl extends AbstractEntityService<User> implements UserService {
 
     @Autowired
-    public UserServiceImpl(UserDAOImpl userDAO) {
-        this.userDAO = userDAO;
-    }
-
-    /**
-     * Returns list of all users in the table.
-     *
-     * @return list of all users in the table
-     */
-    @Override
-    @Transactional
-    public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
-    }
-
-    /**
-     * Adds new user to the table.
-     *
-     * @param user new user
-     */
-    @Override
-    @Transactional
-    public void saveUser(User user) {
-        userDAO.saveUser(user);
-    }
-
-    /**
-     * Returns the user with the specified ID.
-     *
-     * @param userId the ID of the user
-     * @return the user with the specified ID
-     */
-    @Override
-    @Transactional
-    public User getUser(int userId) {
-        return userDAO.getUser(userId);
-    }
-
-    /**
-     * Deletes the user with the specified ID in the table.
-     *
-     * @param userId the ID of the user
-     */
-    @Override
-    @Transactional
-    public void deleteUser(int userId) {
-        userDAO.deleteUser(userId);
+    public UserServiceImpl(GenericDAO<User> genericDAOImpl) {
+        super(genericDAOImpl);
+        genericDAOImpl.setClass(User.class);
     }
 }
