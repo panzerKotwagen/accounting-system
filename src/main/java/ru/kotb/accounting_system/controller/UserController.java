@@ -93,8 +93,13 @@ public class UserController {
      */
     @PutMapping("/users")
     public User updateUser(@RequestBody User user) {
-        userService.saveOrUpdate(user);
-        return user;
+        if (userService.get(user.getId()) == null) {
+            throw new NoSuchEntityException("There is no user with ID = "
+                    + user.getId() + " in the database.");
+        } else {
+            userService.saveOrUpdate(user);
+            return user;
+        }
     }
 
     //TODO: rewrite comment

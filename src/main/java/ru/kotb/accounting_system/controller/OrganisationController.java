@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kotb.accounting_system.entity.Organisation;
+import ru.kotb.accounting_system.exception_handling.NoSuchEntityException;
 import ru.kotb.accounting_system.service.OrganisationService;
 
 import java.util.List;
@@ -58,6 +59,10 @@ public class OrganisationController {
      */
     @GetMapping("/organisations/{id}")
     public Organisation getOrganisation(@PathVariable("id") int organisationId) {
+        if (organisationService.get(organisationId) == null) {
+            throw new NoSuchEntityException("There is no organisation with ID = "
+                    + organisationId + " in the database.");
+        }
         return organisationService.get(organisationId);
     }
 
@@ -86,6 +91,10 @@ public class OrganisationController {
      */
     @PutMapping("/organisations")
     public Organisation updateOrganisation(@RequestBody Organisation organisation) {
+        if (organisationService.get(organisation.getId()) == null) {
+            throw new NoSuchEntityException("There is no organisation with ID = "
+                    + organisation.getId() + " in the database.");
+        }
         organisationService.saveOrUpdate(organisation);
         return organisation;
     }
@@ -100,6 +109,10 @@ public class OrganisationController {
      */
     @DeleteMapping("/organisations/{id}")
     public String deleteUser(@PathVariable("id") int organisationId) {
+        if (organisationService.get(organisationId) == null) {
+            throw new NoSuchEntityException("There is no organisation with ID = "
+                    + organisationId + " in the database.");
+        }
         organisationService.delete(organisationId);
         return "Organisation with ID = " + organisationId + " was deleted.";
     }
