@@ -39,7 +39,7 @@ public class OrganisationController {
      */
     @GetMapping("/organisations")
     public List<Organisation> showAllOrganisations() {
-        return organisationService.getAllOrganisations();
+        return organisationService.getAll();
     }
 
     /**
@@ -50,7 +50,7 @@ public class OrganisationController {
      */
     @GetMapping("/organisations/{id}")
     public Organisation getOrganisation(@PathVariable("id") int organisationId) {
-        return organisationService.getOrganisation(organisationId);
+        return organisationService.get(organisationId);
     }
 
     /**
@@ -63,7 +63,7 @@ public class OrganisationController {
      */
     @PostMapping("/organisations")
     public Organisation addOrganisation(@RequestBody Organisation organisation) {
-        organisationService.saveOrganisation(organisation);
+        organisationService.saveOrUpdate(organisation);
         return organisation;
     }
 
@@ -76,7 +76,7 @@ public class OrganisationController {
      */
     @DeleteMapping("/organisations/{id}")
     public String deleteUser(@PathVariable("id") int organisationId) {
-        organisationService.deleteOrganisation(organisationId);
+        organisationService.delete(organisationId);
         return "Organisation with ID = " + organisationId + " was deleted.";
     }
 }
