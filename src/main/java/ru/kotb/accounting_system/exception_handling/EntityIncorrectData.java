@@ -21,10 +21,24 @@ public class EntityIncorrectData {
     }
 
     /**
+     * Default constructor without parameters.
+     */
+    public EntityIncorrectData() {
+    }
+
+    /**
      * Sets the message.
      * @param info the info message
      */
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    /**
+     * Returns the message.
+     * @return the info message
+     */
+    public String getInfo() {
+        return info;
     }
 }
