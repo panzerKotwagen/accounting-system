@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,16 +23,22 @@ import java.util.List;
 public class OrganisationController {
 
     /**
-     * The OrganisationService object for working with the
+     * The OrganisationService bean for working with the
      * organisations.
      */
     private final OrganisationService organisationService;
 
+    /**
+     * Constructs the controller and links it with the service bean.
+     *
+     * @param organisationService the organisation service bean
+     */
     @Autowired
     public OrganisationController(OrganisationService organisationService) {
         this.organisationService = organisationService;
     }
 
+    //TODO: rewrite comment
     /**
      * Returns a JSON object with all organisations in the table.
      *
@@ -42,6 +49,7 @@ public class OrganisationController {
         return organisationService.getAll();
     }
 
+    //TODO: rewrite comment
     /**
      * Returns a JSON object with description of the specified organization.
      *
@@ -53,6 +61,7 @@ public class OrganisationController {
         return organisationService.get(organisationId);
     }
 
+    //TODO: rewrite comment
     /**
      * Accepts the JSON object with the description of the
      * organisation, transforms it and saves into the table.
@@ -67,6 +76,21 @@ public class OrganisationController {
         return organisation;
     }
 
+    /**
+     * Updates the existing organisation in the table. The request
+     * body must has got the JSON object with the ID of an existing
+     * entity and the updated data.
+     *
+     * @param organisation entity object with ID
+     * @return saved object
+     */
+    @PutMapping("/organisations")
+    public Organisation updateOrganisation(@RequestBody Organisation organisation) {
+        organisationService.saveOrUpdate(organisation);
+        return organisation;
+    }
+
+    //TODO: rewrite comment
     /**
      * Deletes the organisation with the specified ID and return the
      * informative message.
