@@ -6,5 +6,5 @@ import ru.kotb.accounting_system.entity.Organisation;
 /**
  * The interface that provides working with the organisations.
  */
-public interface OrganisationService extends GenericEntityService<Organisation> {
+public interface OrganisationService extends CommonService<Organisation> {
 }
