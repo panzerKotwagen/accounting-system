@@ -3,9 +3,8 @@ package ru.kotb.accounting_system.dao.impl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ru.kotb.accounting_system.dao.GenericDAO;
+import ru.kotb.accounting_system.dao.CommonDAO;
+import ru.kotb.accounting_system.entity.AbstractEntity;
 
 import java.util.List;
 
@@ -14,10 +13,9 @@ import java.util.List;
  * The abstract generic DAO class used to access the tables in the
  * database "accounting_system".
  *
- * @param <T> the entity class that the DAO works with
+ * @param <E> the entity class that the DAO works with
  */
-@Component
-public abstract class AbstractDAO<T> implements GenericDAO<T> {
+public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO<E> {
 
     /**
      * The SessionFactory object for working with database.
@@ -27,7 +25,7 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
     /**
      * The entity class.
      */
-    private Class<T> tClass;
+    private Class<E> tClass;
 
     /**
      * Creates the component and binds it with the sessionFactory
@@ -35,7 +33,6 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
      *
      * @param sessionFactory the SessionFactory object
      */
-    @Autowired
     public AbstractDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -45,7 +42,8 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
      *
      * @param tClass class of the entity
      */
-    public void setClass(Class<T> tClass) {
+    @Override
+    public void setClass(Class<E> tClass) {
         this.tClass = tClass;
     }
 
@@ -56,10 +54,10 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
      * @return list of all entities in the table
      */
     @Override
-    public List<T> getAll() {
+    public List<E> getAll() {
         Session session = sessionFactory.getCurrentSession();
 
-        Query<T> query = session.createQuery("from " + tClass.getName());
+        Query<E> query = session.createQuery("from " + tClass.getName());
 
         return query.getResultList();
     }
@@ -70,7 +68,7 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
      * @param entity new entity object
      */
     @Override
-    public void saveOrUpdate(T entity) {
+    public void saveOrUpdate(E entity) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(entity);
     }
@@ -82,7 +80,7 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
      * @return the entity object with the specified ID
      */
     @Override
-    public T get(int entityId) {
+    public E get(int entityId) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(tClass, entityId);
     }
@@ -95,7 +93,7 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
     @Override
     public void delete(int entityId) {
         Session session = sessionFactory.getCurrentSession();
-        T entity = get(entityId);
+        E entity = get(entityId);
         session.remove(entity);
     }
 }
