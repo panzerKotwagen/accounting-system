@@ -85,10 +85,10 @@ public class UserController {
 
     /**
      * Updates the existing user in the table. The request
-     * body must has got the JSON object with the ID of an existing
+     * body must have got the JSON object with the ID of an existing
      * entity and the updated data.
      *
-     * @param user entity object with ID
+     * @param user entity object with specified ID
      * @return saved object
      */
     @PutMapping("/users")
