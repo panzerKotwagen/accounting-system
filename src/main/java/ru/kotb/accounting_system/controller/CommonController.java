@@ -1,4 +1,4 @@
-package ru.kotb.accounting_system.controller.impl;
+package ru.kotb.accounting_system.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.kotb.accounting_system.entity.AbstractEntity;
