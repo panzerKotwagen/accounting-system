@@ -26,6 +26,7 @@ public class OrganisationContractController {
      * The OrganisationContractService object for working with the
      * organisation contracts.
      */
+    private String url = "asdasd";
     private final OrganisationContractService organisationContractService;
 
     @Autowired
@@ -40,7 +41,7 @@ public class OrganisationContractController {
      *
      * @return JSON object with all contracts in the table
      */
-    @GetMapping("/organisationContracts")
+    @GetMapping("/url")
     public List<OrganisationContract> showAllOrganisationContracts() {
         return organisationContractService.getAll();
     }

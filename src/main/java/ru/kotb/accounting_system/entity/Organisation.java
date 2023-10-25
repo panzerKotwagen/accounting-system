@@ -3,25 +3,15 @@ package ru.kotb.accounting_system.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+
 
 /**
  * The class that describes the contracting company.
  */
 @Entity
 @Table(name = "organisations")
-public class Organisation {
-
-    /**
-     * The entity primary key.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+public class Organisation extends AbstractEntity {
 
     /**
      * The counterparty company name.
@@ -42,20 +32,6 @@ public class Organisation {
     private String TIN;
 
     public Organisation() {
-    }
-
-    public Organisation(String name, String address, String TIN) {
-        this.name = name;
-        this.address = address;
-        this.TIN = TIN;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -85,7 +61,6 @@ public class Organisation {
     @Override
     public String toString() {
         return "Counterparty{" +
-                "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", TIN='" + TIN + '\'' +
