@@ -1,7 +1,14 @@
 package ru.kotb.accounting_system.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.kotb.accounting_system.entity.OrganisationContract;
 import ru.kotb.accounting_system.service.OrganisationContractService;
 
@@ -22,7 +29,9 @@ public class OrganisationContractController {
     private final OrganisationContractService organisationContractService;
 
     @Autowired
-    public OrganisationContractController(OrganisationContractService organisationContractService) {
+    public OrganisationContractController(
+            OrganisationContractService organisationContractService) {
+
         this.organisationContractService = organisationContractService;
     }
 
@@ -33,7 +42,7 @@ public class OrganisationContractController {
      */
     @GetMapping("/organisationContracts")
     public List<OrganisationContract> showAllOrganisationContracts() {
-        return organisationContractService.getAllOrganisationContracts();
+        return organisationContractService.getAll();
     }
 
     /**
@@ -43,8 +52,10 @@ public class OrganisationContractController {
      * @return the JSON object with the specified contract
      */
     @GetMapping("/organisationContracts/{id}")
-    public OrganisationContract getOrganisationContract(@PathVariable("id") int organisationContractId) {
-        return organisationContractService.getOrganisationContract(organisationContractId);
+    public OrganisationContract getOrganisationContract(
+            @PathVariable("id") int organisationContractId) {
+
+        return organisationContractService.get(organisationContractId);
     }
 
     /**
@@ -56,8 +67,26 @@ public class OrganisationContractController {
      * @return accepted JSON object
      */
     @PostMapping("/organisationContracts")
-    public OrganisationContract addOrganisationContract(@RequestBody OrganisationContract organisationContract) {
-        organisationContractService.saveOrganisationContract(organisationContract);
+    public OrganisationContract addOrganisationContract(
+            @RequestBody OrganisationContract organisationContract) {
+
+        organisationContractService.saveOrUpdate(organisationContract);
+        return organisationContract;
+    }
+
+    /**
+     * Updates the existing contract in the table. The request
+     * body must have got the JSON object with the ID of an existing
+     * entity and the updated data.
+     *
+     * @param organisationContract entity object with specified ID
+     * @return saved object
+     */
+    @PutMapping("/organisationContracts")
+    public OrganisationContract updateOrganisationContract(
+            @RequestBody OrganisationContract organisationContract) {
+
+        organisationContractService.saveOrUpdate(organisationContract);
         return organisationContract;
     }
 
@@ -70,7 +99,8 @@ public class OrganisationContractController {
      */
     @DeleteMapping("/organisationContracts/{id}")
     public String deleteUser(@PathVariable("id") int organisationContractId) {
-        organisationContractService.deleteOrganisationContract(organisationContractId);
-        return "OrganisationContract with ID = " + organisationContractId + " was deleted.";
+        organisationContractService.delete(organisationContractId);
+        return "Organisation contract with ID = " + organisationContractId
+                + " was deleted.";
     }
 }
