@@ -8,15 +8,18 @@ import java.util.List;
 /**
  * The generic DAO interface used to access the entities in the
  * database "accounting_system".
+ *
+ * @param <E> the entity class that the DAO works with
  */
 public interface CommonDAO<E extends AbstractEntity> {
 
     /**
      * Sets the entity.
-     * @param tClass class of the entity
+     *
+     * @param eClass class of the entity
      */
-    void setClass(Class<E> tClass);
-    
+    void setClass(Class<E> eClass);
+
     /**
      * Returns list of all entities in the table.
      *

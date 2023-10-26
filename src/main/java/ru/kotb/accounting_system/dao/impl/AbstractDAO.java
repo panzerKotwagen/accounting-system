@@ -25,7 +25,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
     /**
      * The entity class.
      */
-    private Class<E> tClass;
+    private Class<E> eClass;
 
     /**
      * Creates the component and binds it with the sessionFactory
@@ -40,11 +40,11 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
     /**
      * Sets the entity class.
      *
-     * @param tClass class of the entity
+     * @param eClass class of the entity
      */
     @Override
-    public void setClass(Class<E> tClass) {
-        this.tClass = tClass;
+    public void setClass(Class<E> eClass) {
+        this.eClass = eClass;
     }
 
     /**
@@ -57,7 +57,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
     public List<E> getAll() {
         Session session = sessionFactory.getCurrentSession();
 
-        Query<E> query = session.createQuery("from " + tClass.getName());
+        Query<E> query = session.createQuery("from " + eClass.getName());
 
         return query.getResultList();
     }
@@ -82,7 +82,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
     @Override
     public E get(int entityId) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(tClass, entityId);
+        return session.get(eClass, entityId);
     }
 
     /**

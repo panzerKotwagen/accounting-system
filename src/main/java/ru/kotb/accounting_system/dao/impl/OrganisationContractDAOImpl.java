@@ -7,6 +7,9 @@ import ru.kotb.accounting_system.dao.OrganisationContractDAO;
 import ru.kotb.accounting_system.entity.OrganisationContract;
 
 
+/**
+ * The implementation of the OrganisationContractDAO interface.
+ */
 @Repository
 public class OrganisationContractDAOImpl extends AbstractDAO<OrganisationContract>
         implements OrganisationContractDAO {
