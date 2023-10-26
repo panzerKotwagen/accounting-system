@@ -16,6 +16,7 @@ import java.util.List;
  * setter in the constructor.
  *
  * @param <E> the class of the entity
+ * @param <D> the class of the DAO
  */
 public abstract class AbstractService<E extends AbstractEntity, D extends CommonDAO<E>> implements CommonService<E> {
 
