@@ -8,21 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 /**
  * The Entity class that describes the customer, which is linked
  * with the MySQL table "users".
  */
 @Entity
 @Table(name = "users")
-public class User {
-
-    /**
-     * The entity primary key.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+public class User extends AbstractEntity {
 
     /**
      * The user full name.
@@ -49,21 +42,6 @@ public class User {
     private String endDate;
 
     public User() {
-    }
-
-    public User(String fullName, String login, String password, String endDate) {
-        this.fullName = fullName;
-        this.login = login;
-        this.password = password;
-        this.endDate = endDate;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFullName() {

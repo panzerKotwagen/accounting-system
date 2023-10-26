@@ -1,10 +1,9 @@
 package ru.kotb.accounting_system.service.impl;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.GenericDAO;
-import ru.kotb.accounting_system.service.GenericEntityService;
+import ru.kotb.accounting_system.dao.CommonDAO;
+import ru.kotb.accounting_system.entity.AbstractEntity;
+import ru.kotb.accounting_system.service.CommonService;
 
 import java.util.List;
 
@@ -16,23 +15,22 @@ import java.util.List;
  * the entity type in the parameter and set the entity class via
  * setter in the constructor.
  *
- * @param <T> the class of the entity
+ * @param <E> the class of the entity
+ * @param <D> the class of the DAO
  */
-@Service
-@EnableTransactionManagement(proxyTargetClass = true)
-public abstract class AbstractEntityService<T> implements GenericEntityService<T> {
+public abstract class AbstractService<E extends AbstractEntity, D extends CommonDAO<E>> implements CommonService<E> {
 
     /**
      * The DAO object for getting access to the specified table.
      */
-    private final GenericDAO<T> entityDAO;
+    private final D entityDAO;
 
     /**
      * Links the specified DAO with the service.
      *
      * @param genericDAOImpl the DAO of the specified entity class
      */
-    public AbstractEntityService(GenericDAO<T> genericDAOImpl) {
+    public AbstractService(D genericDAOImpl) {
         this.entityDAO = genericDAOImpl;
     }
 
@@ -43,7 +41,7 @@ public abstract class AbstractEntityService<T> implements GenericEntityService<T
      */
     @Override
     @Transactional
-    public List<T> getAll() {
+    public List<E> getAll() {
         return entityDAO.getAll();
     }
 
@@ -54,7 +52,7 @@ public abstract class AbstractEntityService<T> implements GenericEntityService<T
      */
     @Override
     @Transactional
-    public void saveOrUpdate(T entity) {
+    public void saveOrUpdate(E entity) {
         entityDAO.saveOrUpdate(entity);
     }
 
@@ -66,7 +64,7 @@ public abstract class AbstractEntityService<T> implements GenericEntityService<T
      */
     @Override
     @Transactional
-    public T get(int entityId) {
+    public E get(int entityId) {
         return entityDAO.get(entityId);
     }
 

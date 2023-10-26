@@ -2,23 +2,15 @@ package ru.kotb.accounting_system.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 
+/**
+ * The class that describes the contract stage.
+ */
 @Entity
 @Table(name = "contract_stages")
-public class ContractStage {
-
-    /**
-     * The entity primary key.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+public class ContractStage extends AbstractEntity {
 
     /**
      * The contract stage name.
@@ -81,5 +73,85 @@ public class ContractStage {
     private int actualSalaryCost;
 
     public ContractStage() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPlannedStartDate() {
+        return plannedStartDate;
+    }
+
+    public void setPlannedStartDate(String plannedStartDate) {
+        this.plannedStartDate = plannedStartDate;
+    }
+
+    public String getActualStartDate() {
+        return actualStartDate;
+    }
+
+    public void setActualStartDate(String actualStartDate) {
+        this.actualStartDate = actualStartDate;
+    }
+
+    public String getPlannedEndDate() {
+        return plannedEndDate;
+    }
+
+    public void setPlannedEndDate(String plannedEndDate) {
+        this.plannedEndDate = plannedEndDate;
+    }
+
+    public String getActualEndDate() {
+        return actualEndDate;
+    }
+
+    public void setActualEndDate(String actualEndDate) {
+        this.actualEndDate = actualEndDate;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public int getPlannedMaterialCost() {
+        return plannedMaterialCost;
+    }
+
+    public void setPlannedMaterialCost(int plannedMaterialCost) {
+        this.plannedMaterialCost = plannedMaterialCost;
+    }
+
+    public int getActualMaterialCost() {
+        return actualMaterialCost;
+    }
+
+    public void setActualMaterialCost(int actualMaterialCost) {
+        this.actualMaterialCost = actualMaterialCost;
+    }
+
+    public int getPlannedSalaryCost() {
+        return plannedSalaryCost;
+    }
+
+    public void setPlannedSalaryCost(int plannedSalaryCost) {
+        this.plannedSalaryCost = plannedSalaryCost;
+    }
+
+    public int getActualSalaryCost() {
+        return actualSalaryCost;
+    }
+
+    public void setActualSalaryCost(int actualSalaryCost) {
+        this.actualSalaryCost = actualSalaryCost;
     }
 }

@@ -3,28 +3,18 @@ package ru.kotb.accounting_system.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 /**
  * The class that describes a contract with a counterparty company.
  */
 @Entity
 @Table(name = "organisation_contracts")
-public class OrganisationContract {
-
-    /**
-     * The entity primary key.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+public class OrganisationContract extends AbstractEntity {
 
     /**
      * The contract name.
@@ -77,5 +67,69 @@ public class OrganisationContract {
     private String actualEndDate;
 
     public OrganisationContract() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ContractType getContractType() {
+        return contractType;
+    }
+
+    public void setContractType(ContractType contractType) {
+        this.contractType = contractType;
+    }
+
+    public Organisation getOrganisation() {
+        return organisation;
+    }
+
+    public void setOrganisation(Organisation organisation) {
+        this.organisation = organisation;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public String getPlannedStartDate() {
+        return plannedStartDate;
+    }
+
+    public void setPlannedStartDate(String plannedStartDate) {
+        this.plannedStartDate = plannedStartDate;
+    }
+
+    public String getPlannedEndDate() {
+        return plannedEndDate;
+    }
+
+    public void setPlannedEndDate(String plannedEndDate) {
+        this.plannedEndDate = plannedEndDate;
+    }
+
+    public String getActualStartDate() {
+        return actualStartDate;
+    }
+
+    public void setActualStartDate(String actualStartDate) {
+        this.actualStartDate = actualStartDate;
+    }
+
+    public String getActualEndDate() {
+        return actualEndDate;
+    }
+
+    public void setActualEndDate(String actualEndDate) {
+        this.actualEndDate = actualEndDate;
     }
 }

@@ -3,14 +3,12 @@ package ru.kotb.accounting_system.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
+
 
 /**
  * The class that describes the contract that is concluded between
@@ -18,15 +16,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "contracts")
-public class Contract {
-
-    /**
-     * The entity primary key.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+public class Contract extends AbstractEntity {
 
     /**
      * The contract name.
@@ -86,5 +76,77 @@ public class Contract {
     private List<OrganisationContract> organisationContracts;
 
     public Contract() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public ContractType getContractType() {
+        return contractType;
+    }
+
+    public void setContractType(ContractType contractType) {
+        this.contractType = contractType;
+    }
+
+    public String getPlannedStartDate() {
+        return plannedStartDate;
+    }
+
+    public void setPlannedStartDate(String plannedStartDate) {
+        this.plannedStartDate = plannedStartDate;
+    }
+
+    public String getActualStartDate() {
+        return actualStartDate;
+    }
+
+    public void setActualStartDate(String actualStartDate) {
+        this.actualStartDate = actualStartDate;
+    }
+
+    public String getPlannedEndDate() {
+        return plannedEndDate;
+    }
+
+    public void setPlannedEndDate(String plannedEndDate) {
+        this.plannedEndDate = plannedEndDate;
+    }
+
+    public String getActualEndDate() {
+        return actualEndDate;
+    }
+
+    public void setActualEndDate(String actualEndDate) {
+        this.actualEndDate = actualEndDate;
+    }
+
+    public List<ContractStage> getContractStages() {
+        return contractStages;
+    }
+
+    public void setContractStages(List<ContractStage> contractStages) {
+        this.contractStages = contractStages;
+    }
+
+    public List<OrganisationContract> getOrganisationContracts() {
+        return organisationContracts;
+    }
+
+    public void setOrganisationContracts(List<OrganisationContract> organisationContracts) {
+        this.organisationContracts = organisationContracts;
     }
 }
