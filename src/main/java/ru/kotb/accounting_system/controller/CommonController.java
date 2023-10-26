@@ -1,22 +1,31 @@
 package ru.kotb.accounting_system.controller;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import ru.kotb.accounting_system.entity.AbstractEntity;
 
 import java.util.List;
 
+
+/**
+ * The interface that describes REST controller with CRUD operations.
+ *
+ * @param <E> the entity class that the controller works with
+ */
 public interface CommonController<E extends AbstractEntity> {
 
-    //TODO: rewrite comment
     /**
-     * Returns a JSON object with all entities in the table.
+     * Returns list of all entities in the table as JSON array.
      *
-     * @return JSON object with all entities in the table
+     * @return JSON array with all entities in the table
      */
     @GetMapping
-    public List<E> showAll();
+    List<E> showAll();
 
-    //TODO: rewrite comment
     /**
      * Returns a JSON object with description of the specified entity.
      *
@@ -24,19 +33,17 @@ public interface CommonController<E extends AbstractEntity> {
      * @return the JSON object with the specified entity
      */
     @GetMapping("/{id}")
-    public E get(@PathVariable("id") int entityId);
+    E get(@PathVariable("id") int entityId);
 
-    //TODO: rewrite comment
     /**
-     * Accepts the JSON object with the description of the
-     * entity and saves it into the table.
+     * Saves the entity into the table. The request body must have
+     * got the JSON object with the data of the new entity.
      *
-     * @param entity JSON object with the description of the
-     *                     entity
-     * @return accepted JSON object
+     * @param entity the entity object
+     * @return saved object
      */
     @PostMapping
-    public E add(@RequestBody E entity) ;
+    E add(@RequestBody E entity);
 
     /**
      * Updates the existing entity in the table. The request
@@ -47,9 +54,8 @@ public interface CommonController<E extends AbstractEntity> {
      * @return saved object
      */
     @PutMapping
-    public E update(@RequestBody E entity);
+    E update(@RequestBody E entity);
 
-    //TODO: rewrite comment
     /**
      * Deletes the entity with the specified ID and return the
      * informative message.
@@ -58,5 +64,5 @@ public interface CommonController<E extends AbstractEntity> {
      * @return operation status message
      */
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int entityId);
+    String delete(@PathVariable("id") int entityId);
 }

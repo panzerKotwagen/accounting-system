@@ -10,12 +10,17 @@ import ru.kotb.accounting_system.service.CommonService;
 import java.util.List;
 
 
+/**
+ * The implementation of CommonController interface.
+ *
+ * @param <E> the entity class
+ * @param <S> the service class
+ */
 public abstract class AbstractController<E extends AbstractEntity, S extends CommonService<E>>
         implements CommonController<E> {
 
     /**
-     * The S bean for working with the
-     * entities.
+     * The service bean for working with the entities.
      */
     private final S service;
 
@@ -28,18 +33,16 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
         this.service = service;
     }
 
-    //TODO: rewrite comment
     /**
-     * Returns a JSON object with all entities in the table.
+     * Returns list of all entities in the table as JSON array.
      *
-     * @return JSON object with all entities in the table
+     * @return JSON array with all entities in the table
      */
     @Override
     public List<E> showAll() {
         return service.getAll();
     }
 
-    //TODO: rewrite comment
     /**
      * Returns a JSON object with description of the specified entity.
      *
@@ -57,14 +60,12 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
         }
     }
 
-    //TODO: rewrite comment
     /**
-     * Accepts the JSON object with the description of the
-     * entity and saves it into the table.
+     * Saves the entity into the table. The request body must have
+     * got the JSON object with the data of the new entity.
      *
-     * @param entity JSON object with the description of the
-     *                     entity
-     * @return accepted JSON object
+     * @param entity the entity object
+     * @return saved object
      */
     @Override
     public E add(@RequestBody E entity) {
@@ -91,7 +92,6 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
         }
     }
 
-    //TODO: rewrite comment
     /**
      * Deletes the entity with the specified ID and return the
      * informative message.
