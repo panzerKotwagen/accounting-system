@@ -8,7 +8,7 @@ import ru.kotb.accounting_system.entity.Contract;
 
 
 /**
- * The implementation of the ContractAO interface.
+ * The implementation of the ContractDAO interface.
  */
 @Repository
 public class ContractDAOImpl extends AbstractDAO<Contract> implements ContractDAO {
