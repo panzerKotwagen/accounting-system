@@ -33,7 +33,7 @@ public class OrganisationContract extends AbstractEntity {
      * The counterparty with which the contract was concluded.
      */
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "counterparty_organisation_id")
+    @JoinColumn(name = "organisation_id")
     private Organisation organisation;
 
     /**
