@@ -35,8 +35,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO> 
     @Override
     @Transactional
     public List<ContractStage> getAllStages(int contractId) {
-        Contract contract = super.get(contractId);
-        return contract.getContractStages();
+       return super.entityDAO.getAllStages(contractId);
     }
 
     /**
@@ -50,7 +49,6 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO> 
     @Override
     @Transactional
     public List<OrganisationContract> getAllOrganisationContracts(int contractId) {
-        Contract contract = super.get(contractId);
-        return contract.getOrganisationContracts();
+        return super.entityDAO.getAllOrganisationContracts(contractId);
     }
 }

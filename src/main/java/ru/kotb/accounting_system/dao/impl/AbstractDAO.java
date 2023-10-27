@@ -20,7 +20,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
     /**
      * The SessionFactory object for working with database.
      */
-    private final SessionFactory sessionFactory;
+    protected final SessionFactory sessionFactory;
 
     /**
      * The entity class.
