@@ -33,12 +33,14 @@ create table contracts
 (
     id                 int not null auto_increment,
     name               varchar(100),
+    contract_type_id   int,
     amount             int,
     planned_start_date date,
     planned_end_date   date,
     actual_start_date  date,
     actual_end_date    date,
-    primary key (id)
+    primary key (id),
+    foreign key (contract_type_id) references contract_types (id)
 );
 
 create table organisation_contracts

@@ -1,5 +1,7 @@
 package ru.kotb.accounting_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -66,6 +68,7 @@ public class Contract extends AbstractEntity {
      */
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<ContractStage> contractStages;
 
     /**
@@ -73,6 +76,7 @@ public class Contract extends AbstractEntity {
      */
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<OrganisationContract> organisationContracts;
 
     public Contract() {

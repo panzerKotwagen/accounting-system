@@ -22,7 +22,7 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
     /**
      * The service bean for working with the entities.
      */
-    private final S service;
+    protected final S service;
 
     /**
      * Constructs the controller and links it with the service bean.

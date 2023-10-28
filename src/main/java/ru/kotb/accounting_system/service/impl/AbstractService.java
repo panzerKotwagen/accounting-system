@@ -23,7 +23,7 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Common
     /**
      * The DAO object for getting access to the specified table.
      */
-    private final D entityDAO;
+    protected final D entityDAO;
 
     /**
      * Links the specified DAO with the service.
