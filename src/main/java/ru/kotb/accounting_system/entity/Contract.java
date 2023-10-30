@@ -1,6 +1,7 @@
 package ru.kotb.accounting_system.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 
@@ -23,18 +28,23 @@ public class Contract extends AbstractEntity {
     /**
      * The contract name.
      */
+    @NotBlank
+    @Length(min=3, max=100)
     @Column(name = "name")
     private String name;
 
     /**
      * The contract amount.
      */
+    @NotNull
+    @PositiveOrZero
     @Column(name = "amount")
     private int amount;
 
     /**
      * The type of the contract.
      */
+    @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_type_id")
     private ContractType contractType;
@@ -42,6 +52,7 @@ public class Contract extends AbstractEntity {
     /**
      * Expected date when does the contract enter into force.
      */
+    @NotNull
     @Column(name = "planned_start_date")
     private String plannedStartDate;
 
@@ -54,6 +65,7 @@ public class Contract extends AbstractEntity {
     /**
      * Expected date when does the contract end.
      */
+    @NotNull
     @Column(name = "planned_end_date")
     private String plannedEndDate;
 

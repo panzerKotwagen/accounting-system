@@ -1,8 +1,13 @@
 package ru.kotb.accounting_system.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 
 /**
@@ -15,12 +20,15 @@ public class ContractStage extends AbstractEntity {
     /**
      * The contract stage name.
      */
+    @NotBlank
+    @Length(min=3, max=100)
     @Column(name = "name")
     private String name;
 
     /**
      * The planned date when does the contract enter into force.
      */
+    @NotNull
     @Column(name = "planned_start_date")
     private String plannedStartDate;
 
@@ -33,6 +41,7 @@ public class ContractStage extends AbstractEntity {
     /**
      * The planned date when does the contract end.
      */
+    @NotNull
     @Column(name = "planned_end_date")
     private String plannedEndDate;
 
@@ -45,30 +54,38 @@ public class ContractStage extends AbstractEntity {
     /**
      * The stage amount.
      */
+    @NotNull
+    @PositiveOrZero
     @Column(name = "amount")
     private int amount;
 
     /**
      * The planned material cost.
      */
+    @NotNull
+    @PositiveOrZero
     @Column(name = "planned_material_cost")
     private int plannedMaterialCost;
 
     /**
      * The actual material cost.
      */
+    @PositiveOrZero
     @Column(name = "actual_material_cost")
     private int actualMaterialCost;
 
     /**
      * The planned salary cost.
      */
+    @NotNull
+    @PositiveOrZero
     @Column(name = "planned_salary_cost")
     private int plannedSalaryCost;
 
     /**
      * The actual salary cost.
      */
+    @PositiveOrZero
     @Column(name = "actual_salary_cost")
     private int actualSalaryCost;
 

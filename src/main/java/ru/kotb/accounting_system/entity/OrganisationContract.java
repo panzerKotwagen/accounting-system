@@ -1,5 +1,7 @@
 package ru.kotb.accounting_system.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 
 /**
@@ -19,12 +24,15 @@ public class OrganisationContract extends AbstractEntity {
     /**
      * The contract name.
      */
+    @NotBlank
+    @Length(min=3, max=100)
     @Column(name = "name")
     private String name;
 
     /**
      * The type of the contract.
      */
+    @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_type_id")
     private ContractType contractType;
@@ -32,6 +40,7 @@ public class OrganisationContract extends AbstractEntity {
     /**
      * The counterparty with which the contract was concluded.
      */
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "organisation_id")
     private Organisation organisation;
@@ -39,18 +48,22 @@ public class OrganisationContract extends AbstractEntity {
     /**
      * The contract amount.
      */
+    @NotNull
+    @PositiveOrZero
     @Column(name = "amount")
     private int amount;
 
     /**
      * Expected date when does the contract enter into force.
      */
+    @NotNull
     @Column(name = "planned_start_date")
     private String plannedStartDate;
 
     /**
      * Expected date when does the contract end.
      */
+    @NotNull
     @Column(name = "planned_end_date")
     private String plannedEndDate;
 
