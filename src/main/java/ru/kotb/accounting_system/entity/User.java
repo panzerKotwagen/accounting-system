@@ -5,12 +5,10 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 
 /**
@@ -25,7 +23,9 @@ public class User extends AbstractEntity {
      * The user full name.
      */
     @NotBlank
-    @Length(min=3, max=150)
+    @Length(min=3, max=50)
+    // Each word must be capitalized
+    @Pattern(regexp = "^[A-Z][a-z]+(?: [A-Z][a-z]+)*$")
     @Column(name = "full_name")
     private String fullName;
 
@@ -34,6 +34,13 @@ public class User extends AbstractEntity {
      */
     @NotBlank
     @Length(min=3, max=20)
+    /*
+     * The login must consist only of letters and digits, digits must
+     * be after letters.
+     */
+    @Pattern(regexp = "^[A-Za-z]+(?:[A-Za-z0-9]+)*$",
+            message = "The login must consist only of letters and digits, " +
+                    "digits must be after letters.")
     @Column(name = "login", unique = true)
     private String login;
 
@@ -42,6 +49,11 @@ public class User extends AbstractEntity {
      */
     @NotBlank
     @Length(min=8, max=20)
+    /*
+     * The password must contain at least one uppercase, one lowercase
+     * letter, one digit and consist of at least 8 characters.
+     */
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$")
     @Column(name = "password", unique = true)
     private String password;
 
