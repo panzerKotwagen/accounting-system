@@ -1,5 +1,7 @@
 package ru.kotb.accounting_system.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.CascadeType;
@@ -17,6 +19,8 @@ import javax.validation.constraints.PositiveOrZero;
 /**
  * The class that describes a contract with a counterparty company.
  */
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "organisation_contracts")
 public class OrganisationContract extends AbstractEntity {
@@ -78,71 +82,4 @@ public class OrganisationContract extends AbstractEntity {
      */
     @Column(name = "actual_end_date")
     private String actualEndDate;
-
-    public OrganisationContract() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ContractType getContractType() {
-        return contractType;
-    }
-
-    public void setContractType(ContractType contractType) {
-        this.contractType = contractType;
-    }
-
-    public Organisation getOrganisation() {
-        return organisation;
-    }
-
-    public void setOrganisation(Organisation organisation) {
-        this.organisation = organisation;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public String getPlannedStartDate() {
-        return plannedStartDate;
-    }
-
-    public void setPlannedStartDate(String plannedStartDate) {
-        this.plannedStartDate = plannedStartDate;
-    }
-
-    public String getPlannedEndDate() {
-        return plannedEndDate;
-    }
-
-    public void setPlannedEndDate(String plannedEndDate) {
-        this.plannedEndDate = plannedEndDate;
-    }
-
-    public String getActualStartDate() {
-        return actualStartDate;
-    }
-
-    public void setActualStartDate(String actualStartDate) {
-        this.actualStartDate = actualStartDate;
-    }
-
-    public String getActualEndDate() {
-        return actualEndDate;
-    }
-
-    public void setActualEndDate(String actualEndDate) {
-        this.actualEndDate = actualEndDate;
-    }
 }

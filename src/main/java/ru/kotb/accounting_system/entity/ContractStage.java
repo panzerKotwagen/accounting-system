@@ -1,5 +1,7 @@
 package ru.kotb.accounting_system.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -13,6 +15,8 @@ import javax.validation.constraints.PositiveOrZero;
 /**
  * The class that describes the contract stage.
  */
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "contract_stages")
 public class ContractStage extends AbstractEntity {
@@ -88,87 +92,4 @@ public class ContractStage extends AbstractEntity {
     @PositiveOrZero(message = "The value cannot be below zero")
     @Column(name = "actual_salary_cost")
     private int actualSalaryCost;
-
-    public ContractStage() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPlannedStartDate() {
-        return plannedStartDate;
-    }
-
-    public void setPlannedStartDate(String plannedStartDate) {
-        this.plannedStartDate = plannedStartDate;
-    }
-
-    public String getActualStartDate() {
-        return actualStartDate;
-    }
-
-    public void setActualStartDate(String actualStartDate) {
-        this.actualStartDate = actualStartDate;
-    }
-
-    public String getPlannedEndDate() {
-        return plannedEndDate;
-    }
-
-    public void setPlannedEndDate(String plannedEndDate) {
-        this.plannedEndDate = plannedEndDate;
-    }
-
-    public String getActualEndDate() {
-        return actualEndDate;
-    }
-
-    public void setActualEndDate(String actualEndDate) {
-        this.actualEndDate = actualEndDate;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public int getPlannedMaterialCost() {
-        return plannedMaterialCost;
-    }
-
-    public void setPlannedMaterialCost(int plannedMaterialCost) {
-        this.plannedMaterialCost = plannedMaterialCost;
-    }
-
-    public int getActualMaterialCost() {
-        return actualMaterialCost;
-    }
-
-    public void setActualMaterialCost(int actualMaterialCost) {
-        this.actualMaterialCost = actualMaterialCost;
-    }
-
-    public int getPlannedSalaryCost() {
-        return plannedSalaryCost;
-    }
-
-    public void setPlannedSalaryCost(int plannedSalaryCost) {
-        this.plannedSalaryCost = plannedSalaryCost;
-    }
-
-    public int getActualSalaryCost() {
-        return actualSalaryCost;
-    }
-
-    public void setActualSalaryCost(int actualSalaryCost) {
-        this.actualSalaryCost = actualSalaryCost;
-    }
 }

@@ -1,6 +1,7 @@
 package ru.kotb.accounting_system.entity;
 
 
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.validation.constraints.Pattern;
 /**
  * The class that describes the contracting company.
  */
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "organisations")
 public class Organisation extends AbstractEntity {
@@ -41,40 +44,4 @@ public class Organisation extends AbstractEntity {
     @Pattern(regexp = "^[0-9]*$", message = "Please provide the valid TIN")
     @Column(name = "TIN")
     private String TIN;
-
-    public Organisation() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getTIN() {
-        return TIN;
-    }
-
-    public void setTIN(String TIN) {
-        this.TIN = TIN;
-    }
-
-    @Override
-    public String toString() {
-        return "Counterparty{" +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", TIN='" + TIN + '\'' +
-                '}';
-    }
 }

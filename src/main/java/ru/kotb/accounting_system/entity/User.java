@@ -1,6 +1,7 @@
 package ru.kotb.accounting_system.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.validation.constraints.Pattern;
  * The Entity class that describes the customer, which is linked
  * with the MySQL table "users".
  */
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User extends AbstractEntity {
@@ -69,39 +72,4 @@ public class User extends AbstractEntity {
      */
     @Column(name = "end_date")
     private String endDate;
-
-    public User() {
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
 }
