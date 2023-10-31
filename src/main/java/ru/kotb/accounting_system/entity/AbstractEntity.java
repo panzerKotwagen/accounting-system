@@ -1,5 +1,8 @@
 package ru.kotb.accounting_system.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -7,6 +10,7 @@ import java.io.Serializable;
 /**
  * The abstract entity with common attribute "ID".
  */
+@Data
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
@@ -17,12 +21,4 @@ public abstract class AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 }
