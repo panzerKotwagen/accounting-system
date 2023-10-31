@@ -24,15 +24,15 @@ public class OrganisationContract extends AbstractEntity {
     /**
      * The contract name.
      */
-    @NotBlank
-    @Length(min=3, max=100)
+    @NotBlank(message = "The field cannot be empty")
+    @Length(max=100, message = "The maximum field length is limited to 100 characters")
     @Column(name = "name")
     private String name;
 
     /**
      * The type of the contract.
      */
-    @NotNull
+    @NotNull(message = "The field cannot be empty")
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_type_id")
     private ContractType contractType;
@@ -40,7 +40,7 @@ public class OrganisationContract extends AbstractEntity {
     /**
      * The counterparty with which the contract was concluded.
      */
-    @NotNull
+    @NotNull(message = "The field cannot be empty")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "organisation_id")
     private Organisation organisation;
@@ -48,22 +48,22 @@ public class OrganisationContract extends AbstractEntity {
     /**
      * The contract amount.
      */
-    @NotNull
-    @PositiveOrZero
+    @NotNull(message = "The field cannot be empty")
+    @PositiveOrZero(message = "The value cannot be below zero")
     @Column(name = "amount")
     private int amount;
 
     /**
      * Expected date when does the contract enter into force.
      */
-    @NotNull
+    @NotNull(message = "The field cannot be empty")
     @Column(name = "planned_start_date")
     private String plannedStartDate;
 
     /**
      * Expected date when does the contract end.
      */
-    @NotNull
+    @NotNull(message = "The field cannot be empty")
     @Column(name = "planned_end_date")
     private String plannedEndDate;
 

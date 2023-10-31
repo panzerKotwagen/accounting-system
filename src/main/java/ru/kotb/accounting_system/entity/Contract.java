@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -28,23 +27,23 @@ public class Contract extends AbstractEntity {
     /**
      * The contract name.
      */
-    @NotBlank
-    @Length(min=3, max=100)
+    @NotBlank(message = "The field cannot be empty")
+    @Length(max=100, message = "The maximum field length is limited to 100 characters")
     @Column(name = "name")
     private String name;
 
     /**
      * The contract amount.
      */
-    @NotNull
-    @PositiveOrZero
+    @NotNull(message = "The field cannot be empty")
+    @PositiveOrZero(message = "The value cannot be below zero")
     @Column(name = "amount")
     private int amount;
 
     /**
      * The type of the contract.
      */
-    @NotNull
+    @NotNull(message = "The field cannot be empty")
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_type_id")
     private ContractType contractType;
@@ -52,7 +51,7 @@ public class Contract extends AbstractEntity {
     /**
      * Expected date when does the contract enter into force.
      */
-    @NotNull
+    @NotNull(message = "The field cannot be empty")
     @Column(name = "planned_start_date")
     private String plannedStartDate;
 
@@ -65,7 +64,7 @@ public class Contract extends AbstractEntity {
     /**
      * Expected date when does the contract end.
      */
-    @NotNull
+    @NotNull(message = "The field cannot be empty")
     @Column(name = "planned_end_date")
     private String plannedEndDate;
 

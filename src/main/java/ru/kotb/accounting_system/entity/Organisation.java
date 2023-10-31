@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 
 /**
@@ -19,24 +20,25 @@ public class Organisation extends AbstractEntity {
     /**
      * The counterparty company name.
      */
-    @NotBlank
-    @Length(min=3, max=150)
+    @NotBlank(message = "The field cannot be empty")
+    @Length(max=150, message = "The maximum field length is limited to 150 characters")
     @Column(name = "name")
     private String name;
 
     /**
      * The company address.
      */
-    @NotBlank
-    @Length(min=3, max=150)
+    @NotBlank(message = "The field cannot be empty")
+    @Length(max=150, message = "The maximum field length is limited to 150 characters")
     @Column(name = "address")
     private String address;
 
     /**
      * The unique code that regulates the accounting of taxpayers.
      */
-    @NotBlank
-    @Length(min=10, max=10)
+    @NotBlank(message = "The field cannot be empty")
+    @Length(min=10, max=10, message = "TIN must contain 10 digits")
+    @Pattern(regexp = "^[0-9]*$", message = "Please provide the valid TIN")
     @Column(name = "TIN")
     private String TIN;
 

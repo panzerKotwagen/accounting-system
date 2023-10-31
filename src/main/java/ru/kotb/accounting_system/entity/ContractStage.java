@@ -20,15 +20,15 @@ public class ContractStage extends AbstractEntity {
     /**
      * The contract stage name.
      */
-    @NotBlank
-    @Length(min=3, max=100)
+    @NotBlank(message = "The field cannot be empty")
+    @Length(max=100, message = "The maximum field length is limited to 150 characters")
     @Column(name = "name")
     private String name;
 
     /**
      * The planned date when does the contract enter into force.
      */
-    @NotNull
+    @NotNull(message = "The field cannot be empty")
     @Column(name = "planned_start_date")
     private String plannedStartDate;
 
@@ -41,7 +41,7 @@ public class ContractStage extends AbstractEntity {
     /**
      * The planned date when does the contract end.
      */
-    @NotNull
+    @NotNull(message = "The field cannot be empty")
     @Column(name = "planned_end_date")
     private String plannedEndDate;
 
@@ -54,38 +54,38 @@ public class ContractStage extends AbstractEntity {
     /**
      * The stage amount.
      */
-    @NotNull
-    @PositiveOrZero
+    @NotNull(message = "The field cannot be empty")
+    @PositiveOrZero(message = "The value cannot be below zero")
     @Column(name = "amount")
     private int amount;
 
     /**
      * The planned material cost.
      */
-    @NotNull
-    @PositiveOrZero
+    @NotNull(message = "The field cannot be empty")
+    @PositiveOrZero(message = "The value cannot be below zero")
     @Column(name = "planned_material_cost")
     private int plannedMaterialCost;
 
     /**
      * The actual material cost.
      */
-    @PositiveOrZero
+    @PositiveOrZero(message = "The value cannot be below zero")
     @Column(name = "actual_material_cost")
     private int actualMaterialCost;
 
     /**
      * The planned salary cost.
      */
-    @NotNull
-    @PositiveOrZero
+    @NotNull(message = "The field cannot be empty")
+    @PositiveOrZero(message = "The value cannot be below zero")
     @Column(name = "planned_salary_cost")
     private int plannedSalaryCost;
 
     /**
      * The actual salary cost.
      */
-    @PositiveOrZero
+    @PositiveOrZero(message = "The value cannot be below zero")
     @Column(name = "actual_salary_cost")
     private int actualSalaryCost;
 
