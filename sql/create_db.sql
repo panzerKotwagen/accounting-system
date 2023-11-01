@@ -78,3 +78,10 @@ create table contract_stages
     primary key (id),
     foreign key (contract_id) references contracts (id)
 );
+
+create table roles
+(
+    id        int         not null auto_increment,
+    authority varchar(50) not null unique,
+    primary key (id)
+);
