@@ -106,6 +106,12 @@ public class User extends AbstractEntity implements UserDetails {
         this.authorities = authorities;
     }
 
+    public User(String login, String password, Set<Role> authorities) {
+        this.login = login;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
     /**
      * Returns the roles of the user.
      *
