@@ -35,13 +35,10 @@ public class UserServiceImpl extends AbstractService<User, UserDAO>
      */
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = entityDAO.findByLogin(username);
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
 
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-
-        return user;
+        return entityDAO.findByLogin(username).orElseThrow(
+                () -> new UsernameNotFoundException("user is not valid"));
     }
 }

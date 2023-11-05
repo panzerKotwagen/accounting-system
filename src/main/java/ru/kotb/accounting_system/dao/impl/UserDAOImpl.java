@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import ru.kotb.accounting_system.dao.UserDAO;
 import ru.kotb.accounting_system.entity.User;
 
+import java.util.Optional;
+
 
 /**
  * The implementation of the UserDAO interface.
@@ -33,13 +35,13 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
      * @return the user with the specified login or null
      */
     @Override
-    public User findByLogin(String userLogin) {
+    public Optional<User> findByLogin(String userLogin) {
         Session session = sessionFactory.getCurrentSession();
 
         Query<User> query = session.createQuery("from User " +
                 "where login = :userLogin", User.class);
         query.setParameter("userLogin", userLogin);
 
-        return query.uniqueResult();
+        return Optional.ofNullable(query.uniqueResult());
     }
 }
