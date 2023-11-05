@@ -22,14 +22,7 @@ public class Role extends AbstractEntity implements GrantedAuthority {
      * The name of the role.
      */
     @Column(name = "authority", nullable = false, unique = true)
-    private String name;
-
-    /**
-     * The users with this role.
-     */
-    @Transient
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    private String authority;
 
     /**
      * Returns the role name.
@@ -38,6 +31,6 @@ public class Role extends AbstractEntity implements GrantedAuthority {
      */
     @Override
     public String getAuthority() {
-        return name;
+        return authority;
     }
 }

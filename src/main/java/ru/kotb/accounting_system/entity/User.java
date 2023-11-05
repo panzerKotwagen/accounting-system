@@ -2,6 +2,7 @@ package ru.kotb.accounting_system.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,15 +10,11 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -26,9 +23,9 @@ import java.util.Set;
  * with the MySQL table "users".
  */
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "users")
+@AllArgsConstructor
 public class User extends AbstractEntity implements UserDetails {
 
     /**
@@ -86,10 +83,28 @@ public class User extends AbstractEntity implements UserDetails {
     /**
      * The roles of the user.
      */
-    @Getter
-    @Transient
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @JoinTable(
+            name = "user_role_junction",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "id")}
+    )
+    private Set<Role> authorities;
+
+    /**
+     * No args constructor.
+     */
+    public User() {
+        super();
+        authorities = new HashSet<>();
+    }
+
+    public User(String fullName, String login, String password, Set<Role> authorities) {
+        this.fullName = fullName;
+        this.login = login;
+        this.password = password;
+        this.authorities = authorities;
+    }
 
     /**
      * Returns the roles of the user.
@@ -99,7 +114,7 @@ public class User extends AbstractEntity implements UserDetails {
     @Override
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return authorities;
     }
 
     /**
