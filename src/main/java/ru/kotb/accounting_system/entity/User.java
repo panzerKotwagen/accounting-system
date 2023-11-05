@@ -86,8 +86,8 @@ public class User extends AbstractEntity implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role_junction",
-            joinColumns = {@JoinColumn(name = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "id")}
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName="id")}
     )
     private Set<Role> authorities;
 
