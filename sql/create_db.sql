@@ -85,3 +85,11 @@ create table roles
     authority varchar(50) not null unique,
     primary key (id)
 );
+
+create table user_role_junction
+(
+    user_id int,
+    role_id int,
+    foreign key (user_id) references  users (id),
+    foreign key (role_id) references roles (id)
+)
