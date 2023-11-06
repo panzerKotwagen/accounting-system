@@ -1,10 +1,11 @@
 package ru.kotb.accounting_system.dao.impl;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.kotb.accounting_system.dao.ContractStageDAO;
 import ru.kotb.accounting_system.entity.ContractStage;
+
+import javax.persistence.EntityManager;
 
 
 /**
@@ -18,10 +19,10 @@ public class ContractStageDAOImpl extends AbstractDAO<ContractStage>
      * Creates the component and binds it with the sessionFactory
      * object.
      *
-     * @param sessionFactory the SessionFactory object
+     * @param sessionFactory the EntityManager object
      */
     @Autowired
-    public ContractStageDAOImpl(SessionFactory sessionFactory) {
+    public ContractStageDAOImpl(EntityManager sessionFactory) {
         super(sessionFactory);
     }
 }
