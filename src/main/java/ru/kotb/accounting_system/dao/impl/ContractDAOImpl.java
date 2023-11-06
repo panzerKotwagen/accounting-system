@@ -1,7 +1,7 @@
 package ru.kotb.accounting_system.dao.impl;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -10,6 +10,7 @@ import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.OrganisationContract;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 
@@ -23,10 +24,10 @@ public class ContractDAOImpl extends AbstractDAO<Contract> implements ContractDA
      * Creates the component and binds it with the sessionFactory
      * object.
      *
-     * @param sessionFactory the SessionFactory object
+     * @param sessionFactory the EntityManager object
      */
     @Autowired
-    public ContractDAOImpl(SessionFactory sessionFactory) {
+    public ContractDAOImpl(EntityManager sessionFactory) {
         super(sessionFactory);
     }
 
@@ -38,7 +39,7 @@ public class ContractDAOImpl extends AbstractDAO<Contract> implements ContractDA
      */
     @Override
     public List<ContractStage> getAllStages(int contractId) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.unwrap(Session.class);
 
         Query query = session.createQuery(
                 "SELECT c.contractStages FROM Contract c " +
@@ -58,7 +59,7 @@ public class ContractDAOImpl extends AbstractDAO<Contract> implements ContractDA
      */
     @Override
     public List<OrganisationContract> getAllOrganisationContracts(int contractId) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.unwrap(Session.class);
 
         Query query = session.createQuery(
                 "SELECT c.organisationContracts FROM Contract c " +
