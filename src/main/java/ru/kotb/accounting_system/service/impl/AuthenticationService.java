@@ -30,15 +30,16 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerUser(String username, String password){
+    public User registerUser(String fullName, String username, String password){
 
+        //TODO: use encoded password
         String encodedPassword = passwordEncoder.encode(password);
         Role userRole = roleDAO.findByAuthority("USER").get();
 
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);
 
-        User newUser = new User(username, encodedPassword, authorities);
+        User newUser = new User(fullName, username, password, authorities);
         userDAO.saveOrUpdate(newUser);
 
         return newUser;
