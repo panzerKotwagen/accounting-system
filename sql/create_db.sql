@@ -8,7 +8,7 @@ create table users
     id        int not null auto_increment,
     full_name varchar(50),
     login     varchar(20) unique,
-    password  varchar(20) unique,
+    password  varchar(100) unique,
     end_date  date,
     primary key (id)
 );
