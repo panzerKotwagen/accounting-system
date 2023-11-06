@@ -3,18 +3,23 @@ package ru.kotb.accounting_system.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import ru.kotb.accounting_system.dao.RoleDAO;
 import ru.kotb.accounting_system.dao.UserDAO;
+import ru.kotb.accounting_system.dto.RegistrationDTO;
 import ru.kotb.accounting_system.entity.Role;
 import ru.kotb.accounting_system.entity.User;
 
+import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
 
 
 @Service
-@Transactional
+@EnableTransactionManagement(proxyTargetClass = true)
+@Validated
 public class AuthenticationService {
 
     private final UserDAO userDAO;
@@ -30,16 +35,20 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerUser(String fullName, String username, String password){
+    @Transactional
+    public User registerUser(@Valid RegistrationDTO registrationDTO){
 
-        //TODO: use encoded password
-        String encodedPassword = passwordEncoder.encode(password);
+        String encodedPassword = passwordEncoder.encode(registrationDTO.getPassword());
         Role userRole = roleDAO.findByAuthority("USER").get();
 
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);
 
-        User newUser = new User(fullName, username, password, authorities);
+        User newUser = new User(
+                registrationDTO.getFullName(),
+                registrationDTO.getUsername(),
+                encodedPassword,
+                authorities);
         userDAO.saveOrUpdate(newUser);
 
         return newUser;

@@ -40,7 +40,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         Session session = sessionFactory.unwrap(Session.class);
 
         Query<User> query = session.createQuery("from User " +
-                "where login = :userLogin", User.class);
+                "where username = :userLogin", User.class);
         query.setParameter("userLogin", userLogin);
 
         return Optional.ofNullable(query.uniqueResult());
