@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import ru.kotb.accounting_system.dao.UserDAO;
 import ru.kotb.accounting_system.entity.User;
 
+import javax.persistence.EntityManager;
 import java.util.Optional;
 
 
@@ -24,7 +25,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
      * @param sessionFactory the SessionFactory object
      */
     @Autowired
-    public UserDAOImpl(SessionFactory sessionFactory) {
+    public UserDAOImpl(EntityManager sessionFactory) {
         super(sessionFactory);
     }
 
@@ -36,7 +37,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
      */
     @Override
     public Optional<User> findByLogin(String userLogin) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.unwrap(Session.class);
 
         Query<User> query = session.createQuery("from User " +
                 "where login = :userLogin", User.class);

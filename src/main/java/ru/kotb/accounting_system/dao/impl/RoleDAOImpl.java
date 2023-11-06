@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import ru.kotb.accounting_system.dao.RoleDAO;
 import ru.kotb.accounting_system.entity.Role;
 
+import javax.persistence.EntityManager;
 import java.util.Optional;
 
 
@@ -21,13 +22,13 @@ public class RoleDAOImpl extends AbstractDAO<Role> implements RoleDAO {
      * @param sessionFactory the SessionFactory object
      */
     @Autowired
-    public RoleDAOImpl(SessionFactory sessionFactory) {
+    public RoleDAOImpl(EntityManager sessionFactory) {
         super(sessionFactory);
     }
 
     @Override
     public Optional<Role> findByAuthority(String authority) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.unwrap(Session.class);
 
         Query<Role> query = session.createQuery("from Role " +
                 "where authority = :authority", Role.class);
