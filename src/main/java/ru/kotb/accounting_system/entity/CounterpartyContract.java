@@ -25,7 +25,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "organisation_contracts")
-public class OrganisationContract extends AbstractEntity {
+public class CounterpartyContract extends AbstractEntity {
 
     /**
      * The contract name.

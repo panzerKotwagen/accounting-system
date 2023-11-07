@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
-import ru.kotb.accounting_system.entity.OrganisationContract;
+import ru.kotb.accounting_system.entity.CounterpartyContract;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public interface ContractController extends CommonController<Contract> {
      * @return list of all stages of the contract
      */
     @GetMapping("/{id}/organisation-contracts")
-    List<OrganisationContract> showAllOrganisationContracts(
+    List<CounterpartyContract> showAllOrganisationContracts(
             @PathVariable("id") int contractId);
 
     //TODO: Add comments

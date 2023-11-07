@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kotb.accounting_system.dao.ContractDAO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
-import ru.kotb.accounting_system.entity.OrganisationContract;
+import ru.kotb.accounting_system.entity.CounterpartyContract;
 import ru.kotb.accounting_system.excel_helper.ExcelHelper;
 import ru.kotb.accounting_system.service.ContractService;
 
@@ -53,7 +53,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO> 
      */
     @Override
     @Transactional
-    public List<OrganisationContract> getAllOrganisationContracts(int contractId) {
+    public List<CounterpartyContract> getAllOrganisationContracts(int contractId) {
         return super.entityDAO.getAllOrganisationContracts(contractId);
     }
 

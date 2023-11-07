@@ -98,5 +98,5 @@ public class Contract extends AbstractEntity {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<OrganisationContract> organisationContracts;
+    private List<CounterpartyContract> counterpartyContracts;
 }

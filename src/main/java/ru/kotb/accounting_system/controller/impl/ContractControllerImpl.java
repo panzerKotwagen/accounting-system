@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.kotb.accounting_system.controller.ContractController;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
-import ru.kotb.accounting_system.entity.OrganisationContract;
+import ru.kotb.accounting_system.entity.CounterpartyContract;
 import ru.kotb.accounting_system.service.ContractService;
 
 import java.util.List;
@@ -56,7 +56,7 @@ public class ContractControllerImpl
      * @return list of all stages of the contract
      */
     @Override
-    public List<OrganisationContract> showAllOrganisationContracts(int contractId) {
+    public List<CounterpartyContract> showAllOrganisationContracts(int contractId) {
         return service.getAllOrganisationContracts(contractId);
     }
 

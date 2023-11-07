@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import ru.kotb.accounting_system.dao.ContractDAO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
-import ru.kotb.accounting_system.entity.OrganisationContract;
+import ru.kotb.accounting_system.entity.CounterpartyContract;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -58,14 +58,14 @@ public class ContractDAOImpl extends AbstractDAO<Contract> implements ContractDA
      * organisations of the contract with the specified ID
      */
     @Override
-    public List<OrganisationContract> getAllOrganisationContracts(int contractId) {
+    public List<CounterpartyContract> getAllOrganisationContracts(int contractId) {
         Session session = sessionFactory.unwrap(Session.class);
 
         Query query = session.createQuery(
-                "SELECT c.organisationContracts FROM Contract c " +
+                "SELECT c.counterpartyContracts FROM Contract c " +
                         "WHERE c.id = :contractId");
         query.setParameter("contractId", contractId);
 
-        return (List<OrganisationContract>) query.getResultList();
+        return (List<CounterpartyContract>) query.getResultList();
     }
 }
