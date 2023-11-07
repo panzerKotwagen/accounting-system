@@ -1,22 +1,21 @@
 package ru.kotb.accounting_system.dao.impl;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.kotb.accounting_system.dao.UserDAO;
-import ru.kotb.accounting_system.entity.User;
+import ru.kotb.accounting_system.dao.RoleDAO;
+import ru.kotb.accounting_system.entity.Role;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
 
 
 /**
- * The implementation of the UserDAO interface.
+ * The implementation of the RoleDAO interface.
  */
 @Repository
-public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
+public class RoleDAOImpl extends AbstractDAO<Role> implements RoleDAO {
 
     /**
      * Creates the component and binds it with the sessionFactory
@@ -25,23 +24,23 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
      * @param sessionFactory the SessionFactory object
      */
     @Autowired
-    public UserDAOImpl(EntityManager sessionFactory) {
+    public RoleDAOImpl(EntityManager sessionFactory) {
         super(sessionFactory);
     }
 
     /**
-     * Returns the user with the specified login.
+     * Returns the role with specified name.
      *
-     * @param userLogin user login
-     * @return the user with the specified login or null
+     * @param authority the name of the role
+     * @return the role with specified name
      */
     @Override
-    public Optional<User> findByLogin(String userLogin) {
+    public Optional<Role> findByAuthority(String authority) {
         Session session = sessionFactory.unwrap(Session.class);
 
-        Query<User> query = session.createQuery("from User " +
-                "where username = :userLogin", User.class);
-        query.setParameter("userLogin", userLogin);
+        Query<Role> query = session.createQuery("from Role " +
+                "where authority = :authority", Role.class);
+        query.setParameter("authority", authority);
 
         return Optional.ofNullable(query.uniqueResult());
     }

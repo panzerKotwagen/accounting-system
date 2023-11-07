@@ -1,4 +1,4 @@
-package ru.kotb.accounting_system.validation;
+package ru.kotb.accounting_system.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,11 +14,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ValidationErrorResponse {
+public class ValidationErrorResponseDTO {
 
     /**
      * The list of all occurred validation errors.
      */
-    private List<Violation> violations = new ArrayList<>();
+    private List<ViolationDTO> violations = new ArrayList<>();
 }
 

@@ -8,7 +8,7 @@ create table users
     id        int not null auto_increment,
     full_name varchar(50),
     login     varchar(20) unique,
-    password  varchar(20) unique,
+    password  varchar(100) unique,
     end_date  date,
     primary key (id)
 );
@@ -78,3 +78,18 @@ create table contract_stages
     primary key (id),
     foreign key (contract_id) references contracts (id)
 );
+
+create table roles
+(
+    id        int         not null auto_increment,
+    authority varchar(50) not null unique,
+    primary key (id)
+);
+
+create table user_role_junction
+(
+    user_id int,
+    role_id int,
+    foreign key (user_id) references  users (id),
+    foreign key (role_id) references roles (id)
+)

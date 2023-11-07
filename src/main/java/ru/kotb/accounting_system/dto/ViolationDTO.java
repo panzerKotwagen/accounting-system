@@ -1,4 +1,4 @@
-package ru.kotb.accounting_system.validation;
+package ru.kotb.accounting_system.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class Violation {
+public class ViolationDTO {
 
     /**
      * The name of the field that has not been validated.

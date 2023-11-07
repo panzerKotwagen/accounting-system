@@ -8,6 +8,10 @@ import ru.kotb.accounting_system.entity.OrganisationContract;
 
 import java.util.List;
 
+
+/**
+ * The controller class that processes requests to /api/contracts.
+ */
 public interface ContractController extends CommonController<Contract> {
 
     /**
