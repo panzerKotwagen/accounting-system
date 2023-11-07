@@ -8,8 +8,10 @@ import ru.kotb.accounting_system.dao.ContractDAO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.OrganisationContract;
+import ru.kotb.accounting_system.excel_helper.ExcelHelper;
 import ru.kotb.accounting_system.service.ContractService;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 
@@ -20,10 +22,13 @@ import java.util.List;
 @EnableTransactionManagement(proxyTargetClass = true)
 public class ContractServiceImpl extends AbstractService<Contract, ContractDAO> implements ContractService {
 
+    private final ExcelHelper excelHelper;
+
     @Autowired
-    public ContractServiceImpl(ContractDAO contractDAO) {
+    public ContractServiceImpl(ContractDAO contractDAO, ExcelHelper excelHelper) {
         super(contractDAO);
         contractDAO.setClass(Contract.class);
+        this.excelHelper = excelHelper;
     }
 
     /**
@@ -35,7 +40,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO> 
     @Override
     @Transactional
     public List<ContractStage> getAllStages(int contractId) {
-       return super.entityDAO.getAllStages(contractId);
+        return super.entityDAO.getAllStages(contractId);
     }
 
     /**
@@ -50,5 +55,16 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO> 
     @Transactional
     public List<OrganisationContract> getAllOrganisationContracts(int contractId) {
         return super.entityDAO.getAllOrganisationContracts(contractId);
+    }
+
+    /**
+     * Returns all contract in MS Excel file.
+     *
+     * @return MS Excel file with all contracts
+     */
+    @Transactional
+    public ByteArrayInputStream getReport() {
+
+        return excelHelper.convertToExcel(entityDAO.getAll());
     }
 }

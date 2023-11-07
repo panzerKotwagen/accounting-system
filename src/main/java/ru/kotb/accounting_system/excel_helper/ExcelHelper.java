@@ -10,6 +10,6 @@ import java.util.List;
  * table to MS Excel format file.
  */
 public interface ExcelHelper {
-    public ByteArrayInputStream convertToExcel(
+    ByteArrayInputStream convertToExcel(
             List<Contract> contracts);
 }

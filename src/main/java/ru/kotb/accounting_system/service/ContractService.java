@@ -4,6 +4,7 @@ import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.OrganisationContract;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 
@@ -29,4 +30,11 @@ public interface ContractService extends CommonService<Contract> {
      * organisations of the contract with the specified ID
      */
     List<OrganisationContract> getAllOrganisationContracts(int contractId);
+
+    /**
+     * Returns all contract in MS Excel file.
+     *
+     * @return MS Excel file with all contracts
+     */
+    ByteArrayInputStream getReport();
 }

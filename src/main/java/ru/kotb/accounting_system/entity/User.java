@@ -44,6 +44,7 @@ public class User extends AbstractEntity implements UserDetails {
      */
     @NotBlank(message = "The field cannot be empty")
     @Column(name = "login", unique = true)
+    //TODO: Add exception if username is already taken
     private String username;
 
     /**
@@ -52,6 +53,7 @@ public class User extends AbstractEntity implements UserDetails {
     @NotBlank(message = "The field cannot be empty")
     @JsonIgnore
     @Column(name = "password", unique = true)
+    //TODO: Add exception if password is already taken
     private String password;
 
     /**

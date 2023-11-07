@@ -1,5 +1,7 @@
 package ru.kotb.accounting_system.controller;
 
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.kotb.accounting_system.entity.Contract;
@@ -34,4 +36,8 @@ public interface ContractController extends CommonController<Contract> {
     @GetMapping("/{id}/organisation-contracts")
     List<OrganisationContract> showAllOrganisationContracts(
             @PathVariable("id") int contractId);
+
+    //TODO: Add comments
+    @GetMapping("/report/download")
+    ResponseEntity<Resource> downloadReport();
 }
