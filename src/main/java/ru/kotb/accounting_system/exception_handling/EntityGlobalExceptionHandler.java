@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import ru.kotb.accounting_system.validation.ValidationErrorResponse;
-import ru.kotb.accounting_system.validation.Violation;
+import ru.kotb.accounting_system.dto.ValidationErrorResponseDTO;
+import ru.kotb.accounting_system.dto.ViolationDTO;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -31,13 +31,13 @@ public class EntityGlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    ValidationErrorResponse handleMethodArgumentNotValidException(
+    ValidationErrorResponseDTO handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
 
-        ValidationErrorResponse error = new ValidationErrorResponse();
+        ValidationErrorResponseDTO error = new ValidationErrorResponseDTO();
         for (FieldError fe : e.getBindingResult().getFieldErrors()) {
             error.getViolations().add(
-                    new Violation(fe.getField(),
+                    new ViolationDTO(fe.getField(),
                             fe.getDefaultMessage()));
         }
         return error;
@@ -53,13 +53,13 @@ public class EntityGlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    ValidationErrorResponse handleConstraintValidationException(
+    ValidationErrorResponseDTO handleConstraintValidationException(
             ConstraintViolationException e) {
 
-        ValidationErrorResponse error = new ValidationErrorResponse();
+        ValidationErrorResponseDTO error = new ValidationErrorResponseDTO();
         for (ConstraintViolation v : e.getConstraintViolations()) {
             error.getViolations().add(
-                    new Violation(v.getPropertyPath().toString(),
+                    new ViolationDTO(v.getPropertyPath().toString(),
                             v.getMessage()));
         }
         return error;

@@ -1,6 +1,5 @@
 package ru.kotb.accounting_system.controller.impl;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +10,9 @@ import ru.kotb.accounting_system.entity.User;
 import ru.kotb.accounting_system.service.impl.AuthenticationService;
 
 
+/**
+ * The controller that is
+ */
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {

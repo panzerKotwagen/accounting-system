@@ -1,7 +1,6 @@
 package ru.kotb.accounting_system.dao.impl;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,6 +11,9 @@ import javax.persistence.EntityManager;
 import java.util.Optional;
 
 
+/**
+ * The implementation of the RoleDAO interface.
+ */
 @Repository
 public class RoleDAOImpl extends AbstractDAO<Role> implements RoleDAO {
 
@@ -26,6 +28,12 @@ public class RoleDAOImpl extends AbstractDAO<Role> implements RoleDAO {
         super(sessionFactory);
     }
 
+    /**
+     * Returns the role with specified name.
+     *
+     * @param authority the name of the role
+     * @return the role with specified name
+     */
     @Override
     public Optional<Role> findByAuthority(String authority) {
         Session session = sessionFactory.unwrap(Session.class);
