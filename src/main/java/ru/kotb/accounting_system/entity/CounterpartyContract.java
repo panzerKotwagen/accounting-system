@@ -13,7 +13,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.PositiveOrZero;
+import java.sql.Date;
 
 
 /**
@@ -23,7 +25,7 @@ import javax.validation.constraints.PositiveOrZero;
 @NoArgsConstructor
 @Entity
 @Table(name = "organisation_contracts")
-public class OrganisationContract extends AbstractEntity {
+public class CounterpartyContract extends AbstractEntity {
 
     /**
      * The contract name.
@@ -62,24 +64,28 @@ public class OrganisationContract extends AbstractEntity {
      */
     @NotNull(message = "The field cannot be empty")
     @Column(name = "planned_start_date")
-    private String plannedStartDate;
+    @FutureOrPresent
+    private Date plannedStartDate;
 
     /**
      * Expected date when does the contract end.
      */
     @NotNull(message = "The field cannot be empty")
     @Column(name = "planned_end_date")
-    private String plannedEndDate;
+    @FutureOrPresent
+    private Date plannedEndDate;
 
     /**
      * Actual date when does the contract enter into force.
      */
     @Column(name = "actual_start_date")
-    private String actualStartDate;
+    @FutureOrPresent
+    private Date actualStartDate;
 
     /**
      * Actual date when does the contract end.
      */
     @Column(name = "actual_end_date")
-    private String actualEndDate;
+    @FutureOrPresent
+    private Date actualEndDate;
 }

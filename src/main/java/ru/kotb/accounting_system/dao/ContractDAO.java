@@ -2,7 +2,7 @@ package ru.kotb.accounting_system.dao;
 
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
-import ru.kotb.accounting_system.entity.OrganisationContract;
+import ru.kotb.accounting_system.entity.CounterpartyContract;
 
 import java.util.List;
 
@@ -28,5 +28,5 @@ public interface ContractDAO extends CommonDAO<Contract> {
      * @return all contracts with the counterparty
      * organisations of the contract with the specified ID
      */
-    List<OrganisationContract> getAllOrganisationContracts(int contractId);
+    List<CounterpartyContract> getAllOrganisationContracts(int contractId);
 }

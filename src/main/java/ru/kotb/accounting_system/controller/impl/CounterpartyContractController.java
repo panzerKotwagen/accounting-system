@@ -3,8 +3,8 @@ package ru.kotb.accounting_system.controller.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.kotb.accounting_system.entity.OrganisationContract;
-import ru.kotb.accounting_system.service.OrganisationContractService;
+import ru.kotb.accounting_system.entity.CounterpartyContract;
+import ru.kotb.accounting_system.service.CounterpartyContractService;
 
 
 /**
@@ -12,8 +12,8 @@ import ru.kotb.accounting_system.service.OrganisationContractService;
  */
 @RestController
 @RequestMapping("/api/organisation-contracts")
-public class OrganisationContractController
-        extends AbstractController<OrganisationContract, OrganisationContractService> {
+public class CounterpartyContractController
+        extends AbstractController<CounterpartyContract, CounterpartyContractService> {
 
     /**
      * Constructs the controller and links it with the service bean.
@@ -21,7 +21,7 @@ public class OrganisationContractController
      * @param service the entity service bean
      */
     @Autowired
-    public OrganisationContractController(OrganisationContractService service) {
+    public CounterpartyContractController(CounterpartyContractService service) {
         super(service);
     }
 }

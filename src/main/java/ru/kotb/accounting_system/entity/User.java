@@ -14,7 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
+import java.sql.Date;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,6 +44,7 @@ public class User extends AbstractEntity implements UserDetails {
      */
     @NotBlank(message = "The field cannot be empty")
     @Column(name = "login", unique = true)
+    //TODO: Add exception if username is already taken
     private String username;
 
     /**
@@ -50,13 +53,15 @@ public class User extends AbstractEntity implements UserDetails {
     @NotBlank(message = "The field cannot be empty")
     @JsonIgnore
     @Column(name = "password", unique = true)
+    //TODO: Add exception if password is already taken
     private String password;
 
     /**
      * The date when the user account stops working.
      */
     @Column(name = "end_date")
-    private String endDate;
+    @FutureOrPresent
+    private Date endDate;
 
     /**
      * The roles of the user.
