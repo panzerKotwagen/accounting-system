@@ -21,14 +21,14 @@ import java.util.List;
 public class ContractDAOImpl extends AbstractDAO<Contract> implements ContractDAO {
 
     /**
-     * Creates the component and binds it with the sessionFactory
+     * Creates the component and binds it with the entityManager
      * object.
      *
-     * @param sessionFactory the EntityManager object
+     * @param entityManager the EntityManager object
      */
     @Autowired
-    public ContractDAOImpl(EntityManager sessionFactory) {
-        super(sessionFactory);
+    public ContractDAOImpl(EntityManager entityManager) {
+        super(entityManager);
     }
 
     /**
@@ -39,7 +39,7 @@ public class ContractDAOImpl extends AbstractDAO<Contract> implements ContractDA
      */
     @Override
     public List<ContractStage> getAllStages(int contractId) {
-        Session session = sessionFactory.unwrap(Session.class);
+        Session session = entityManager.unwrap(Session.class);
 
         Query query = session.createQuery(
                 "SELECT c.contractStages FROM Contract c " +
@@ -59,7 +59,7 @@ public class ContractDAOImpl extends AbstractDAO<Contract> implements ContractDA
      */
     @Override
     public List<CounterpartyContract> getAllOrganisationContracts(int contractId) {
-        Session session = sessionFactory.unwrap(Session.class);
+        Session session = entityManager.unwrap(Session.class);
 
         Query query = session.createQuery(
                 "SELECT c.counterpartyContracts FROM Contract c " +

@@ -50,7 +50,7 @@ public class Contract extends AbstractEntity {
      * The type of the contract.
      */
     @NotNull(message = "The field cannot be empty")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "contract_type_id")
     private ContractType contractType;
 

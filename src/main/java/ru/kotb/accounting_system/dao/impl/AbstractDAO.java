@@ -20,7 +20,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
     /**
      * The EntityManager object for working with database.
      */
-    protected final EntityManager sessionFactory;
+    protected final EntityManager entityManager;
 
     /**
      * The entity class.
@@ -28,13 +28,13 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
     private Class<E> eClass;
 
     /**
-     * Creates the component and binds it with the sessionFactory
+     * Creates the component and binds it with the entityManager
      * object.
      *
-     * @param sessionFactory the EntityManager object
+     * @param entityManager the EntityManager object
      */
-    public AbstractDAO(EntityManager sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public AbstractDAO(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     /**
@@ -55,7 +55,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      */
     @Override
     public List<E> getAll() {
-        Session session = sessionFactory.unwrap(Session.class);
+        Session session = entityManager.unwrap(Session.class);
 
         Query<E> query = session.createQuery("from " + eClass.getName());
 
@@ -69,7 +69,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      */
     @Override
     public void saveOrUpdate(E entity) {
-        Session session = sessionFactory.unwrap(Session.class);
+        Session session = entityManager.unwrap(Session.class);
         session.saveOrUpdate(entity);
     }
 
@@ -81,7 +81,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      */
     @Override
     public E get(int entityId) {
-        Session session = sessionFactory.unwrap(Session.class);
+        Session session = entityManager.unwrap(Session.class);
         return session.get(eClass, entityId);
     }
 
@@ -92,7 +92,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      */
     @Override
     public void delete(int entityId) {
-        Session session = sessionFactory.unwrap(Session.class);
+        Session session = entityManager.unwrap(Session.class);
         E entity = get(entityId);
         session.remove(entity);
     }

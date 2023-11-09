@@ -16,13 +16,13 @@ public class ContractStageDAOImpl extends AbstractDAO<ContractStage>
         implements ContractStageDAO {
 
     /**
-     * Creates the component and binds it with the sessionFactory
+     * Creates the component and binds it with the entityManager
      * object.
      *
-     * @param sessionFactory the EntityManager object
+     * @param entityManager the EntityManager object
      */
     @Autowired
-    public ContractStageDAOImpl(EntityManager sessionFactory) {
-        super(sessionFactory);
+    public ContractStageDAOImpl(EntityManager entityManager) {
+        super(entityManager);
     }
 }

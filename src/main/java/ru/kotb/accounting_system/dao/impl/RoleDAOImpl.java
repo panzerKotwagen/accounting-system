@@ -18,14 +18,14 @@ import java.util.Optional;
 public class RoleDAOImpl extends AbstractDAO<Role> implements RoleDAO {
 
     /**
-     * Creates the component and binds it with the sessionFactory
+     * Creates the component and binds it with the entityManager
      * object.
      *
-     * @param sessionFactory the SessionFactory object
+     * @param entityManager the entityManager object
      */
     @Autowired
-    public RoleDAOImpl(EntityManager sessionFactory) {
-        super(sessionFactory);
+    public RoleDAOImpl(EntityManager entityManager) {
+        super(entityManager);
     }
 
     /**
@@ -36,7 +36,7 @@ public class RoleDAOImpl extends AbstractDAO<Role> implements RoleDAO {
      */
     @Override
     public Optional<Role> findByAuthority(String authority) {
-        Session session = sessionFactory.unwrap(Session.class);
+        Session session = entityManager.unwrap(Session.class);
 
         Query<Role> query = session.createQuery("from Role " +
                 "where authority = :authority", Role.class);

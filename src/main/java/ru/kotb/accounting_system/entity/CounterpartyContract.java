@@ -39,7 +39,7 @@ public class CounterpartyContract extends AbstractEntity {
      * The type of the contract.
      */
     @NotNull(message = "The field cannot be empty")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "contract_type_id")
     private ContractType contractType;
 
@@ -47,7 +47,7 @@ public class CounterpartyContract extends AbstractEntity {
      * The counterparty with which the contract was concluded.
      */
     @NotNull(message = "The field cannot be empty")
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "organisation_id")
     private Organisation organisation;
 

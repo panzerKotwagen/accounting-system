@@ -17,13 +17,13 @@ public class CounterpartyContractDAOImpl extends AbstractDAO<CounterpartyContrac
         implements CounterpartyContractDAO {
 
     /**
-     * Creates the component and binds it with the sessionFactory
+     * Creates the component and binds it with the entityManager
      * object.
      *
-     * @param sessionFactory the EntityManager object
+     * @param entityManager the EntityManager object
      */
     @Autowired
-    public CounterpartyContractDAOImpl(EntityManager sessionFactory) {
-        super(sessionFactory);
+    public CounterpartyContractDAOImpl(EntityManager entityManager) {
+        super(entityManager);
     }
 }

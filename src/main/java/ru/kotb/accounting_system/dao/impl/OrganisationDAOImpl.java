@@ -17,13 +17,13 @@ public class OrganisationDAOImpl extends AbstractDAO<Organisation>
         implements OrganisationDAO {
 
     /**
-     * Creates the component and binds it with the sessionFactory
+     * Creates the component and binds it with the entityManager
      * object.
      *
-     * @param sessionFactory the EntityManager object
+     * @param entityManager the EntityManager object
      */
     @Autowired
-    public OrganisationDAOImpl(EntityManager sessionFactory) {
-        super(sessionFactory);
+    public OrganisationDAOImpl(EntityManager entityManager) {
+        super(entityManager);
     }
 }

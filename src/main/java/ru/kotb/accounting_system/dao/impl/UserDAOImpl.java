@@ -1,7 +1,6 @@
 package ru.kotb.accounting_system.dao.impl;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,14 +18,14 @@ import java.util.Optional;
 public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
 
     /**
-     * Creates the component and binds it with the sessionFactory
+     * Creates the component and binds it with the entityManager
      * object.
      *
-     * @param sessionFactory the SessionFactory object
+     * @param entityManager the entityManager object
      */
     @Autowired
-    public UserDAOImpl(EntityManager sessionFactory) {
-        super(sessionFactory);
+    public UserDAOImpl(EntityManager entityManager) {
+        super(entityManager);
     }
 
     /**
@@ -37,7 +36,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
      */
     @Override
     public Optional<User> findByLogin(String userLogin) {
-        Session session = sessionFactory.unwrap(Session.class);
+        Session session = entityManager.unwrap(Session.class);
 
         Query<User> query = session.createQuery("from User " +
                 "where username = :userLogin", User.class);
