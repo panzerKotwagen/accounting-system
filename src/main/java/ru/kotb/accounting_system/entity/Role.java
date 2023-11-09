@@ -14,9 +14,9 @@ import javax.persistence.Table;
  * The entity class that describes the user roles to access the API.
  */
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "roles")
 public class Role extends AbstractEntity implements GrantedAuthority {
 

@@ -28,8 +28,8 @@ import java.util.Set;
  */
 @Data
 @Entity
-@Table(name = "users")
 @AllArgsConstructor
+@Table(name = "users")
 public class User extends AbstractEntity implements UserDetails {
 
     /**

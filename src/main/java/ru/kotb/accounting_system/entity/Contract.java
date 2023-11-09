@@ -1,6 +1,7 @@
 package ru.kotb.accounting_system.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -25,64 +26,11 @@ import java.util.List;
  * the company and the customer.
  */
 @Data
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "contracts")
-public class Contract extends AbstractEntity {
-
-    /**
-     * The contract name.
-     */
-    @NotBlank(message = "The field cannot be empty")
-    @Length(max=100, message = "The maximum field length is limited to 100 characters")
-    @Column(name = "name")
-    private String name;
-
-    /**
-     * The contract amount.
-     */
-    @NotNull(message = "The field cannot be empty")
-    @PositiveOrZero(message = "The value cannot be below zero")
-    @Column(name = "amount")
-    private int amount;
-
-    /**
-     * The type of the contract.
-     */
-    @NotNull(message = "The field cannot be empty")
-    @ManyToOne()
-    @JoinColumn(name = "contract_type_id")
-    private ContractType contractType;
-
-    /**
-     * Expected date when does the contract enter into force.
-     */
-    @NotNull(message = "The field cannot be empty")
-    @Column(name = "planned_start_date")
-    @FutureOrPresent
-    private Date plannedStartDate;
-
-    /**
-     * Actual date when does the contract enter into force.
-     */
-    @Column(name = "actual_start_date")
-    @FutureOrPresent
-    private Date actualStartDate;
-
-    /**
-     * Expected date when does the contract end.
-     */
-    @NotNull(message = "The field cannot be empty")
-    @Column(name = "planned_end_date")
-    @FutureOrPresent
-    private Date plannedEndDate;
-
-    /**
-     * Actual date when does the contract end.
-     */
-    @Column(name = "actual_end_date")
-    @FutureOrPresent
-    private Date actualEndDate;
+public class Contract extends AbstractContract {
 
     /**
      * The stages of the contract.
