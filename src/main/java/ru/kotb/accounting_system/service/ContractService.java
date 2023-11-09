@@ -5,6 +5,7 @@ import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
 
 import java.io.ByteArrayInputStream;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -44,4 +45,6 @@ public interface ContractService extends CommonService<Contract> {
      * @return MS Excel file with all contracts
      */
     ByteArrayInputStream getStagesReport(int contractId);
+
+    List<Contract> getForPeriond(Date start, Date end);
 }

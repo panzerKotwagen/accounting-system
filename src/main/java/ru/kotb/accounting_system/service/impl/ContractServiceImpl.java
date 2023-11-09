@@ -12,6 +12,7 @@ import ru.kotb.accounting_system.excel_helper.ExcelHelper;
 import ru.kotb.accounting_system.service.ContractService;
 
 import java.io.ByteArrayInputStream;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -75,5 +76,14 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO> 
         Contract contract = entityDAO.get(contractId);
         return excelHelper.convertContractStagesToExcel(
                 contract, contract.getContractStages());
+    }
+
+    @Override
+    @Transactional
+    public List<Contract> getForPeriond(Date start, Date end) {
+        List<Contract> contracts = entityDAO.getAll();
+        contracts.removeIf(n -> (n.getPlannedStartDate().before(start)));
+        contracts.removeIf(n -> (n.getPlannedStartDate().after(end)));
+        return contracts;
     }
 }

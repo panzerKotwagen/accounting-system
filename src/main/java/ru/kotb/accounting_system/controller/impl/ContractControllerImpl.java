@@ -7,14 +7,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kotb.accounting_system.controller.ContractController;
+import ru.kotb.accounting_system.dto.DatePeriodDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
 import ru.kotb.accounting_system.service.ContractService;
 
+import java.sql.Date;
 import java.util.List;
 
 
@@ -64,9 +67,10 @@ public class ContractControllerImpl
     //TODO: Add comments
     //TODO: Add add output of contracts for a certain period of time
     @Override
-    public ResponseEntity<Resource> downloadReport() {
+    public ResponseEntity<Resource> downloadContractsReport() {
         String filename = "contracts.xlsx";
-        InputStreamResource file = new InputStreamResource(service.getContractsReport());
+        InputStreamResource file = new InputStreamResource(
+                service.getContractsReport());
 
         return ResponseEntity.ok()
                 .header(
@@ -89,5 +93,11 @@ public class ContractControllerImpl
                         "attachment; filename=" + filename)
                 .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
                 .body(file);
+    }
+
+    public List<Contract> showAll(@RequestBody(required = false) DatePeriodDTO periodDTO) {
+        if (periodDTO == null)
+            return service.getAll();
+        return service.getForPeriond(periodDTO.getStart(), periodDTO.getEnd());
     }
 }

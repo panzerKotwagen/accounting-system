@@ -4,10 +4,13 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import ru.kotb.accounting_system.dto.DatePeriodDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
 
+import java.sql.Date;
 import java.util.List;
 
 
@@ -39,9 +42,12 @@ public interface ContractController extends CommonController<Contract> {
 
     //TODO: Add comments
     @GetMapping("/report/download")
-    ResponseEntity<Resource> downloadReport();
+    ResponseEntity<Resource> downloadContractsReport();
 
     @GetMapping("{id}/stages/report/download")
     ResponseEntity<Resource> downloadStagesReport(
             @PathVariable("id") int contractId);
+
+    @GetMapping("/")
+    List<Contract> showAll(@RequestBody(required = false) DatePeriodDTO periodDTO);
 }
