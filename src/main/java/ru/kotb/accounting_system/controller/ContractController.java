@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kotb.accounting_system.dto.DatePeriodDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * The controller class that processes requests to /api/contracts.
  */
+@RequestMapping("/api/contracts")
 public interface ContractController extends CommonController<Contract> {
 
     /**

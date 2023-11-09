@@ -12,7 +12,7 @@ import ru.kotb.accounting_system.service.UserService;
  */
 @RestController
 @RequestMapping("/api/users")
-public class UserController extends AbstractController<User, UserService> {
+public class UserControllerImpl extends AbstractController<User, UserService> {
 
     /**
      * Constructs the controller and links it with the service bean.
@@ -20,7 +20,7 @@ public class UserController extends AbstractController<User, UserService> {
      * @param userService the user service bean
      */
     @Autowired
-    public UserController(UserService userService) {
+    public UserControllerImpl(UserService userService) {
         super(userService);
     }
 }

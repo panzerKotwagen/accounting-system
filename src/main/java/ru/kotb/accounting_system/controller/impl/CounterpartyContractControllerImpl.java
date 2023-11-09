@@ -12,7 +12,7 @@ import ru.kotb.accounting_system.service.CounterpartyContractService;
  */
 @RestController
 @RequestMapping("/api/organisation-contracts")
-public class CounterpartyContractController
+public class CounterpartyContractControllerImpl
         extends AbstractController<CounterpartyContract, CounterpartyContractService> {
 
     /**
@@ -21,7 +21,7 @@ public class CounterpartyContractController
      * @param service the entity service bean
      */
     @Autowired
-    public CounterpartyContractController(CounterpartyContractService service) {
+    public CounterpartyContractControllerImpl(CounterpartyContractService service) {
         super(service);
     }
 }

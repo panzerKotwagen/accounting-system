@@ -12,7 +12,7 @@ import ru.kotb.accounting_system.service.OrganisationService;
  */
 @RestController
 @RequestMapping("/api/organisations")
-public class OrganisationController extends AbstractController<Organisation, OrganisationService> {
+public class OrganisationControllerImpl extends AbstractController<Organisation, OrganisationService> {
 
 
     /**
@@ -21,7 +21,7 @@ public class OrganisationController extends AbstractController<Organisation, Org
      * @param service the entity service bean
      */
     @Autowired
-    public OrganisationController(OrganisationService service) {
+    public OrganisationControllerImpl(OrganisationService service) {
         super(service);
     }
 }

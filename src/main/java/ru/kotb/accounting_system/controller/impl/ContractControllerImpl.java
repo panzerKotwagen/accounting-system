@@ -24,7 +24,6 @@ import java.util.List;
  * The controller class that processes requests to /api/contracts.
  */
 @RestController
-@RequestMapping("/api/contracts")
 public class ContractControllerImpl
         extends AbstractController<Contract, ContractService>
         implements ContractController {
@@ -112,6 +111,7 @@ public class ContractControllerImpl
      * @param periodDTO DTO with start and end date of the period
      * @return JSON array with all contracts in the table
      */
+    @Override
     public List<Contract> showAll(@RequestBody(required = false) DatePeriodDTO periodDTO) {
         if (periodDTO == null)
             return service.getAll();

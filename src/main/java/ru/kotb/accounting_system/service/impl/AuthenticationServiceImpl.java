@@ -11,6 +11,7 @@ import ru.kotb.accounting_system.dao.UserDAO;
 import ru.kotb.accounting_system.dto.RegistrationDTO;
 import ru.kotb.accounting_system.entity.Role;
 import ru.kotb.accounting_system.entity.User;
+import ru.kotb.accounting_system.service.AuthenticationService;
 
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -24,7 +25,7 @@ import java.util.Set;
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
 @Validated
-public class AuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService {
 
     /**
      * The DAO object for getting access to the "users" table.
@@ -49,7 +50,7 @@ public class AuthenticationService {
      * @param passwordEncoder the password encoder
      */
     @Autowired
-    public AuthenticationService(UserDAO userDAO, RoleDAO roleDAO, PasswordEncoder passwordEncoder) {
+    public AuthenticationServiceImpl(UserDAO userDAO, RoleDAO roleDAO, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
         this.roleDAO = roleDAO;
         this.passwordEncoder = passwordEncoder;

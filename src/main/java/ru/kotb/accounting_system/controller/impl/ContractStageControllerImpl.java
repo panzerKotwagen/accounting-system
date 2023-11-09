@@ -12,7 +12,7 @@ import ru.kotb.accounting_system.service.ContractStageService;
  */
 @RestController
 @RequestMapping("/api/contract-stages")
-public class ContractStageController
+public class ContractStageControllerImpl
         extends AbstractController<ContractStage, ContractStageService> {
 
     /**
@@ -21,7 +21,7 @@ public class ContractStageController
      * @param contractStageService the contract stage service bean
      */
     @Autowired
-    public ContractStageController(ContractStageService contractStageService) {
+    public ContractStageControllerImpl(ContractStageService contractStageService) {
         super(contractStageService);
     }
 }
