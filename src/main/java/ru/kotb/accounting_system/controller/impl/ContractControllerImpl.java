@@ -17,7 +17,6 @@ import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
 import ru.kotb.accounting_system.service.ContractService;
 
-import java.sql.Date;
 import java.util.List;
 
 
@@ -64,8 +63,11 @@ public class ContractControllerImpl
         return service.getAllOrganisationContracts(contractId);
     }
 
-    //TODO: Add comments
-    //TODO: Add add output of contracts for a certain period of time
+    /**
+     * Returns the Excel file with the all contracts.
+     *
+     * @return the Excel file with the all contracts
+     */
     @Override
     public ResponseEntity<Resource> downloadContractsReport() {
         String filename = "contracts.xlsx";
@@ -80,6 +82,14 @@ public class ContractControllerImpl
                 .body(file);
     }
 
+    /**
+     * Return the Excel file with the all stages of the specified
+     * contract.
+     *
+     * @param contractId the id of the contract
+     * @return the Excel file with the all stages of the specified
+     * contract
+     */
     @Override
     public ResponseEntity<Resource> downloadStagesReport(
             @PathVariable("id") int contractId) {
@@ -95,9 +105,16 @@ public class ContractControllerImpl
                 .body(file);
     }
 
+    /**
+     * Returns all contracts for the specified period, or just all
+     * contracts if it was not specified.
+     *
+     * @param periodDTO DTO with start and end date of the period
+     * @return JSON array with all contracts in the table
+     */
     public List<Contract> showAll(@RequestBody(required = false) DatePeriodDTO periodDTO) {
         if (periodDTO == null)
             return service.getAll();
-        return service.getForPeriond(periodDTO.getStart(), periodDTO.getEnd());
+        return service.getForPeriod(periodDTO.getStart(), periodDTO.getEnd());
     }
 }

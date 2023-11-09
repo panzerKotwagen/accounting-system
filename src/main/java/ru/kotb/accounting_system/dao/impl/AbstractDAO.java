@@ -1,13 +1,11 @@
 package ru.kotb.accounting_system.dao.impl;
 
 import org.hibernate.Session;
-
 import org.hibernate.query.Query;
 import ru.kotb.accounting_system.dao.CommonDAO;
 import ru.kotb.accounting_system.entity.AbstractEntity;
 
 import javax.persistence.EntityManager;
-import java.sql.Date;
 import java.util.List;
 
 

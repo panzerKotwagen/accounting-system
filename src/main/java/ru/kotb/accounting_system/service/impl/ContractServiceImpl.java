@@ -70,6 +70,11 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO> 
         return excelHelper.convertContractsToExcel(entityDAO.getAll());
     }
 
+    /**
+     * Returns all stages of the specified contract in MS Excel file.
+     *
+     * @return MS Excel file with all contract stages
+     */
     @Override
     @Transactional
     public ByteArrayInputStream getStagesReport(int contractId) {
@@ -78,9 +83,16 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO> 
                 contract, contract.getContractStages());
     }
 
+    /**
+     * Returns all contracts for the specified period.
+     *
+     * @param start the period start date
+     * @param end   the period end date
+     * @return contract list
+     */
     @Override
     @Transactional
-    public List<Contract> getForPeriond(Date start, Date end) {
+    public List<Contract> getForPeriod(Date start, Date end) {
         List<Contract> contracts = entityDAO.getAll();
         contracts.removeIf(n -> (n.getPlannedStartDate().before(start)));
         contracts.removeIf(n -> (n.getPlannedStartDate().after(end)));

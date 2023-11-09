@@ -40,11 +40,18 @@ public interface ContractService extends CommonService<Contract> {
     ByteArrayInputStream getContractsReport();
 
     /**
-     * Returns all contract in MS Excel file.
+     * Returns all stages of the specified contract in MS Excel file.
      *
-     * @return MS Excel file with all contracts
+     * @return MS Excel file with all contract stages
      */
     ByteArrayInputStream getStagesReport(int contractId);
 
-    List<Contract> getForPeriond(Date start, Date end);
+    /**
+     * Returns all contracts for the specified period.
+     *
+     * @param start the period start date
+     * @param end   the period end date
+     * @return contract list
+     */
+    List<Contract> getForPeriod(Date start, Date end);
 }

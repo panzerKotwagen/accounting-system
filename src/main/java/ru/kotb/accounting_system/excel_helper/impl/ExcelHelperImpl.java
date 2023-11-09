@@ -27,6 +27,13 @@ public class ExcelHelperImpl implements ExcelHelper {
 
 
     //TODO: Beautify the output
+    /**
+     * Converts contracts list into the Excel spreadsheet represented
+     * by ByteArrayInputStream
+     *
+     * @param contracts the contract list
+     * @return Excel file with the contract table
+     */
     public ByteArrayInputStream convertContractsToExcel(
             List<Contract> contracts) {
 
@@ -81,6 +88,14 @@ public class ExcelHelperImpl implements ExcelHelper {
         }
     }
 
+    //TODO: Beautify the output and refactor
+    /**
+     * Converts stages list into the Excel spreadsheet represented
+     * by ByteArrayInputStream
+     *
+     * @param stages the contract list
+     * @return Excel file with the stages table
+     */
     public ByteArrayInputStream convertContractStagesToExcel(
             Contract contract, List<ContractStage> stages) {
 
