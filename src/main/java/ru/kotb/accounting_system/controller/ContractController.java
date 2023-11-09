@@ -40,4 +40,8 @@ public interface ContractController extends CommonController<Contract> {
     //TODO: Add comments
     @GetMapping("/report/download")
     ResponseEntity<Resource> downloadReport();
+
+    @GetMapping("{id}/stages/report/download")
+    ResponseEntity<Resource> downloadStagesReport(
+            @PathVariable("id") int contractId);
 }

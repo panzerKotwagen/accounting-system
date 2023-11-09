@@ -6,6 +6,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kotb.accounting_system.controller.ContractController;
@@ -65,7 +66,22 @@ public class ContractControllerImpl
     @Override
     public ResponseEntity<Resource> downloadReport() {
         String filename = "contracts.xlsx";
-        InputStreamResource file = new InputStreamResource(service.getReport());
+        InputStreamResource file = new InputStreamResource(service.getContractsReport());
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=" + filename)
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(file);
+    }
+
+    @Override
+    public ResponseEntity<Resource> downloadStagesReport(
+            @PathVariable("id") int contractId) {
+        String filename = "contract_stages.xlsx";
+        InputStreamResource file = new InputStreamResource(service
+                .getStagesReport(contractId));
 
         return ResponseEntity.ok()
                 .header(

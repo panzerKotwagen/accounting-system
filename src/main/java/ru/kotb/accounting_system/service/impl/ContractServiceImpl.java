@@ -62,9 +62,18 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO> 
      *
      * @return MS Excel file with all contracts
      */
+    @Override
     @Transactional
-    public ByteArrayInputStream getReport() {
+    public ByteArrayInputStream getContractsReport() {
 
-        return excelHelper.convertToExcel(entityDAO.getAll());
+        return excelHelper.convertContractsToExcel(entityDAO.getAll());
+    }
+
+    @Override
+    @Transactional
+    public ByteArrayInputStream getStagesReport(int contractId) {
+        Contract contract = entityDAO.get(contractId);
+        return excelHelper.convertContractStagesToExcel(
+                contract, contract.getContractStages());
     }
 }
