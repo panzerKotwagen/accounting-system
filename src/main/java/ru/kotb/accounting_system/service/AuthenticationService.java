@@ -3,6 +3,8 @@ package ru.kotb.accounting_system.service;
 import ru.kotb.accounting_system.dto.RegistrationDTO;
 import ru.kotb.accounting_system.entity.User;
 
+import javax.validation.Valid;
+
 
 /**
  * The interface that provides registration and authentication of the
@@ -18,5 +20,5 @@ public interface AuthenticationService {
      *                        name, username and password
      * @return the saved user
      */
-    User registerUser(RegistrationDTO registrationDTO);
+    User registerUser(@Valid RegistrationDTO registrationDTO);
 }
