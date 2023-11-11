@@ -2,8 +2,7 @@ package ru.kotb.accounting_system.model_assembler.impl;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import ru.kotb.accounting_system.controller.impl.AbstractController;
-import ru.kotb.accounting_system.controller.impl.UserControllerImpl;
+import ru.kotb.accounting_system.controller.CommonController;
 import ru.kotb.accounting_system.entity.AbstractEntity;
 import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 
@@ -21,7 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  * @param <T> the entity controller class
  */
 public abstract class AbstractModelAssembler<E extends AbstractEntity,
-        T extends AbstractController> implements CommonModelAssembler<E> {
+        T extends CommonController<E>> implements CommonModelAssembler<E> {
 
     /**
      * The entity controller class.
