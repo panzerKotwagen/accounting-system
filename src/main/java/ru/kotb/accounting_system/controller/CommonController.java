@@ -25,7 +25,7 @@ public interface CommonController<E extends AbstractEntity> {
      * @return JSON array with all entities in the table
      */
     @GetMapping
-    CollectionModel<EntityModel<E>> showAll();
+    CollectionModel<EntityModel<E>> all();
 
     /**
      * Returns a JSON object with description of the specified entity.

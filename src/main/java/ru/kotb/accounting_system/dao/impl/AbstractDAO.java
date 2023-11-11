@@ -1,6 +1,5 @@
 package ru.kotb.accounting_system.dao.impl;
 
-import ru.kotb.accounting_system.dao.CommonDAO;
 import ru.kotb.accounting_system.entity.AbstractEntity;
 
 import javax.persistence.EntityManager;
@@ -9,12 +8,12 @@ import java.util.List;
 
 
 /**
- * The abstract generic DAO class used to access the tables in the
- * database "accounting_system".
+ * The abstract DAO class provides standard CRUD operation witn an
+ * entity.
  *
  * @param <E> the entity class that the DAO works with
  */
-public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO<E> {
+public abstract class AbstractDAO<E extends AbstractEntity> {
 
     /**
      * The EntityManager object for working with database.
@@ -41,7 +40,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      *
      * @param eClass class of the entity
      */
-    @Override
+
     public void setClass(Class<E> eClass) {
         this.eClass = eClass;
     }
@@ -52,7 +51,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      *
      * @return list of all entities in the table
      */
-    @Override
+    @SuppressWarnings("unchecked")
     public List<E> getAll() {
         Query query = entityManager.createQuery("from " + eClass.getName());
         return query.getResultList();
@@ -63,7 +62,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      *
      * @param entity new entity object
      */
-    @Override
+
     public E saveOrUpdate(E entity) {
         return entityManager.merge(entity);
     }
@@ -74,7 +73,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      * @param entityId the ID of the entity
      * @return the entity object with the specified ID
      */
-    @Override
+
     public E get(int entityId) {
         return entityManager.find(eClass, entityId);
     }
@@ -84,7 +83,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      *
      * @param entityId the ID of the entity
      */
-    @Override
+
     public void delete(int entityId) {
         entityManager.remove(get(entityId));
     }
