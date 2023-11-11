@@ -1,9 +1,10 @@
 package ru.kotb.accounting_system.controller.impl;
 
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.kotb.accounting_system.controller.OrganisationController;
+import ru.kotb.accounting_system.controller.CommonController;
 import ru.kotb.accounting_system.entity.Organisation;
-import ru.kotb.accounting_system.model_assembler.impl.OrganisationModelAssemblerImpl;
+import ru.kotb.accounting_system.model_assembler.impl.OrganisationModelAssembler;
 import ru.kotb.accounting_system.service.OrganisationService;
 
 
@@ -11,9 +12,10 @@ import ru.kotb.accounting_system.service.OrganisationService;
  * The controller class that processes requests to /api/organisations.
  */
 @RestController
-public class OrganisationControllerImpl
+@RequestMapping("/api/organisations")
+public class OrganisationController
         extends AbstractController<Organisation, OrganisationService>
-        implements OrganisationController {
+        implements CommonController<Organisation> {
 
 
     /**
@@ -21,9 +23,9 @@ public class OrganisationControllerImpl
      *
      * @param service the entity service bean
      */
-    public OrganisationControllerImpl(
+    public OrganisationController(
             OrganisationService service,
-            OrganisationModelAssemblerImpl assembler) {
+            OrganisationModelAssembler assembler) {
 
         super(service, assembler);
     }

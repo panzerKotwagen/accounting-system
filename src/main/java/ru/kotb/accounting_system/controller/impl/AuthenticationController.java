@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.kotb.accounting_system.controller.AuthenticationController;
 import ru.kotb.accounting_system.dto.RegistrationDTO;
 import ru.kotb.accounting_system.entity.User;
 import ru.kotb.accounting_system.service.impl.AuthenticationServiceImpl;
@@ -13,16 +12,17 @@ import ru.kotb.accounting_system.service.impl.AuthenticationServiceImpl;
 
 //TODO: Add comments
 @RestController
-public class AuthenticationControllerImpl implements AuthenticationController {
+@RequestMapping("/api/auth")
+public class AuthenticationController {
 
     private final AuthenticationServiceImpl authenticationService;
 
     @Autowired
-    public AuthenticationControllerImpl(AuthenticationServiceImpl authenticationService) {
+    public AuthenticationController(AuthenticationServiceImpl authenticationService) {
         this.authenticationService = authenticationService;
     }
 
-    @Override
+    @PostMapping("/register")
     public User registerUser(@RequestBody RegistrationDTO body) {
         return authenticationService.registerUser(body);
     }

@@ -16,9 +16,9 @@ import ru.kotb.accounting_system.dto.DatePeriodDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
-import ru.kotb.accounting_system.model_assembler.ContractModelAssembler;
-import ru.kotb.accounting_system.model_assembler.ContractStageModelAssembler;
-import ru.kotb.accounting_system.model_assembler.CounterpartyContractModelAssembler;
+import ru.kotb.accounting_system.model_assembler.impl.ContractModelAssembler;
+import ru.kotb.accounting_system.model_assembler.impl.ContractStageModelAssembler;
+import ru.kotb.accounting_system.model_assembler.impl.CounterpartyContractModelAssembler;
 import ru.kotb.accounting_system.service.ContractService;
 
 

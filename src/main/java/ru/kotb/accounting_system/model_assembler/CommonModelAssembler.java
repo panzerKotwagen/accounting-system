@@ -9,8 +9,8 @@ import java.util.List;
 
 
 /**
- * The class that provides wrapping an entity into response with links
- * to relevant operations.
+ * The interface that provides wrapping an entity into response with
+ * links to relevant operations.
  *
  * @param <E> the entity class
  */
