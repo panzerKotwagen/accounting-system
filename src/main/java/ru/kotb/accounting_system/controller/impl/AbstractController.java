@@ -1,13 +1,18 @@
 package ru.kotb.accounting_system.controller.impl;
 
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.kotb.accounting_system.controller.CommonController;
 import ru.kotb.accounting_system.entity.AbstractEntity;
 import ru.kotb.accounting_system.exception_handling.NoSuchEntityException;
+import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 import ru.kotb.accounting_system.service.CommonService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -16,7 +21,8 @@ import java.util.List;
  * @param <E> the entity class
  * @param <S> the service class
  */
-public abstract class AbstractController<E extends AbstractEntity, S extends CommonService<E>>
+public abstract class AbstractController<E extends AbstractEntity,
+        S extends CommonService<E>>
         implements CommonController<E> {
 
     /**
@@ -25,12 +31,20 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
     protected final S service;
 
     /**
-     * Constructs the controller and links it with the service bean.
-     *
-     * @param service the entity service bean
+     * The helper bean that wraps an entity in {@code EntityModel<E>}.
      */
-    public AbstractController(S service) {
+    private final CommonModelAssembler<E> assembler;
+
+    /**
+     * Constructs the controller and links it with the service and
+     * assembler beans.
+     *
+     * @param service   the entity service bean
+     * @param assembler the entity assembler bean
+     */
+    public AbstractController(S service, CommonModelAssembler<E> assembler) {
         this.service = service;
+        this.assembler = assembler;
     }
 
     /**
@@ -39,8 +53,12 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
      * @return JSON array with all entities in the table
      */
     @Override
-    public List<E> showAll() {
-        return service.getAll();
+    public CollectionModel<EntityModel<E>> showAll() {
+        List<EntityModel<E>> entities = service.getAll().stream()
+                .map(assembler::toModel)
+                .collect(Collectors.toList());
+
+        return assembler.toCollectionModel(entities);
     }
 
     /**
@@ -50,13 +68,13 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
      * @return the JSON object with the specified entity
      */
     @Override
-    public E get(@PathVariable("id") int entityId) {
+    public EntityModel<E> get(@PathVariable("id") int entityId) {
         E entity = service.get(entityId);
         if (entity == null) {
             throw new NoSuchEntityException("There is no entity with ID = "
                     + entityId + " in the database.");
         } else {
-            return entity;
+            return assembler.toModel(entity);
         }
     }
 
@@ -68,9 +86,9 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
      * @return saved object
      */
     @Override
-    public E add(@RequestBody E entity) {
+    public EntityModel<E> add(@RequestBody E entity) {
         service.saveOrUpdate(entity);
-        return entity;
+        return assembler.toModel(entity);
     }
 
     /**
@@ -82,13 +100,13 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
      * @return saved object
      */
     @Override
-    public E update(@RequestBody E entity) {
+    public EntityModel<E> update(@RequestBody E entity) {
         if (service.get(entity.getId()) == null) {
             throw new NoSuchEntityException("There is no entity with ID = "
                     + entity.getId() + " in the database.");
         } else {
             service.saveOrUpdate(entity);
-            return entity;
+            return assembler.toModel(entity);
         }
     }
 
@@ -100,14 +118,14 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
      * @return operation status message
      */
     @Override
-    public String delete(@PathVariable("id") int entityId) {
+    public ResponseEntity<E> delete(@PathVariable("id") int entityId) {
         E entity = service.get(entityId);
         if (entity == null) {
             throw new NoSuchEntityException("There is no entity with ID = "
                     + entityId + " in the database.");
         } else {
             service.delete(entityId);
-            return "Entity with ID = " + entityId + " was deleted.";
+            return ResponseEntity.noContent().build();
         }
     }
 }
