@@ -8,13 +8,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kotb.accounting_system.controller.ContractController;
 import ru.kotb.accounting_system.dto.DatePeriodDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
+import ru.kotb.accounting_system.model_assembler.ContractModelAssembler;
 import ru.kotb.accounting_system.service.ContractService;
 
 import java.util.List;
@@ -31,11 +31,13 @@ public class ContractControllerImpl
     /**
      * Constructs the controller and links it with the service bean.
      *
-     * @param contractService the contract service bean
+     * @param service the contract service bean
      */
     @Autowired
-    public ContractControllerImpl(ContractService contractService) {
-        super(contractService);
+    public ContractControllerImpl(
+            ContractService service,
+            ContractModelAssembler assembler) {
+        super(service, assembler);
     }
 
     /**
