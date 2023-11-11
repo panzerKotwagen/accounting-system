@@ -1,6 +1,8 @@
 package ru.kotb.accounting_system.controller;
 
 import org.springframework.core.io.Resource;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,8 +12,6 @@ import ru.kotb.accounting_system.dto.DatePeriodDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
-
-import java.util.List;
 
 
 /**
@@ -28,7 +28,7 @@ public interface ContractController extends CommonController<Contract> {
      * @return list of all stages of the contract
      */
     @GetMapping("/{id}/stages")
-    List<ContractStage> showAllContractStages(@PathVariable("id") int contractId);
+    CollectionModel<EntityModel<ContractStage>> showAllContractStages(@PathVariable("id") int contractId);
 
     /**
      * Returns the list of all organisation contract of the contract
@@ -37,8 +37,8 @@ public interface ContractController extends CommonController<Contract> {
      * @param contractId the specified ID of the contract
      * @return list of all stages of the contract
      */
-    @GetMapping("/{id}/organisation-contracts")
-    List<CounterpartyContract> showAllOrganisationContracts(
+    @GetMapping("/{id}/counterparty-contracts")
+    CollectionModel<EntityModel<CounterpartyContract>> showAllOrganisationContracts(
             @PathVariable("id") int contractId);
 
     /**
@@ -69,5 +69,5 @@ public interface ContractController extends CommonController<Contract> {
      * @return JSON array with all contracts in the table
      */
     @GetMapping("/")
-    List<Contract> showAll(@RequestBody(required = false) DatePeriodDTO periodDTO);
+    CollectionModel<EntityModel<Contract>> showAll(@RequestBody(required = false) DatePeriodDTO periodDTO);
 }

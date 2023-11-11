@@ -30,7 +30,7 @@ public abstract class AbstractController<E extends AbstractEntity,
     /**
      * The helper bean that wraps an entity in {@code EntityModel<E>}.
      */
-    private final CommonModelAssembler<E> assembler;
+    protected final CommonModelAssembler<E> assembler;
 
     /**
      * Constructs the controller and links it with the service and

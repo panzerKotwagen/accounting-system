@@ -3,6 +3,8 @@ package ru.kotb.accounting_system.controller.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +17,9 @@ import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
 import ru.kotb.accounting_system.model_assembler.ContractModelAssembler;
+import ru.kotb.accounting_system.model_assembler.ContractStageModelAssembler;
+import ru.kotb.accounting_system.model_assembler.CounterpartyContractModelAssembler;
 import ru.kotb.accounting_system.service.ContractService;
-
-import java.util.List;
 
 
 /**
@@ -28,16 +30,28 @@ public class ContractControllerImpl
         extends AbstractController<Contract, ContractService>
         implements ContractController {
 
+    private final ContractStageModelAssembler stageAssembler;
+
+    private final CounterpartyContractModelAssembler counterpartyAssembler;
+
     /**
-     * Constructs the controller and links it with the service bean.
+     * Constructs the controller and links it with the beans.
      *
      * @param service the contract service bean
+     * @param assembler the contract assembler bean
+     * @param stageAssembler the stage assembler bean
+     * @param counterpartyAssembler the counterparty assembler bean
      */
     @Autowired
     public ContractControllerImpl(
             ContractService service,
-            ContractModelAssembler assembler) {
+            ContractModelAssembler assembler,
+            ContractStageModelAssembler stageAssembler,
+            CounterpartyContractModelAssembler counterpartyAssembler) {
+
         super(service, assembler);
+        this.stageAssembler = stageAssembler;
+        this.counterpartyAssembler = counterpartyAssembler;
     }
 
     /**
@@ -48,8 +62,8 @@ public class ContractControllerImpl
      * @return list of all stages of the contract
      */
     @Override
-    public List<ContractStage> showAllContractStages(int contractId) {
-        return service.getAllStages(contractId);
+    public CollectionModel<EntityModel<ContractStage>> showAllContractStages(int contractId) {
+        return stageAssembler.toCollectionModel(service.getAllStages(contractId));
     }
 
     /**
@@ -60,8 +74,11 @@ public class ContractControllerImpl
      * @return list of all stages of the contract
      */
     @Override
-    public List<CounterpartyContract> showAllOrganisationContracts(int contractId) {
-        return service.getAllOrganisationContracts(contractId);
+    public CollectionModel<EntityModel<CounterpartyContract>>
+    showAllOrganisationContracts(int contractId) {
+
+        return counterpartyAssembler.toCollectionModel(
+                service.getAllOrganisationContracts(contractId));
     }
 
     /**
@@ -114,9 +131,13 @@ public class ContractControllerImpl
      * @return JSON array with all contracts in the table
      */
     @Override
-    public List<Contract> showAll(@RequestBody(required = false) DatePeriodDTO periodDTO) {
+    public CollectionModel<EntityModel<Contract>> showAll(
+            @RequestBody(required = false) DatePeriodDTO periodDTO) {
+
         if (periodDTO == null)
-            return service.getAll();
-        return service.getForPeriod(periodDTO.getStart(), periodDTO.getEnd());
+            return assembler.toCollectionModel(service.getAll());
+
+        return assembler.toCollectionModel(
+                service.getForPeriod(periodDTO.getStart(), periodDTO.getEnd()));
     }
 }
