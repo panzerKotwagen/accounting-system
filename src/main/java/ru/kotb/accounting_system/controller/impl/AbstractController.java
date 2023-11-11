@@ -11,9 +11,6 @@ import ru.kotb.accounting_system.exception_handling.NoSuchEntityException;
 import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 import ru.kotb.accounting_system.service.CommonService;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 /**
  * The implementation of CommonController interface.
@@ -54,11 +51,7 @@ public abstract class AbstractController<E extends AbstractEntity,
      */
     @Override
     public CollectionModel<EntityModel<E>> showAll() {
-        List<EntityModel<E>> entities = service.getAll().stream()
-                .map(assembler::toModel)
-                .collect(Collectors.toList());
-
-        return assembler.toCollectionModel(entities);
+        return assembler.toCollectionModel(service.getAll());
     }
 
     /**

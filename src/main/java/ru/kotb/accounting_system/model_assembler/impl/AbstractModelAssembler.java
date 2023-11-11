@@ -7,6 +7,7 @@ import ru.kotb.accounting_system.entity.AbstractEntity;
 import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -41,12 +42,16 @@ public abstract class AbstractModelAssembler<E extends AbstractEntity,
      * Wraps a list of entity models into {@code CollectionModel} with
      * relevant links.
      *
-     * @param entityModels the list of entity models
+     * @param entities the list of entities
      * @return the collection model of the entity models
      */
     @Override
-    public CollectionModel<EntityModel<E>> toCollectionModel(List<EntityModel<E>> entityModels) {
-        return CollectionModel.of(entityModels,
+    public CollectionModel<EntityModel<E>> toCollectionModel(List<E> entities) {
+        List<EntityModel<E>> modelList = entities.stream()
+                .map(this::toModel)
+                .collect(Collectors.toList());
+
+        return CollectionModel.of(modelList,
                 linkTo(methodOn(controllerClass).showAll()).withSelfRel());
     }
 

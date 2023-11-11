@@ -18,9 +18,9 @@ public interface CommonModelAssembler<E extends AbstractEntity>
         extends RepresentationModelAssembler<E, EntityModel<E>> {
 
     /**
-     * Wraps {@code List<EntityModel<E>>} into {@code CollectionModel}.
-     * @param modelList the list of entity models
+     * Wraps {@code List} of entities into {@code CollectionModel}.
+     * @param entities the list of entities
      * @return {@code CollectionModel} with the list of entity models.
      */
-    CollectionModel<EntityModel<E>> toCollectionModel(List<EntityModel<E>> modelList);
+    CollectionModel<EntityModel<E>> toCollectionModel(List<E> entities);
 }
