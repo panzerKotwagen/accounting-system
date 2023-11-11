@@ -1,11 +1,10 @@
 package ru.kotb.accounting_system.dao.impl;
 
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import ru.kotb.accounting_system.dao.CommonDAO;
 import ru.kotb.accounting_system.entity.AbstractEntity;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 
@@ -55,10 +54,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      */
     @Override
     public List<E> getAll() {
-        Session session = entityManager.unwrap(Session.class);
-
-        Query<E> query = session.createQuery("from " + eClass.getName());
-
+        Query query = entityManager.createQuery("from " + eClass.getName());
         return query.getResultList();
     }
 
@@ -69,8 +65,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      */
     @Override
     public void saveOrUpdate(E entity) {
-        Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(entity);
+        entityManager.merge(entity);
     }
 
     /**
@@ -81,8 +76,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      */
     @Override
     public E get(int entityId) {
-        Session session = entityManager.unwrap(Session.class);
-        return session.get(eClass, entityId);
+        return entityManager.find(eClass, entityId);
     }
 
     /**
@@ -92,8 +86,6 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      */
     @Override
     public void delete(int entityId) {
-        Session session = entityManager.unwrap(Session.class);
-        E entity = get(entityId);
-        session.remove(entity);
+        entityManager.remove(get(entityId));
     }
 }
