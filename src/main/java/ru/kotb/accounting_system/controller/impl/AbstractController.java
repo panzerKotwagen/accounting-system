@@ -80,8 +80,7 @@ public abstract class AbstractController<E extends AbstractEntity,
      */
     @Override
     public EntityModel<E> add(@RequestBody E entity) {
-        service.saveOrUpdate(entity);
-        return assembler.toModel(entity);
+        return assembler.toModel(service.saveOrUpdate(entity));
     }
 
     /**
@@ -98,8 +97,7 @@ public abstract class AbstractController<E extends AbstractEntity,
             throw new NoSuchEntityException("There is no entity with ID = "
                     + entity.getId() + " in the database.");
         } else {
-            service.saveOrUpdate(entity);
-            return assembler.toModel(entity);
+            return assembler.toModel(service.saveOrUpdate(entity));
         }
     }
 

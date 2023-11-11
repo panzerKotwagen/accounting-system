@@ -64,8 +64,8 @@ public abstract class AbstractDAO<E extends AbstractEntity> implements CommonDAO
      * @param entity new entity object
      */
     @Override
-    public void saveOrUpdate(E entity) {
-        entityManager.merge(entity);
+    public E saveOrUpdate(E entity) {
+        return entityManager.merge(entity);
     }
 
     /**

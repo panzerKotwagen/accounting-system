@@ -78,8 +78,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 registrationDTO.getUsername(),
                 encodedPassword,
                 authorities);
-        userDAO.saveOrUpdate(newUser);
-
-        return newUser;
+        return userDAO.saveOrUpdate(newUser);
     }
 }

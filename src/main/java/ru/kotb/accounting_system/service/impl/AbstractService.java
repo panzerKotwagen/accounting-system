@@ -52,8 +52,8 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Common
      */
     @Override
     @Transactional
-    public void saveOrUpdate(E entity) {
-        entityDAO.saveOrUpdate(entity);
+    public E saveOrUpdate(E entity) {
+        return entityDAO.saveOrUpdate(entity);
     }
 
     /**

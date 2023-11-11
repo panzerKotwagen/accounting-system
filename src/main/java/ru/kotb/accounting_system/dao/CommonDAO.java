@@ -32,7 +32,7 @@ public interface CommonDAO<E extends AbstractEntity> {
      *
      * @param entity new entity
      */
-    void saveOrUpdate(E entity);
+    E saveOrUpdate(E entity);
 
     /**
      * Returns the entity with the specified ID.
