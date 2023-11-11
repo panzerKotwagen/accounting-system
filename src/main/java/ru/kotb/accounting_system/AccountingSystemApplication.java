@@ -23,13 +23,19 @@ public class AccountingSystemApplication {
     @Bean
     CommandLineRunner run(RoleDAO roleDAO, UserDAO userDAO, PasswordEncoder passwordEncode) {
         return args -> {
-            if (roleDAO.findByAuthority("ADMIN").isPresent()) return;
+            if (userDAO.findByLogin("admin").isPresent()) return;
 
-            Role adminRole = new Role("ADMIN");
-            roleDAO.saveOrUpdate(adminRole);
-            roleDAO.saveOrUpdate(new Role("USER"));
-            System.out.println("Create Admin");
+            if (!roleDAO.findByAuthority("ADMIN").isPresent()) {
+                roleDAO.saveOrUpdate(new Role("ADMIN"));
+            }
 
+            if (!roleDAO.findByAuthority("USER").isPresent()) {
+                roleDAO.saveOrUpdate(new Role("USER"));
+            }
+
+            System.out.println("Create admin user");
+
+            Role adminRole = roleDAO.findByAuthority("ADMIN").get();
             Set<Role> roles = new HashSet<>();
             roles.add(adminRole);
 
