@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kotb.accounting_system.controller.CommonController;
 import ru.kotb.accounting_system.entity.ContractStage;
-import ru.kotb.accounting_system.model_assembler.impl.ContractStageModelAssembler;
+import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 import ru.kotb.accounting_system.service.ContractStageService;
 
 
@@ -26,7 +26,7 @@ public class ContractStageController
     @Autowired
     public ContractStageController(
             ContractStageService service,
-            ContractStageModelAssembler assembler) {
+            CommonModelAssembler<ContractStage> assembler) {
         super(service, assembler);
     }
 }

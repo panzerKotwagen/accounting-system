@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kotb.accounting_system.controller.CommonController;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
-import ru.kotb.accounting_system.model_assembler.impl.CounterpartyContractModelAssembler;
+import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 import ru.kotb.accounting_system.service.CounterpartyContractService;
 
 
@@ -26,7 +26,7 @@ public class CounterpartyContractController
     @Autowired
     public CounterpartyContractController(
             CounterpartyContractService service,
-            CounterpartyContractModelAssembler assembler) {
+            CommonModelAssembler<CounterpartyContract> assembler) {
         super(service, assembler);
     }
 }

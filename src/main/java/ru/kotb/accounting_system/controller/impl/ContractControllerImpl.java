@@ -16,6 +16,7 @@ import ru.kotb.accounting_system.dto.DatePeriodDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
+import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 import ru.kotb.accounting_system.model_assembler.impl.ContractModelAssembler;
 import ru.kotb.accounting_system.model_assembler.impl.ContractStageModelAssembler;
 import ru.kotb.accounting_system.model_assembler.impl.CounterpartyContractModelAssembler;
@@ -30,9 +31,9 @@ public class ContractControllerImpl
         extends AbstractController<Contract, ContractService>
         implements ContractController {
 
-    private final ContractStageModelAssembler stageAssembler;
+    private final CommonModelAssembler<ContractStage> stageAssembler;
 
-    private final CounterpartyContractModelAssembler counterpartyAssembler;
+    private final CommonModelAssembler<CounterpartyContract> counterpartyAssembler;
 
     /**
      * Constructs the controller and links it with the beans.

@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kotb.accounting_system.controller.CommonController;
 import ru.kotb.accounting_system.entity.Organisation;
-import ru.kotb.accounting_system.model_assembler.impl.OrganisationModelAssembler;
+import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 import ru.kotb.accounting_system.service.OrganisationService;
 
 
@@ -25,7 +25,7 @@ public class OrganisationController
      */
     public OrganisationController(
             OrganisationService service,
-            OrganisationModelAssembler assembler) {
+            CommonModelAssembler<Organisation> assembler) {
 
         super(service, assembler);
     }
