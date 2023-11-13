@@ -3,6 +3,7 @@ package ru.kotb.accounting_system.dao.impl;
 import ru.kotb.accounting_system.entity.AbstractEntity;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> {
     /**
      * The EntityManager object for working with database.
      */
+    @PersistenceContext
     protected final EntityManager entityManager;
 
     /**

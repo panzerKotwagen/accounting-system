@@ -1,13 +1,13 @@
 package ru.kotb.accounting_system.dao.impl;
 
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kotb.accounting_system.dao.IRoleDAO;
 import ru.kotb.accounting_system.entity.Role;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.Optional;
 
 
@@ -15,7 +15,6 @@ import java.util.Optional;
  * The implementation of the RoleDAO interface.
  */
 @Repository
-//TODO: replace using Hibernate with JPA
 public class RoleDAO extends AbstractDAO<Role> implements IRoleDAO {
 
     /**
@@ -36,13 +35,12 @@ public class RoleDAO extends AbstractDAO<Role> implements IRoleDAO {
      * @return the role with specified name
      */
     @Override
+    @Transactional
     public Optional<Role> findByAuthority(String authority) {
-        Session session = entityManager.unwrap(Session.class);
-
-        Query<Role> query = session.createQuery("from Role " +
+        Query query = entityManager.createQuery("from Role " +
                 "where authority = :authority", Role.class);
         query.setParameter("authority", authority);
 
-        return Optional.ofNullable(query.uniqueResult());
+        return query.getResultList().stream().findFirst();
     }
 }
