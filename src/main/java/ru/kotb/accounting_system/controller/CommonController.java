@@ -44,7 +44,7 @@ public interface CommonController<E extends AbstractEntity> {
      * @return saved object
      */
     @PostMapping
-    EntityModel<E> add(@RequestBody E entity);
+    ResponseEntity<?> add(@RequestBody E entity);
 
     /**
      * Updates the existing entity in the table. The request
@@ -55,7 +55,7 @@ public interface CommonController<E extends AbstractEntity> {
      * @return saved object
      */
     @PutMapping
-    EntityModel<E> update(@RequestBody E entity);
+    ResponseEntity<?> update(@RequestBody E entity);
 
     /**
      * Deletes the entity with the specified ID and return the

@@ -2,6 +2,7 @@ package ru.kotb.accounting_system.controller;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -78,8 +79,13 @@ public abstract class AbstractController<E extends AbstractEntity,
      * @return saved object
      */
     @Override
-    public EntityModel<E> add(@RequestBody E entity) {
-        return assembler.toModel(service.saveOrUpdate(entity));
+    public ResponseEntity<?> add(@RequestBody E entity) {
+        EntityModel<E> entityModel = assembler.toModel(
+                service.saveOrUpdate(entity));
+
+        return ResponseEntity
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(entityModel);
     }
 
     /**
@@ -91,12 +97,17 @@ public abstract class AbstractController<E extends AbstractEntity,
      * @return saved object
      */
     @Override
-    public EntityModel<E> update(@RequestBody E entity) {
+    public ResponseEntity<?> update(@RequestBody E entity) {
         if (service.get(entity.getId()) == null) {
             throw new NoSuchEntityException("There is no entity with ID = "
                     + entity.getId() + " in the database.");
         } else {
-            return assembler.toModel(service.saveOrUpdate(entity));
+            EntityModel<E> entityModel = assembler
+                    .toModel(service.saveOrUpdate(entity));
+
+            return ResponseEntity
+                    .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                    .body(entityModel);
         }
     }
 
