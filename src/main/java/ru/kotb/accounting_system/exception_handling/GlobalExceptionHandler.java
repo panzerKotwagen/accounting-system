@@ -19,7 +19,7 @@ import javax.validation.ConstraintViolationException;
  * The exception handler for the entity exceptions.
  */
 @ControllerAdvice
-public class EntityGlobalExceptionHandler {
+public class GlobalExceptionHandler {
 
     /**
      * Processes {@code MethodArgumentNotValidException} which is

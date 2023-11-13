@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.HashSet;
@@ -35,6 +37,11 @@ public class User extends AbstractEntity implements UserDetails {
     /**
      * The user full name.
      */
+    @Length(min = 3, message = "The full name length must be greater than 3")
+    @Length(max = 50, message = "The full name length must be less than 50")
+    // Each word must be capitalized
+    @Pattern(regexp = "^[A-Z][a-z]+(?: [A-Z][a-z]+)*$",
+            message = "Please provide the correct full name")
     @NotBlank(message = "The field cannot be empty")
     @Column(name = "full_name")
     private String fullName;
@@ -44,16 +51,25 @@ public class User extends AbstractEntity implements UserDetails {
      */
     @NotBlank(message = "The field cannot be empty")
     @Column(name = "login", unique = true)
-    //TODO: Add exception if username is already taken
+    /**
+     * The user unique login.
+     */
+    @Length(min = 3, message = "The login length must be greater than 3")
+    @Length(max = 20, message = "The login length must be less than 20")
+    /*
+     * The login must consist only of letters and digits.
+     */
+    @Pattern(regexp = "^[A-Za-z0-9]*$",
+            message = "Please provide login consisting only of letters and numbers")
     private String username;
 
     /**
-     * The password which is required to log in.
+     * The password which is required to log in. Stored in
+     * encoded format.
      */
     @NotBlank(message = "The field cannot be empty")
-    @JsonIgnore
-    @Column(name = "password", unique = true)
-    //TODO: Add exception if password is already taken
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "password")
     private String password;
 
     /**
@@ -72,6 +88,7 @@ public class User extends AbstractEntity implements UserDetails {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
+    @JsonIgnore
     private Set<Role> authorities;
 
     /**

@@ -11,6 +11,7 @@ import ru.kotb.accounting_system.dao.IUserDAO;
 import ru.kotb.accounting_system.dto.RegistrationDTO;
 import ru.kotb.accounting_system.entity.Role;
 import ru.kotb.accounting_system.entity.User;
+import ru.kotb.accounting_system.exception_handling.DuplicateUsernameException;
 import ru.kotb.accounting_system.service.IAuthenticationService;
 
 import javax.validation.Valid;
@@ -66,6 +67,8 @@ public class AuthenticationService implements IAuthenticationService {
      */
     @Transactional
     public User registerUser(@Valid RegistrationDTO registrationDTO) {
+        if (userDAO.findByUsername(registrationDTO.getUsername()).isPresent())
+            throw new DuplicateUsernameException("This username is already taken");
 
         Role userRole = roleDAO.findByAuthority("USER").get();
         Set<Role> authorities = new HashSet<>();
