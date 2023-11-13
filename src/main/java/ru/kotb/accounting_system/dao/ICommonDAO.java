@@ -1,4 +1,4 @@
-package ru.kotb.accounting_system.service;
+package ru.kotb.accounting_system.dao;
 
 import ru.kotb.accounting_system.entity.AbstractEntity;
 
@@ -6,20 +6,28 @@ import java.util.List;
 
 
 /**
- * The generic interface that provides working with the specified
- * entity.
+ * The generic DAO interface that describes standard CRUD operations.
+ *
+ * @param <E> the entity class that the DAO works with
  */
-public interface CommonService<E extends AbstractEntity> {
+public interface ICommonDAO<E extends AbstractEntity> {
+
+    /**
+     * Sets the entity.
+     *
+     * @param eClass class of the entity
+     */
+    void setClass(Class<E> eClass);
 
     /**
      * Returns list of all entities in the table.
      *
-     * @return list of all entities in the table
+     * @return list of all entities in the table.
      */
     List<E> getAll();
 
     /**
-     * Adds a new entity to the table or updates the existing.
+     * Adds a new entity to the table or update the existing.
      *
      * @param entity new entity
      */

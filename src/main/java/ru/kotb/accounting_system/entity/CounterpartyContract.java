@@ -1,5 +1,6 @@
 package ru.kotb.accounting_system.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -22,70 +23,17 @@ import java.sql.Date;
  * The class that describes a contract with a counterparty company.
  */
 @Data
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "organisation_contracts")
-public class CounterpartyContract extends AbstractEntity {
-
-    /**
-     * The contract name.
-     */
-    @NotBlank(message = "The field cannot be empty")
-    @Length(max=100, message = "The maximum field length is limited to 100 characters")
-    @Column(name = "name")
-    private String name;
-
-    /**
-     * The type of the contract.
-     */
-    @NotNull(message = "The field cannot be empty")
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "contract_type_id")
-    private ContractType contractType;
+public class CounterpartyContract extends AbstractContract {
 
     /**
      * The counterparty with which the contract was concluded.
      */
     @NotNull(message = "The field cannot be empty")
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "organisation_id")
     private Organisation organisation;
-
-    /**
-     * The contract amount.
-     */
-    @NotNull(message = "The field cannot be empty")
-    @PositiveOrZero(message = "The value cannot be below zero")
-    @Column(name = "amount")
-    private int amount;
-
-    /**
-     * Expected date when does the contract enter into force.
-     */
-    @NotNull(message = "The field cannot be empty")
-    @Column(name = "planned_start_date")
-    @FutureOrPresent
-    private Date plannedStartDate;
-
-    /**
-     * Expected date when does the contract end.
-     */
-    @NotNull(message = "The field cannot be empty")
-    @Column(name = "planned_end_date")
-    @FutureOrPresent
-    private Date plannedEndDate;
-
-    /**
-     * Actual date when does the contract enter into force.
-     */
-    @Column(name = "actual_start_date")
-    @FutureOrPresent
-    private Date actualStartDate;
-
-    /**
-     * Actual date when does the contract end.
-     */
-    @Column(name = "actual_end_date")
-    @FutureOrPresent
-    private Date actualEndDate;
 }

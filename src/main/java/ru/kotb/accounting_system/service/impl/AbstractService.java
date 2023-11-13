@@ -1,7 +1,7 @@
 package ru.kotb.accounting_system.service.impl;
 
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.CommonDAO;
+import ru.kotb.accounting_system.dao.ICommonDAO;
 import ru.kotb.accounting_system.entity.AbstractEntity;
 import ru.kotb.accounting_system.service.CommonService;
 
@@ -18,7 +18,8 @@ import java.util.List;
  * @param <E> the class of the entity
  * @param <D> the class of the DAO
  */
-public abstract class AbstractService<E extends AbstractEntity, D extends CommonDAO<E>> implements CommonService<E> {
+public abstract class AbstractService<E extends AbstractEntity,
+        D extends ICommonDAO<E>> implements CommonService<E> {
 
     /**
      * The DAO object for getting access to the specified table.
@@ -52,8 +53,8 @@ public abstract class AbstractService<E extends AbstractEntity, D extends Common
      */
     @Override
     @Transactional
-    public void saveOrUpdate(E entity) {
-        entityDAO.saveOrUpdate(entity);
+    public E saveOrUpdate(E entity) {
+        return entityDAO.saveOrUpdate(entity);
     }
 
     /**

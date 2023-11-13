@@ -1,5 +1,6 @@
 package ru.kotb.accounting_system.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -18,8 +19,9 @@ import java.sql.Date;
  * The class that describes the contract stage.
  */
 @Data
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "contract_stages")
 public class ContractStage extends AbstractEntity {
 

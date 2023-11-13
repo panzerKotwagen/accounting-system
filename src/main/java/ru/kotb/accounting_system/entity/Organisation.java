@@ -15,8 +15,9 @@ import javax.validation.constraints.Pattern;
  * The class that describes the contracting company.
  */
 @Data
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "organisations")
 public class Organisation extends AbstractEntity {
 

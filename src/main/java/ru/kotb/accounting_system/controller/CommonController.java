@@ -1,5 +1,8 @@
 package ru.kotb.accounting_system.controller;
 
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.kotb.accounting_system.entity.AbstractEntity;
-
-import java.util.List;
 
 
 /**
@@ -24,7 +25,7 @@ public interface CommonController<E extends AbstractEntity> {
      * @return JSON array with all entities in the table
      */
     @GetMapping
-    List<E> showAll();
+    CollectionModel<EntityModel<E>> all();
 
     /**
      * Returns a JSON object with description of the specified entity.
@@ -33,7 +34,7 @@ public interface CommonController<E extends AbstractEntity> {
      * @return the JSON object with the specified entity
      */
     @GetMapping("/{id}")
-    E get(@PathVariable("id") int entityId);
+    EntityModel<E> get(@PathVariable("id") int entityId);
 
     /**
      * Saves the entity into the table. The request body must have
@@ -43,7 +44,7 @@ public interface CommonController<E extends AbstractEntity> {
      * @return saved object
      */
     @PostMapping
-    E add(@RequestBody E entity);
+    ResponseEntity<?> add(@RequestBody E entity);
 
     /**
      * Updates the existing entity in the table. The request
@@ -54,7 +55,7 @@ public interface CommonController<E extends AbstractEntity> {
      * @return saved object
      */
     @PutMapping
-    E update(@RequestBody E entity);
+    ResponseEntity<?> update(@RequestBody E entity);
 
     /**
      * Deletes the entity with the specified ID and return the
@@ -64,5 +65,5 @@ public interface CommonController<E extends AbstractEntity> {
      * @return operation status message
      */
     @DeleteMapping("/{id}")
-    String delete(@PathVariable("id") int entityId);
+    ResponseEntity<E> delete(@PathVariable("id") int entityId);
 }
