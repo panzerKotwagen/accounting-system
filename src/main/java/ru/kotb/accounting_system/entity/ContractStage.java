@@ -5,9 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -24,6 +22,14 @@ import java.sql.Date;
 @AllArgsConstructor
 @Table(name = "contract_stages")
 public class ContractStage extends AbstractEntity {
+
+    /**
+     * The contract that the stage is associated with.
+     */
+    @ManyToOne()
+    @JoinColumn(name = "contract_id")
+    @NotNull
+    private Contract contract;
 
     /**
      * The contract stage name.
