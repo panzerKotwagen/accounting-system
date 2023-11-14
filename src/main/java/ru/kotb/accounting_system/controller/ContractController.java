@@ -83,7 +83,7 @@ public class ContractController
      * @return list of all stages of the contract
      */
     @GetMapping("/{id}/stages")
-    public CollectionModel<EntityModel<ContractStage>> showAllContractStages(int contractId) {
+    public CollectionModel<EntityModel<ContractStage>> allStages(@PathVariable("id") int contractId) {
         return stageAssembler.toCollectionModel(service.getAllStages(contractId));
     }
 
@@ -96,7 +96,7 @@ public class ContractController
      */
     @GetMapping("/{id}/counterparty-contracts")
     public CollectionModel<EntityModel<CounterpartyContract>>
-    showAllOrganisationContracts(int contractId) {
+    allCounterpartyContracts(@PathVariable("id") int contractId) {
 
         return counterpartyAssembler.toCollectionModel(
                 service.getAllOrganisationContracts(contractId));
@@ -132,6 +132,7 @@ public class ContractController
     @GetMapping("{id}/stages/report/download")
     public ResponseEntity<Resource> downloadStagesReport(
             @PathVariable("id") int contractId) {
+
         String filename = "contract_stages.xlsx";
         InputStreamResource file = new InputStreamResource(service
                 .getStagesReport(contractId));
