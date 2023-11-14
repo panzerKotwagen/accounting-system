@@ -1,5 +1,6 @@
 package ru.kotb.accounting_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class ContractStage extends AbstractEntity {
     @ManyToOne()
     @JoinColumn(name = "contract_id")
     @NotNull
+    @JsonIgnore
     private Contract contract;
 
     /**

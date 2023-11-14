@@ -167,6 +167,7 @@ public class ContractController
                     + contractId + " in the database.");
         }
 
+        stage.setContract(contract);
         contract.getContractStages().add(stage);
         return stageController.add(stage);
     }
@@ -189,6 +190,7 @@ public class ContractController
                     + contractId + " in the database.");
         }
 
+        stage.setContract(contract);
         return stageController.update(stage);
     }
 
@@ -214,6 +216,7 @@ public class ContractController
         }
 
         contract.getCounterpartyContracts().add(counterpartyContract);
+        counterpartyContract.setContract(contract);
         return counterpartyContractController.add(counterpartyContract);
     }
 
@@ -238,6 +241,7 @@ public class ContractController
                     + contractId + " in the database.");
         }
 
+        counterpartyContract.setContract(contract);
         return counterpartyContractController.update(counterpartyContract);
     }
 }
