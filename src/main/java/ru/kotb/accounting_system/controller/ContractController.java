@@ -8,15 +8,12 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.kotb.accounting_system.dto.DatePeriodDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
+import ru.kotb.accounting_system.exception_handling.NoSuchEntityException;
 import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 import ru.kotb.accounting_system.model_assembler.ContractModelAssembler;
 import ru.kotb.accounting_system.model_assembler.ContractStageModelAssembler;
@@ -36,12 +33,15 @@ public class ContractController
 
     private final CommonModelAssembler<CounterpartyContract> counterpartyAssembler;
 
+    private final ContractStageController stageController;
+    private final CounterpartyContractController counterpartyContractController;
+
     /**
      * Constructs the controller and links it with the beans.
      *
-     * @param service the contract service bean
-     * @param assembler the contract assembler bean
-     * @param stageAssembler the stage assembler bean
+     * @param service               the contract service bean
+     * @param assembler             the contract assembler bean
+     * @param stageAssembler        the stage assembler bean
      * @param counterpartyAssembler the counterparty assembler bean
      */
     @Autowired
@@ -49,11 +49,15 @@ public class ContractController
             IContractService service,
             ContractModelAssembler assembler,
             ContractStageModelAssembler stageAssembler,
-            CounterpartyContractModelAssembler counterpartyAssembler) {
+            CounterpartyContractModelAssembler counterpartyAssembler,
+            ContractStageController stageController,
+            CounterpartyContractController counterpartyContractController) {
 
         super(service, assembler);
         this.stageAssembler = stageAssembler;
         this.counterpartyAssembler = counterpartyAssembler;
+        this.stageController = stageController;
+        this.counterpartyContractController = counterpartyContractController;
     }
 
 
@@ -143,5 +147,97 @@ public class ContractController
                         "attachment; filename=" + filename)
                 .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
                 .body(file);
+    }
+
+    /**
+     * Adds a stage to the contract with specified ID. The request
+     * body must have got the JSON object with the data of the new stage.
+     *
+     * @param contractId id of the contract
+     * @param stage      the {@code ContractStage} entity
+     * @return HTTP 201 response with added stage
+     */
+    @PostMapping("/{id}/stages")
+    public ResponseEntity<?> addStage(
+            @PathVariable("id") int contractId, @RequestBody ContractStage stage) {
+        Contract contract = service.get(contractId);
+
+        if (contract == null) {
+            throw new NoSuchEntityException("There is no contract with ID = "
+                    + contractId + " in the database.");
+        }
+
+        contract.getContractStages().add(stage);
+        return stageController.add(stage);
+    }
+
+    /**
+     * Updates the stage to the contract with specified ID. The request
+     * body must have got the JSON object with the data of the existed stage.
+     *
+     * @param contractId id of the contract
+     * @param stage      the {@code ContractStage} entity
+     * @return HTTP 201 response with updated stage
+     */
+    @PutMapping("/{id}/stages")
+    public ResponseEntity<?> updateStage(
+            @PathVariable("id") int contractId, @RequestBody ContractStage stage) {
+        Contract contract = service.get(contractId);
+
+        if (contract == null) {
+            throw new NoSuchEntityException("There is no contract with ID = "
+                    + contractId + " in the database.");
+        }
+
+        return stageController.update(stage);
+    }
+
+    /**
+     * Adds a counterparty contract to the contract with specified ID.
+     * The request body must have got the JSON object with the data of
+     * the new counterparty contract.
+     *
+     * @param contractId           id of the contract
+     * @param counterpartyContract the {@code CounterpartyContract} entity
+     * @return HTTP 201 response with added counterparty contract
+     */
+    @PostMapping("/{id}/counterparty-contracts")
+    public ResponseEntity<?> addCounterparty(
+            @PathVariable("id") int contractId,
+            @RequestBody CounterpartyContract counterpartyContract) {
+
+        Contract contract = service.get(contractId);
+
+        if (contract == null) {
+            throw new NoSuchEntityException("There is no contract with ID = "
+                    + contractId + " in the database.");
+        }
+
+        contract.getCounterpartyContracts().add(counterpartyContract);
+        return counterpartyContractController.add(counterpartyContract);
+    }
+
+    /**
+     * Updates the counterparty contract in the contract with specified ID.
+     * The request body must have got the JSON object with the data of
+     * the existed counterparty contract.
+     *
+     * @param contractId           id of the contract
+     * @param counterpartyContract the {@code CounterpartyContract} entity
+     * @return HTTP 201 response with added counterparty contract
+     */
+    @PutMapping("/{id}/counterparty-contracts")
+    public ResponseEntity<?> updateCounterparty(
+            @PathVariable("id") int contractId,
+            @RequestBody CounterpartyContract counterpartyContract) {
+
+        Contract contract = service.get(contractId);
+
+        if (contract == null) {
+            throw new NoSuchEntityException("There is no contract with ID = "
+                    + contractId + " in the database.");
+        }
+
+        return counterpartyContractController.update(counterpartyContract);
     }
 }
