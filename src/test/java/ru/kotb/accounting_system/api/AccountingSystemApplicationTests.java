@@ -1,4 +1,4 @@
-package ru.kotb.accounting_system;
+package ru.kotb.accounting_system.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
