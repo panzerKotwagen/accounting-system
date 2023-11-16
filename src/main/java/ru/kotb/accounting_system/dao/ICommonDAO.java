@@ -24,14 +24,14 @@ public interface ICommonDAO<E extends AbstractEntity> {
      *
      * @return list of all entities in the table.
      */
-    List<E> getAll();
+    List<E> findAll();
 
     /**
      * Adds a new entity to the table or update the existing.
      *
      * @param entity new entity
      */
-    E saveOrUpdate(E entity);
+    E save(E entity);
 
     /**
      * Returns the entity with the specified ID.
@@ -39,7 +39,7 @@ public interface ICommonDAO<E extends AbstractEntity> {
      * @param entityId the ID of the entity
      * @return the entity with the specified ID
      */
-    E get(int entityId);
+    E findById(int entityId);
 
     /**
      * Deletes the entity with the specified ID in the table.

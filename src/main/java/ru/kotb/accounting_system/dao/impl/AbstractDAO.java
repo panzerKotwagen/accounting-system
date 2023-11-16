@@ -54,7 +54,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> {
      * @return list of all entities in the table
      */
     @SuppressWarnings("unchecked")
-    public List<E> getAll() {
+    public List<E> findAll() {
         Query query = entityManager.createQuery("from " + eClass.getName());
         return query.getResultList();
     }
@@ -65,7 +65,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> {
      * @param entity new entity object
      */
 
-    public E saveOrUpdate(E entity) {
+    public E save(E entity) {
         return entityManager.merge(entity);
     }
 
@@ -76,7 +76,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> {
      * @return the entity object with the specified ID
      */
 
-    public E get(int entityId) {
+    public E findById(int entityId) {
         return entityManager.find(eClass, entityId);
     }
 
@@ -87,6 +87,6 @@ public abstract class AbstractDAO<E extends AbstractEntity> {
      */
 
     public void delete(int entityId) {
-        entityManager.remove(get(entityId));
+        entityManager.remove(findById(entityId));
     }
 }

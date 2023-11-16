@@ -67,7 +67,7 @@ public class ContractService extends AbstractService<Contract, IContractDAO> imp
     @Transactional
     public ByteArrayInputStream getContractsReport() {
 
-        return excelHelper.convertContractsToExcel(entityDAO.getAll());
+        return excelHelper.convertContractsToExcel(entityDAO.findAll());
     }
 
     /**
@@ -78,7 +78,7 @@ public class ContractService extends AbstractService<Contract, IContractDAO> imp
     @Override
     @Transactional
     public ByteArrayInputStream getStagesReport(int contractId) {
-        Contract contract = entityDAO.get(contractId);
+        Contract contract = entityDAO.findById(contractId);
         return excelHelper.convertContractStagesToExcel(
                 contract, contract.getContractStages());
     }
@@ -93,7 +93,7 @@ public class ContractService extends AbstractService<Contract, IContractDAO> imp
     @Override
     @Transactional
     public List<Contract> getForPeriod(Date start, Date end) {
-        List<Contract> contracts = entityDAO.getAll();
+        List<Contract> contracts = entityDAO.findAll();
         contracts.removeIf(n -> (n.getPlannedStartDate().before(start)));
         contracts.removeIf(n -> (n.getPlannedStartDate().after(end)));
         return contracts;

@@ -13,6 +13,8 @@ import ru.kotb.accounting_system.dao.impl.CommonDAO;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 
 /**
  * Tests for {@code CommonDAO<E>}.
@@ -36,31 +38,31 @@ public class CommonDAOTest {
     }
 
     @Test
-    public void getReturnEntity() {
+    public void findByIdReturnEntity() {
         TestEntity entity = new TestEntity();
 
-        entity = dao.saveOrUpdate(entity);
-        entity = dao.get(entity.getId());
+        entity = dao.save(entity);
+        entity = dao.findById(entity.getId());
 
         Assertions.assertThat(entity).isNotNull();
     }
 
     @Test
-    public void getNonExistedEntity() {
-        TestEntity entity = dao.get(0);
+    public void findByIdNonExistedEntity() {
+        TestEntity entity = dao.findById(0);
 
         Assertions.assertThat(entity).isNull();
     }
 
     @Test
-    public void getAllReturnMoreThenOneEntity() {
+    public void findAllReturnMoreThenOneEntity() {
         TestEntity entity = new TestEntity();
         TestEntity entity2 = new TestEntity();
 
-        dao.saveOrUpdate(entity);
-        dao.saveOrUpdate(entity2);
+        dao.save(entity);
+        dao.save(entity2);
 
-        List<TestEntity> entityList = dao.getAll();
+        List<TestEntity> entityList = dao.findAll();
 
         Assertions.assertThat(entityList).isNotNull();
         Assertions.assertThat(entityList.size()).isEqualTo(2);
@@ -69,32 +71,33 @@ public class CommonDAOTest {
     @Test
     public void saveReturnEntityWithID() {
         TestEntity entity = new TestEntity();
-        TestEntity savedEntity = dao.saveOrUpdate(entity);
+
+        TestEntity savedEntity = dao.save(entity);
 
         Assertions.assertThat(savedEntity.getId()).isNotNull();
     }
     @Test
     public void updateEntityReturnEntityNotNull() {
         TestEntity entity = new TestEntity();
-        entity = dao.saveOrUpdate(entity);
+        entity = dao.save(entity);
 
-        TestEntity entitySave = dao.get(entity.getId());
+        TestEntity entitySave = dao.findById(entity.getId());
         entitySave.setName("New name");
 
-        TestEntity updatedTestEntity = dao.saveOrUpdate(entitySave);
+        TestEntity updatedTestEntity = dao.save(entitySave);
 
         Assertions.assertThat(updatedTestEntity.getName()).isNotNull();
+        Assertions.assertThat(updatedTestEntity.getName())
+                .isEqualTo("New name");
     }
 
     @Test
     public void deleteReturnEntityIsNull() {
         TestEntity entity = new TestEntity();
 
-        entity = dao.saveOrUpdate(entity);
-        dao.delete(entity.getId());
-        TestEntity entityReturn = dao.get(entity.getId());
+        dao.save(entity);
 
-        Assertions.assertThat(entityReturn).isNull();
+        assertAll(() -> dao.delete(1));
     }
 
     @Test

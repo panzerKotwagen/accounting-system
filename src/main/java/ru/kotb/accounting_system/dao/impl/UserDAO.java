@@ -1,13 +1,12 @@
 package ru.kotb.accounting_system.dao.impl;
 
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.kotb.accounting_system.dao.IUserDAO;
 import ru.kotb.accounting_system.entity.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.Optional;
 
 
@@ -15,7 +14,6 @@ import java.util.Optional;
  * The implementation of the UserDAO interface.
  */
 @Repository
-//TODO: replace using Hibernate with JPA
 public class UserDAO extends AbstractDAO<User> implements IUserDAO {
 
     /**
@@ -37,12 +35,10 @@ public class UserDAO extends AbstractDAO<User> implements IUserDAO {
      */
     @Override
     public Optional<User> findByUsername(String userLogin) {
-        Session session = entityManager.unwrap(Session.class);
-
-        Query<User> query = session.createQuery("from User " +
+        Query query = entityManager.createQuery("from User " +
                 "where username = :userLogin", User.class);
         query.setParameter("userLogin", userLogin);
 
-        return Optional.ofNullable(query.uniqueResult());
+        return query.getResultList().stream().findFirst();
     }
 }

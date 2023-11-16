@@ -43,7 +43,7 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public List<E> getAll() {
-        return entityDAO.getAll();
+        return entityDAO.findAll();
     }
 
     /**
@@ -54,7 +54,7 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public E saveOrUpdate(E entity) {
-        return entityDAO.saveOrUpdate(entity);
+        return entityDAO.save(entity);
     }
 
     /**
@@ -66,7 +66,7 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public E get(int entityId) {
-        return entityDAO.get(entityId);
+        return entityDAO.findById(entityId);
     }
 
     /**
