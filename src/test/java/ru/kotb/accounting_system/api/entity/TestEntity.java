@@ -1,4 +1,4 @@
-package ru.kotb.accounting_system.api.repository;
+package ru.kotb.accounting_system.api.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

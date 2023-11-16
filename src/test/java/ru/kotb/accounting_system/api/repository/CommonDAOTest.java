@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kotb.accounting_system.api.entity.TestEntity;
 import ru.kotb.accounting_system.dao.impl.CommonDAO;
 
 import java.util.List;
@@ -34,11 +36,20 @@ public class CommonDAOTest {
     }
 
     @Test
-    public void saveReturnEntityWithID() {
+    public void getReturnEntity() {
         TestEntity entity = new TestEntity();
-        TestEntity savedEntity = dao.saveOrUpdate(entity);
 
-        Assertions.assertThat(savedEntity.getId()).isNotNull();
+        entity = dao.saveOrUpdate(entity);
+        entity = dao.get(entity.getId());
+
+        Assertions.assertThat(entity).isNotNull();
+    }
+
+    @Test
+    public void getNonExistedEntity() {
+        TestEntity entity = dao.get(0);
+
+        Assertions.assertThat(entity).isNull();
     }
 
     @Test
@@ -55,6 +66,13 @@ public class CommonDAOTest {
         Assertions.assertThat(entityList.size()).isEqualTo(2);
     }
 
+    @Test
+    public void saveReturnEntityWithID() {
+        TestEntity entity = new TestEntity();
+        TestEntity savedEntity = dao.saveOrUpdate(entity);
+
+        Assertions.assertThat(savedEntity.getId()).isNotNull();
+    }
     @Test
     public void updateEntityReturnEntityNotNull() {
         TestEntity entity = new TestEntity();
@@ -77,5 +95,12 @@ public class CommonDAOTest {
         TestEntity entityReturn = dao.get(entity.getId());
 
         Assertions.assertThat(entityReturn).isNull();
+    }
+
+    @Test
+    public void deleteNonExistedEntity() {
+        org.junit.jupiter.api.Assertions.assertThrows(
+                InvalidDataAccessApiUsageException.class,
+                () -> dao.delete(-100));
     }
 }
