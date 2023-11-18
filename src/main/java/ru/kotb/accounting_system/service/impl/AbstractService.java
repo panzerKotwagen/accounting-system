@@ -3,9 +3,11 @@ package ru.kotb.accounting_system.service.impl;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kotb.accounting_system.dao.AbstractDAO;
 import ru.kotb.accounting_system.entity.AbstractEntity;
+import ru.kotb.accounting_system.exception_handling.NoSuchEntityException;
 import ru.kotb.accounting_system.service.CommonService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 /**
@@ -66,7 +68,9 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public E get(int entityId) {
-        return entityDAO.findById(entityId).get();
+        return entityDAO.findById(entityId).orElseThrow(
+                () -> new NoSuchEntityException("There is no entity with ID = "
+                + entityId + " in the database."));
     }
 
     /**
@@ -77,6 +81,11 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public void delete(int entityId) {
-        entityDAO.delete(entityId);
+        try {
+            entityDAO.delete(entityId);
+        } catch (NoSuchElementException e) {
+            throw new NoSuchEntityException("There is no entity with ID = "
+                    + entityId + " in the database.");
+        }
     }
 }

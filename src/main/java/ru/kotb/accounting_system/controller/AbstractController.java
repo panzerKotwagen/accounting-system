@@ -62,13 +62,7 @@ public abstract class AbstractController<E extends AbstractEntity,
      */
     @Override
     public EntityModel<E> get(@PathVariable("id") int entityId) {
-        E entity = service.get(entityId);
-        if (entity == null) {
-            throw new NoSuchEntityException("There is no entity with ID = "
-                    + entityId + " in the database.");
-        } else {
-            return assembler.toModel(entity);
-        }
+        return assembler.toModel(service.get(entityId));
     }
 
     /**
@@ -98,17 +92,13 @@ public abstract class AbstractController<E extends AbstractEntity,
      */
     @Override
     public ResponseEntity<?> update(@RequestBody E entity) {
-        if (service.get(entity.getId()) == null) {
-            throw new NoSuchEntityException("There is no entity with ID = "
-                    + entity.getId() + " in the database.");
-        } else {
-            EntityModel<E> entityModel = assembler
-                    .toModel(service.saveOrUpdate(entity));
+        EntityModel<E> entityModel = assembler
+                .toModel(service.saveOrUpdate(entity));
 
-            return ResponseEntity
-                    .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                    .body(entityModel);
-        }
+        return ResponseEntity
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(entityModel);
+
     }
 
     /**
@@ -120,13 +110,7 @@ public abstract class AbstractController<E extends AbstractEntity,
      */
     @Override
     public ResponseEntity<E> delete(@PathVariable("id") int entityId) {
-        E entity = service.get(entityId);
-        if (entity == null) {
-            throw new NoSuchEntityException("There is no entity with ID = "
-                    + entityId + " in the database.");
-        } else {
-            service.delete(entityId);
-            return ResponseEntity.noContent().build();
-        }
+        service.delete(entityId);
+        return ResponseEntity.noContent().build();
     }
 }
