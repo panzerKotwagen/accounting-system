@@ -67,7 +67,7 @@ public abstract class AbstractService<E extends AbstractEntity,
      */
     @Override
     @Transactional
-    public E get(int entityId) {
+    public E getById(int entityId) {
         return entityDAO.findById(entityId).orElseThrow(
                 () -> new NoSuchEntityException("There is no entity with ID = "
                 + entityId + " in the database."));
@@ -80,9 +80,9 @@ public abstract class AbstractService<E extends AbstractEntity,
      */
     @Override
     @Transactional
-    public void delete(int entityId) {
+    public void deleteById(int entityId) {
         try {
-            entityDAO.delete(entityId);
+            entityDAO.deleteById(entityId);
         } catch (NoSuchElementException e) {
             throw new NoSuchEntityException("There is no entity with ID = "
                     + entityId + " in the database.");

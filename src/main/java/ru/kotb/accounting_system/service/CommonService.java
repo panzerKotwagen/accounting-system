@@ -31,12 +31,12 @@ public interface CommonService<E extends AbstractEntity> {
      * @param entityId the ID of the entity
      * @return the entity with the specified ID
      */
-    E get(int entityId);
+    E getById(int entityId);
 
     /**
      * Deletes the entity with the specified ID in the table.
      *
      * @param entityId the ID of the entity
      */
-    void delete(int entityId);
+    void deleteById(int entityId);
 }

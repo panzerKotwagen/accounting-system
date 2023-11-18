@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -88,7 +87,7 @@ public abstract class AbstractDAO<E extends AbstractEntity> {
      * @param entityId the ID of the entity
      */
 
-    public void delete(int entityId) {
+    public void deleteById(int entityId) {
         entityManager.remove(findById(entityId).get());
     }
 }

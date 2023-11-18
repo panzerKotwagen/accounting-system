@@ -70,6 +70,23 @@ public class CommonDAOTest {
     }
 
     @Test
+    public void saveTestEntityTwoTimesReturnsDifferentEntities() {
+        TestEntity entity = new TestEntity("Test");
+
+        TestEntity savedTestEntity1 = dao.save(entity);
+        TestEntity savedTestEntity2 = dao.save(entity);
+
+        Assertions.assertThat(savedTestEntity1).isNotEqualTo(savedTestEntity2);
+    }
+
+    @Test
+    public void findAllReturnEmptyList() {
+        List<TestEntity> entityList = dao.findAll();
+
+        Assertions.assertThat(entityList.size()).isEqualTo(0);
+    }
+
+    @Test
     public void saveReturnEntityWithID() {
         TestEntity entity = new TestEntity();
 
@@ -77,6 +94,7 @@ public class CommonDAOTest {
 
         Assertions.assertThat(savedEntity.getId()).isNotNull();
     }
+
     @Test
     public void updateEntityReturnEntityNotNull() {
         TestEntity entity = new TestEntity();
@@ -88,6 +106,8 @@ public class CommonDAOTest {
         TestEntity updatedTestEntity = dao.save(entitySave);
 
         Assertions.assertThat(updatedTestEntity.getName()).isNotNull();
+        Assertions.assertThat(updatedTestEntity.getId())
+                .isEqualTo(entitySave.getId());
         Assertions.assertThat(updatedTestEntity.getName())
                 .isEqualTo("New name");
     }
@@ -96,15 +116,15 @@ public class CommonDAOTest {
     public void deleteReturnEntityIsNull() {
         TestEntity entity = new TestEntity();
 
-        dao.save(entity);
+        TestEntity savedEntity = dao.save(entity);
 
-        assertAll(() -> dao.delete(1));
+        assertAll(() -> dao.deleteById(savedEntity.getId()));
     }
 
     @Test
     public void deleteNonExistedEntity() {
         org.junit.jupiter.api.Assertions.assertThrows(
                 NoSuchElementException.class,
-                () -> dao.delete(-100));
+                () -> dao.deleteById(-100));
     }
 }

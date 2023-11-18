@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.kotb.accounting_system.entity.AbstractEntity;
-import ru.kotb.accounting_system.exception_handling.NoSuchEntityException;
 import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 import ru.kotb.accounting_system.service.CommonService;
 
@@ -62,7 +61,7 @@ public abstract class AbstractController<E extends AbstractEntity,
      */
     @Override
     public EntityModel<E> get(@PathVariable("id") int entityId) {
-        return assembler.toModel(service.get(entityId));
+        return assembler.toModel(service.getById(entityId));
     }
 
     /**
@@ -110,7 +109,7 @@ public abstract class AbstractController<E extends AbstractEntity,
      */
     @Override
     public ResponseEntity<E> delete(@PathVariable("id") int entityId) {
-        service.delete(entityId);
+        service.deleteById(entityId);
         return ResponseEntity.noContent().build();
     }
 }

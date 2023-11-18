@@ -160,7 +160,7 @@ public class ContractController
     @PostMapping("/{id}/stages")
     public ResponseEntity<?> addStage(
             @PathVariable("id") int contractId, @RequestBody ContractStage stage) {
-        Contract contract = service.get(contractId);
+        Contract contract = service.getById(contractId);
 
         if (contract == null) {
             throw new NoSuchEntityException("There is no contract with ID = "
@@ -183,7 +183,7 @@ public class ContractController
     @PutMapping("/{id}/stages")
     public ResponseEntity<?> updateStage(
             @PathVariable("id") int contractId, @RequestBody ContractStage stage) {
-        Contract contract = service.get(contractId);
+        Contract contract = service.getById(contractId);
 
         if (contract == null) {
             throw new NoSuchEntityException("There is no contract with ID = "
@@ -208,7 +208,7 @@ public class ContractController
             @PathVariable("id") int contractId,
             @RequestBody CounterpartyContract counterpartyContract) {
 
-        Contract contract = service.get(contractId);
+        Contract contract = service.getById(contractId);
 
         if (contract == null) {
             throw new NoSuchEntityException("There is no contract with ID = "
@@ -234,7 +234,7 @@ public class ContractController
             @PathVariable("id") int contractId,
             @RequestBody CounterpartyContract counterpartyContract) {
 
-        Contract contract = service.get(contractId);
+        Contract contract = service.getById(contractId);
 
         if (contract == null) {
             throw new NoSuchEntityException("There is no contract with ID = "
