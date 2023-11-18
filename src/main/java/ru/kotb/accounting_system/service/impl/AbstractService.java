@@ -66,7 +66,7 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public E get(int entityId) {
-        return entityDAO.findById(entityId);
+        return entityDAO.findById(entityId).get();
     }
 
     /**

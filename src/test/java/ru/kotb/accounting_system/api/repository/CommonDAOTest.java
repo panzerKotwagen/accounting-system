@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kotb.accounting_system.api.entity.TestEntity;
 import ru.kotb.accounting_system.dao.CommonDAO;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -42,16 +43,16 @@ public class CommonDAOTest {
         TestEntity entity = new TestEntity();
 
         entity = dao.save(entity);
-        entity = dao.findById(entity.getId());
+        entity = dao.findById(entity.getId()).get();
 
         Assertions.assertThat(entity).isNotNull();
     }
 
     @Test
     public void findByIdNonExistedEntity() {
-        TestEntity entity = dao.findById(0);
+        Optional<TestEntity> entity = dao.findById(0);
 
-        Assertions.assertThat(entity).isNull();
+        Assertions.assertThat(entity).isEmpty();
     }
 
     @Test
@@ -81,7 +82,7 @@ public class CommonDAOTest {
         TestEntity entity = new TestEntity();
         entity = dao.save(entity);
 
-        TestEntity entitySave = dao.findById(entity.getId());
+        TestEntity entitySave = dao.findById(entity.getId()).get();
         entitySave.setName("New name");
 
         TestEntity updatedTestEntity = dao.save(entitySave);
@@ -103,7 +104,7 @@ public class CommonDAOTest {
     @Test
     public void deleteNonExistedEntity() {
         org.junit.jupiter.api.Assertions.assertThrows(
-                InvalidDataAccessApiUsageException.class,
+                NoSuchElementException.class,
                 () -> dao.delete(-100));
     }
 }

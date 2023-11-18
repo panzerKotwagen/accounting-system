@@ -79,7 +79,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
     @Override
     @Transactional
     public ByteArrayInputStream getStagesReport(int contractId) {
-        Contract contract = entityDAO.findById(contractId);
+        Contract contract = entityDAO.findById(contractId).get();
         return excelHelper.convertContractStagesToExcel(
                 contract, contract.getContractStages());
     }
