@@ -12,7 +12,6 @@ import ru.kotb.accounting_system.dto.RegistrationDTO;
 import ru.kotb.accounting_system.entity.Role;
 import ru.kotb.accounting_system.entity.User;
 import ru.kotb.accounting_system.exception_handling.DuplicateUsernameException;
-import ru.kotb.accounting_system.service.AuthenticationService;
 
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -26,7 +25,7 @@ import java.util.Set;
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
 @Validated
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class AuthenticationService {
 
     /**
      * The DAO object for getting access to the "users" table.
@@ -51,7 +50,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      * @param passwordEncoder the password encoder
      */
     @Autowired
-    public AuthenticationServiceImpl(UserDAO userDAO, RoleDAO roleDAO, PasswordEncoder passwordEncoder) {
+    public AuthenticationService(UserDAO userDAO, RoleDAO roleDAO, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
         this.roleDAO = roleDAO;
         this.passwordEncoder = passwordEncoder;
