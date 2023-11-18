@@ -1,7 +1,7 @@
 package ru.kotb.accounting_system.service.impl;
 
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.ICommonDAO;
+import ru.kotb.accounting_system.dao.AbstractDAO;
 import ru.kotb.accounting_system.entity.AbstractEntity;
 import ru.kotb.accounting_system.service.CommonService;
 
@@ -19,7 +19,7 @@ import java.util.List;
  * @param <D> the class of the DAO
  */
 public abstract class AbstractService<E extends AbstractEntity,
-        D extends ICommonDAO<E>> implements CommonService<E> {
+        D extends AbstractDAO<E>> implements CommonService<E> {
 
     /**
      * The DAO object for getting access to the specified table.

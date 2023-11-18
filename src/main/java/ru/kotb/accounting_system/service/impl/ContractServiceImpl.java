@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.IContractDAO;
+import ru.kotb.accounting_system.dao.ContractDAO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
 import ru.kotb.accounting_system.excel_helper.ExcelHelper;
-import ru.kotb.accounting_system.service.IContractService;
+import ru.kotb.accounting_system.service.ContractService;
 
 import java.io.ByteArrayInputStream;
 import java.sql.Date;
@@ -21,12 +21,13 @@ import java.util.List;
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
-public class ContractService extends AbstractService<Contract, IContractDAO> implements IContractService {
+public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
+        implements ContractService {
 
     private final ExcelHelper excelHelper;
 
     @Autowired
-    public ContractService(IContractDAO contractDAO, ExcelHelper excelHelper) {
+    public ContractServiceImpl(ContractDAO contractDAO, ExcelHelper excelHelper) {
         super(contractDAO);
         contractDAO.setClass(Contract.class);
         this.excelHelper = excelHelper;

@@ -18,7 +18,7 @@ import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 import ru.kotb.accounting_system.model_assembler.ContractModelAssembler;
 import ru.kotb.accounting_system.model_assembler.ContractStageModelAssembler;
 import ru.kotb.accounting_system.model_assembler.CounterpartyContractModelAssembler;
-import ru.kotb.accounting_system.service.IContractService;
+import ru.kotb.accounting_system.service.ContractService;
 
 
 /**
@@ -27,7 +27,7 @@ import ru.kotb.accounting_system.service.IContractService;
 @RestController
 @RequestMapping("/api/contracts")
 public class ContractController
-        extends AbstractController<Contract, IContractService> {
+        extends AbstractController<Contract, ContractService> {
 
     private final CommonModelAssembler<ContractStage> stageAssembler;
 
@@ -46,7 +46,7 @@ public class ContractController
      */
     @Autowired
     public ContractController(
-            IContractService service,
+            ContractService service,
             ContractModelAssembler assembler,
             ContractStageModelAssembler stageAssembler,
             CounterpartyContractModelAssembler counterpartyAssembler,

@@ -1,4 +1,4 @@
-package ru.kotb.accounting_system.dao.impl;
+package ru.kotb.accounting_system.dao;
 
 import ru.kotb.accounting_system.entity.AbstractEntity;
 

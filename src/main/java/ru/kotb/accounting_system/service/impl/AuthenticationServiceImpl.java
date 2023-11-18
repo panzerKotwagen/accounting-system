@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import ru.kotb.accounting_system.dao.IRoleDAO;
-import ru.kotb.accounting_system.dao.IUserDAO;
+import ru.kotb.accounting_system.dao.RoleDAO;
+import ru.kotb.accounting_system.dao.UserDAO;
 import ru.kotb.accounting_system.dto.RegistrationDTO;
 import ru.kotb.accounting_system.entity.Role;
 import ru.kotb.accounting_system.entity.User;
 import ru.kotb.accounting_system.exception_handling.DuplicateUsernameException;
-import ru.kotb.accounting_system.service.IAuthenticationService;
+import ru.kotb.accounting_system.service.AuthenticationService;
 
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -26,17 +26,17 @@ import java.util.Set;
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
 @Validated
-public class AuthenticationService implements IAuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService {
 
     /**
      * The DAO object for getting access to the "users" table.
      */
-    private final IUserDAO userDAO;
+    private final UserDAO userDAO;
 
     /**
      * The DAO object for getting access to the "roles" table.
      */
-    private final IRoleDAO roleDAO;
+    private final RoleDAO roleDAO;
 
     /**
      * The password encoder.
@@ -51,7 +51,7 @@ public class AuthenticationService implements IAuthenticationService {
      * @param passwordEncoder the password encoder
      */
     @Autowired
-    public AuthenticationService(IUserDAO userDAO, IRoleDAO roleDAO, PasswordEncoder passwordEncoder) {
+    public AuthenticationServiceImpl(UserDAO userDAO, RoleDAO roleDAO, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
         this.roleDAO = roleDAO;
         this.passwordEncoder = passwordEncoder;

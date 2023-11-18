@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.IUserDAO;
+import ru.kotb.accounting_system.dao.UserDAO;
 import ru.kotb.accounting_system.entity.User;
 import ru.kotb.accounting_system.exception_handling.DuplicateUsernameException;
 import ru.kotb.accounting_system.service.CommonService;
@@ -19,7 +19,7 @@ import ru.kotb.accounting_system.service.CommonService;
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
-public class UserService extends AbstractService<User, IUserDAO>
+public class UserService extends AbstractService<User, UserDAO>
         implements CommonService<User>, UserDetailsService {
 
     /**
@@ -28,7 +28,7 @@ public class UserService extends AbstractService<User, IUserDAO>
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(IUserDAO userDAO, PasswordEncoder passwordEncoder) {
+    public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder) {
         super(userDAO);
         userDAO.setClass(User.class);
         this.passwordEncoder = passwordEncoder;
@@ -40,7 +40,8 @@ public class UserService extends AbstractService<User, IUserDAO>
      *
      * @param username the login of the user
      * @return the {@code UserDetails} object
-     * @throws UsernameNotFoundException
+     * @throws UsernameNotFoundException user with this username was
+     *                                   not found
      */
     @Override
     @Transactional

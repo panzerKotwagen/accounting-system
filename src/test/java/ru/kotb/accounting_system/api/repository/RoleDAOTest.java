@@ -7,7 +7,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.impl.RoleDAO;
+import ru.kotb.accounting_system.dao.RoleDAO;
 import ru.kotb.accounting_system.entity.Role;
 
 import java.util.Optional;

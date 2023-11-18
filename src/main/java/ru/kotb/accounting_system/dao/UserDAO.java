@@ -1,8 +1,7 @@
-package ru.kotb.accounting_system.dao.impl;
+package ru.kotb.accounting_system.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.kotb.accounting_system.dao.IUserDAO;
 import ru.kotb.accounting_system.entity.User;
 
 import javax.persistence.EntityManager;
@@ -14,7 +13,7 @@ import java.util.Optional;
  * The implementation of the UserDAO interface.
  */
 @Repository
-public class UserDAO extends AbstractDAO<User> implements IUserDAO {
+public class UserDAO extends AbstractDAO<User> {
 
     /**
      * Creates the component and binds it with the entityManager
@@ -33,7 +32,6 @@ public class UserDAO extends AbstractDAO<User> implements IUserDAO {
      * @param userLogin user login
      * @return the user with the specified login or null
      */
-    @Override
     public Optional<User> findByUsername(String userLogin) {
         Query query = entityManager.createQuery("from User " +
                 "where username = :userLogin", User.class);

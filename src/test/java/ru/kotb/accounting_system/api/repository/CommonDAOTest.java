@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kotb.accounting_system.api.entity.TestEntity;
-import ru.kotb.accounting_system.dao.impl.CommonDAO;
+import ru.kotb.accounting_system.dao.CommonDAO;
 
 import java.util.List;
 

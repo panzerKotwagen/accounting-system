@@ -10,7 +10,7 @@ import javax.validation.Valid;
  * The interface that provides registration and authentication of the
  * users.
  */
-public interface IAuthenticationService {
+public interface AuthenticationService {
 
     /**
      * Accepts the {@code RegistrationDTO} as input, and saves it in

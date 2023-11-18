@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * The interface that provides working with the contracts.
  */
-public interface IContractService extends CommonService<Contract> {
+public interface ContractService extends CommonService<Contract> {
 
     /**
      * Returns all stages of the contract with the specified ID.
