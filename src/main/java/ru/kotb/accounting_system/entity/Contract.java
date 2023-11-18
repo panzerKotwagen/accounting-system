@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,7 +19,6 @@ import java.util.List;
  */
 @Data
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "contracts")
 public class Contract extends AbstractContract {
@@ -36,4 +36,9 @@ public class Contract extends AbstractContract {
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contract")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<CounterpartyContract> counterpartyContracts;
+
+    public Contract() {
+        counterpartyContracts = new ArrayList<>();
+        contractStages = new ArrayList<>();
+    }
 }
