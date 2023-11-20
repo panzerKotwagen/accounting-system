@@ -42,7 +42,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
     @Override
     @Transactional
     public List<ContractStage> getAllStages(int contractId) {
-        return super.entityDAO.getAllStages(contractId);
+        return super.DAO.getAllStages(contractId);
     }
 
     /**
@@ -56,7 +56,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
     @Override
     @Transactional
     public List<CounterpartyContract> getAllOrganisationContracts(int contractId) {
-        return super.entityDAO.getAllOrganisationContracts(contractId);
+        return super.DAO.getAllOrganisationContracts(contractId);
     }
 
     /**
@@ -68,7 +68,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
     @Transactional
     public ByteArrayInputStream getContractsReport() {
 
-        return excelHelper.convertContractsToExcel(entityDAO.findAll());
+        return excelHelper.convertContractsToExcel(DAO.findAll());
     }
 
     /**
@@ -79,7 +79,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
     @Override
     @Transactional
     public ByteArrayInputStream getStagesReport(int contractId) {
-        Contract contract = entityDAO.findById(contractId).get();
+        Contract contract = DAO.findById(contractId).get();
         return excelHelper.convertContractStagesToExcel(
                 contract, contract.getContractStages());
     }
@@ -94,7 +94,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
     @Override
     @Transactional
     public List<Contract> getForPeriod(Date start, Date end) {
-        List<Contract> contracts = entityDAO.findAll();
+        List<Contract> contracts = DAO.findAll();
         contracts.removeIf(n -> (n.getPlannedStartDate().before(start)));
         contracts.removeIf(n -> (n.getPlannedStartDate().after(end)));
         return contracts;

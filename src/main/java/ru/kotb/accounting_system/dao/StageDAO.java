@@ -36,4 +36,16 @@ public class StageDAO extends AbstractDAO<ContractStage> {
 
         return (List<ContractStage>) query.getResultList();
     }
+
+    /**
+     * Deletes the specified stage.
+     *
+     * @param id the ID of the stage
+     */
+    @Override
+    public void deleteById(int id) {
+        ContractStage stage = findById(id).get();
+        stage.getContract().getContractStages().remove(stage);
+        super.deleteById(id);
+    }
 }

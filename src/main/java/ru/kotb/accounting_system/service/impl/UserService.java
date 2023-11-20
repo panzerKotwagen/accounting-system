@@ -48,7 +48,7 @@ public class UserService extends AbstractService<User, UserDAO>
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        return entityDAO.findByUsername(username).orElseThrow(
+        return DAO.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("User is not valid"));
     }
 
@@ -60,7 +60,7 @@ public class UserService extends AbstractService<User, UserDAO>
     @Override
     public User saveOrUpdate(User entity) {
         //TODO: password check when update
-        User user = entityDAO.findByUsername(entity.getUsername())
+        User user = DAO.findByUsername(entity.getUsername())
                 .orElse(null);
 
         if (user != null && entity.getId() != user.getId())

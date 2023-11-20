@@ -24,9 +24,9 @@ public abstract class AbstractService<E extends AbstractEntity,
         D extends AbstractDAO<E>> implements CommonService<E> {
 
     /**
-     * The DAO object for getting access to the specified table.
+     * The repository for getting access to the specified table.
      */
-    protected final D entityDAO;
+    protected final D DAO;
 
     /**
      * Links the specified DAO with the service.
@@ -34,7 +34,7 @@ public abstract class AbstractService<E extends AbstractEntity,
      * @param genericDAOImpl the DAO of the specified entity class
      */
     public AbstractService(D genericDAOImpl) {
-        this.entityDAO = genericDAOImpl;
+        this.DAO = genericDAOImpl;
     }
 
     /**
@@ -45,7 +45,7 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public List<E> getAll() {
-        return entityDAO.findAll();
+        return DAO.findAll();
     }
 
     /**
@@ -56,36 +56,36 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public E saveOrUpdate(E entity) {
-        return entityDAO.save(entity);
+        return DAO.save(entity);
     }
 
     /**
      * Returns the entity with the specified ID.
      *
-     * @param entityId the ID of the entity
+     * @param id the ID of the entity
      * @return the entity with the specified ID
      */
     @Override
     @Transactional
-    public E getById(int entityId) {
-        return entityDAO.findById(entityId).orElseThrow(
+    public E getById(int id) {
+        return DAO.findById(id).orElseThrow(
                 () -> new NoSuchEntityException("There is no entity with ID = "
-                + entityId + " in the database."));
+                + id + " in the database."));
     }
 
     /**
      * Deletes the entity with the specified ID in the table.
      *
-     * @param entityId the ID of the entity
+     * @param id the ID of the entity
      */
     @Override
     @Transactional
-    public void deleteById(int entityId) {
+    public void deleteById(int id) {
         try {
-            entityDAO.deleteById(entityId);
+            DAO.deleteById(id);
         } catch (NoSuchElementException e) {
             throw new NoSuchEntityException("There is no entity with ID = "
-                    + entityId + " in the database.");
+                    + id + " in the database.");
         }
     }
 }
