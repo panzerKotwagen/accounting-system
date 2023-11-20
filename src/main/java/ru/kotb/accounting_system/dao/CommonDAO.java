@@ -10,6 +10,10 @@ import javax.persistence.EntityManager;
 
 
 //TODO: Add comments
+/**
+ * After creating the bean, you must specify the class, otherwise it will not work!!!
+ * @param <E>
+ */
 @Repository
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class CommonDAO<E extends AbstractEntity> extends AbstractDAO<E> {
