@@ -3,7 +3,6 @@ package ru.kotb.accounting_system.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,7 +25,8 @@ public class Contract extends AbstractContract {
     /**
      * The stages of the contract.
      */
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contract")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REMOVE}, mappedBy = "contract")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<ContractStage> contractStages;
 
