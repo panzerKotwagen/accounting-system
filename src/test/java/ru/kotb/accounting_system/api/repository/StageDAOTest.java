@@ -33,6 +33,9 @@ public class StageDAOTest {
         ContractStage stage1 = new ContractStage();
         ContractStage stage2 = new ContractStage();
 
+        stage1.setContract(contract);
+        stage2.setContract(contract);
+
         contract.getContractStages().add(stage1);
         contract.getContractStages().add(stage2);
         contract = contractDAO.save(contract);
