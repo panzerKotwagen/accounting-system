@@ -33,7 +33,7 @@ public class Contract extends AbstractContract {
     /**
      * The contract with the counterparty that included into the contract.
      */
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contract")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "contract", orphanRemoval = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<CounterpartyContract> counterpartyContracts;
 

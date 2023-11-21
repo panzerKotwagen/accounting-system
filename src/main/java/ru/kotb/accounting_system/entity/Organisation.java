@@ -7,11 +7,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Persistent;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
@@ -55,9 +51,9 @@ public class Organisation extends AbstractEntity {
     /**
      * Counterparty contracts that linked with this organisation.
      */
-    @Persistent
     @JsonIgnore
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="organisation_id")
     private List<CounterpartyContract> contracts;
 
     public Organisation() {
