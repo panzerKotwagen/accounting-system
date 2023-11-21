@@ -1,16 +1,3 @@
-insert into accounting_system.users (full_name, login, password, end_date)
-values
-    ('Viktor Yablokov', 'admin', 'password', '2024-02-02'),
-    ('Zaur Tregulov', 'Tregulov', '123Aa456', '2024-1-13'),
-    ('Oleg Ivanov', 'Ivanov', '13245Aa6', '2023-12-01'),
-    ('Nina Sidorova', 'Sidorova', '123426Aa', '2024-02-02');
-
-insert into accounting_system.roles (authority)
-values ('ADMIN'), ('USER');
-
-insert into accounting_system.user_role_junction (user_id, role_id)
-values (1, 1), (2, 2), (3, 2), (4, 2);
-
 insert into accounting_system.contract_types (name)
 values ('Shipment'), ('Purchase'), ('Work');
 
