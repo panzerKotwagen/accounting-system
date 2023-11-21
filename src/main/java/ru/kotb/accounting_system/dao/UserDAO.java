@@ -24,6 +24,7 @@ public class UserDAO extends AbstractDAO<User> {
     @Autowired
     public UserDAO(EntityManager entityManager) {
         super(entityManager);
+        this.setClass(User.class);
     }
 
     /**

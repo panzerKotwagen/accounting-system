@@ -30,7 +30,6 @@ public class UserService extends AbstractService<User, UserDAO>
     @Autowired
     public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder) {
         super(userDAO);
-        userDAO.setClass(User.class);
         this.passwordEncoder = passwordEncoder;
     }
 
