@@ -11,17 +11,11 @@ import java.util.Optional;
 
 
 /**
- * The implementation of the RoleDAO interface.
+ * The DAO to work with the {@code Role} entity.
  */
 @Repository
 public class RoleDAO extends AbstractDAO<Role> {
 
-    /**
-     * Creates the component and binds it with the entityManager
-     * object.
-     *
-     * @param entityManager the entityManager object
-     */
     @Autowired
     public RoleDAO(EntityManager entityManager) {
         super(entityManager);

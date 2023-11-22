@@ -10,17 +10,11 @@ import java.util.Optional;
 
 
 /**
- * The implementation of the UserDAO interface.
+ * The DAO to work with the {@code User} entity.
  */
 @Repository
 public class UserDAO extends AbstractDAO<User> {
 
-    /**
-     * Creates the component and binds it with the entityManager
-     * object.
-     *
-     * @param entityManager the entityManager object
-     */
     @Autowired
     public UserDAO(EntityManager entityManager) {
         super(entityManager);

@@ -8,15 +8,12 @@ import javax.persistence.Query;
 import java.util.List;
 
 
+/**
+ * The DAO to work with the {@code ContractStage} entity.
+ */
 @Repository
 public class StageDAO extends AbstractDAO<ContractStage> {
 
-    /**
-     * Creates the component and binds it with the entityManager
-     * object.
-     *
-     * @param entityManager the EntityManager object
-     */
     public StageDAO(EntityManager entityManager) {
         super(entityManager);
         setClass(ContractStage.class);

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 
 /**
- * The abstract DAO class provides standard CRUD operation witn an
+ * The abstract DAO class provides standard CRUD operation with an
  * entity.
  *
  * @param <E> the entity class that the DAO works with
@@ -43,7 +43,6 @@ public abstract class AbstractDAO<E extends AbstractEntity> {
      *
      * @param eClass class of the entity
      */
-
     public void setClass(Class<E> eClass) {
         this.eClass = eClass;
     }
