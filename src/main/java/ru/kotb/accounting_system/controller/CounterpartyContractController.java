@@ -17,11 +17,6 @@ public class CounterpartyContractController
         extends AbstractController<CounterpartyContract,
         CommonService<CounterpartyContract>> {
 
-    /**
-     * Constructs the controller and links it with the service bean.
-     *
-     * @param service the entity service bean
-     */
     @Autowired
     public CounterpartyContractController(
             CommonService<CounterpartyContract> service,
