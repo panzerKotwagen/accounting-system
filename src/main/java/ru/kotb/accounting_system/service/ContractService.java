@@ -53,5 +53,5 @@ public interface ContractService extends CommonService<Contract> {
      * @param end   the period end date
      * @return contract list
      */
-    List<Contract> getForPeriod(Date start, Date end);
+    List<Contract> getAll(Date start, Date end);
 }

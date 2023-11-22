@@ -9,7 +9,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.kotb.accounting_system.dto.DatePeriodDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
@@ -19,6 +18,9 @@ import ru.kotb.accounting_system.model_assembler.ContractModelAssembler;
 import ru.kotb.accounting_system.model_assembler.ContractStageModelAssembler;
 import ru.kotb.accounting_system.model_assembler.CounterpartyContractModelAssembler;
 import ru.kotb.accounting_system.service.ContractService;
+
+import java.sql.Date;
+import java.util.Optional;
 
 
 /**
@@ -34,6 +36,7 @@ public class ContractController
     private final CommonModelAssembler<CounterpartyContract> counterpartyAssembler;
 
     private final ContractStageController stageController;
+
     private final CounterpartyContractController counterpartyContractController;
 
     /**
@@ -60,23 +63,25 @@ public class ContractController
         this.counterpartyContractController = counterpartyContractController;
     }
 
-
     /**
      * Returns all contracts for the specified period, or just all
      * contracts if it was not specified.
      *
-     * @param periodDTO DTO with start and end date of the period
+     * @param startDate DTO with start and end date of the period
      * @return JSON array with all contracts in the table
      */
-    @GetMapping("/")
+    @GetMapping(params = {"startDate", "endDate"})
     public CollectionModel<EntityModel<Contract>> all(
-            @RequestBody(required = false) DatePeriodDTO periodDTO) {
+            @RequestParam(value = "startDate", required = false) Optional<Date> startDate,
+            @RequestParam(value = "endDate", required = false) Optional<Date> endDate) {
 
-        if (periodDTO == null)
-            return assembler.toCollectionModel(service.getAll());
+        //TODO: exception when date is not valid
+        if (startDate.isPresent() && endDate.isPresent()) {
+            return assembler.toCollectionModel(
+                    service.getAll(startDate.get(), endDate.get()));
+        }
 
-        return assembler.toCollectionModel(
-                service.getForPeriod(periodDTO.getStart(), periodDTO.getEnd()));
+        return assembler.toCollectionModel(service.getAll());
     }
 
     /**
