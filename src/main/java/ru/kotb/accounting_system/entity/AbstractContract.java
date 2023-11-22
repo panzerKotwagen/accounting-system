@@ -1,6 +1,7 @@
 package ru.kotb.accounting_system.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -13,9 +14,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.sql.Date;
 
-@Data
+
+/**
+ * The class that describes common fields of contract.
+ */
+@Getter
+@Setter
 @MappedSuperclass
 public class AbstractContract extends AbstractEntity {
+
     /**
      * The contract name.
      */

@@ -2,8 +2,9 @@ package ru.kotb.accounting_system.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -15,7 +16,8 @@ import javax.validation.constraints.NotNull;
 /**
  * The class that describes a contract with a counterparty company.
  */
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

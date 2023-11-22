@@ -3,7 +3,8 @@ package ru.kotb.accounting_system.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,7 +29,8 @@ import java.util.Set;
  * The entity class that describes the customer, which is linked
  * with the MySQL table "users".
  */
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @Table(name = "users")

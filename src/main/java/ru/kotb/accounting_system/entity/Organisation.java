@@ -3,11 +3,16 @@ package ru.kotb.accounting_system.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.data.annotation.Persistent;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
@@ -17,7 +22,8 @@ import java.util.List;
 /**
  * The class that describes the contracting company.
  */
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @Table(name = "organisations")
