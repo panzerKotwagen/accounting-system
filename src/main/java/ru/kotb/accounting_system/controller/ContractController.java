@@ -75,7 +75,6 @@ public class ContractController
             @RequestParam(value = "startDate", required = false) Optional<Date> startDate,
             @RequestParam(value = "endDate", required = false) Optional<Date> endDate) {
 
-        //TODO: exception when date is not valid
         if (startDate.isPresent() && endDate.isPresent()) {
             return assembler.toCollectionModel(
                     service.getAll(startDate.get(), endDate.get()));
