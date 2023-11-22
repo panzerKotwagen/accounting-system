@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 import ru.kotb.accounting_system.entity.Contract;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.sql.Date;
+import java.util.List;
 
 
 /**
@@ -16,5 +19,16 @@ public class ContractDAO extends AbstractDAO<Contract> {
     @Autowired
     public ContractDAO(EntityManager entityManager) {
         super(entityManager);
+    }
+
+    public List<Contract> findAllWhereDateBetween(Date start, Date end) {
+        Query query = entityManager.createQuery(" FROM Contract " +
+                "WHERE plannedStartDate >= :start" +
+                " and plannedEndDate <= :end", Contract.class);
+
+        query.setParameter("start", start);
+        query.setParameter("end", end);
+
+        return query.getResultList();
     }
 }

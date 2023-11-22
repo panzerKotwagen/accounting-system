@@ -58,11 +58,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
     @Override
     @Transactional
     public List<Contract> getAll(Date start, Date end) {
-        List<Contract> contracts = DAO.findAll();
-        contracts.removeIf(n -> (n.getPlannedStartDate().before(start)));
-        //TODO: fix getting contracts with the end date later than specified
-        contracts.removeIf(n -> (n.getPlannedStartDate().after(end)));
-        return contracts;
+        return DAO.findAllWhereDateBetween(start, end);
     }
 
     /**
