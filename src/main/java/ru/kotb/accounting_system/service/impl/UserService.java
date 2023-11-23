@@ -8,29 +8,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.IUserDAO;
+import org.springframework.validation.annotation.Validated;
+import ru.kotb.accounting_system.dao.UserDAO;
 import ru.kotb.accounting_system.entity.User;
 import ru.kotb.accounting_system.exception_handling.DuplicateUsernameException;
 import ru.kotb.accounting_system.service.CommonService;
 
+import javax.validation.Valid;
+
 
 /**
- * The implementation of the UserService interface.
+ * The service for working with {@code User} entity.
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
-public class UserService extends AbstractService<User, IUserDAO>
+@Validated
+public class UserService extends AbstractService<User, UserDAO>
         implements CommonService<User>, UserDetailsService {
 
-    /**
-     * The password encoder.
-     */
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(IUserDAO userDAO, PasswordEncoder passwordEncoder) {
+    public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder) {
         super(userDAO);
-        userDAO.setClass(User.class);
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -40,14 +40,15 @@ public class UserService extends AbstractService<User, IUserDAO>
      *
      * @param username the login of the user
      * @return the {@code UserDetails} object
-     * @throws UsernameNotFoundException
+     * @throws UsernameNotFoundException user with this username was
+     *                                   not found
      */
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        return entityDAO.findByUsername(username).orElseThrow(
+        return DAO.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("User is not valid"));
     }
 
@@ -57,9 +58,8 @@ public class UserService extends AbstractService<User, IUserDAO>
      * @param entity new entity
      */
     @Override
-    public User saveOrUpdate(User entity) {
-        //TODO: password check when update
-        User user = entityDAO.findByUsername(entity.getUsername())
+    public User saveOrUpdate(@Valid User entity) {
+        User user = DAO.findByUsername(entity.getUsername())
                 .orElse(null);
 
         if (user != null && entity.getId() != user.getId())

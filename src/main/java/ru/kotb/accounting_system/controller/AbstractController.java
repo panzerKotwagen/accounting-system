@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.kotb.accounting_system.entity.AbstractEntity;
-import ru.kotb.accounting_system.exception_handling.NoSuchEntityException;
 import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 import ru.kotb.accounting_system.service.CommonService;
 
@@ -45,9 +44,7 @@ public abstract class AbstractController<E extends AbstractEntity,
     }
 
     /**
-     * Returns list of all entities in the table as JSON array.
-     *
-     * @return JSON array with all entities in the table
+     * Returns {@code CollectionModel} of the entities.
      */
     @Override
     public CollectionModel<EntityModel<E>> all() {
@@ -55,20 +52,13 @@ public abstract class AbstractController<E extends AbstractEntity,
     }
 
     /**
-     * Returns a JSON object with description of the specified entity.
+     * Returns {@code EntityModel} with the specified entity.
      *
      * @param entityId the specified ID of the entity
-     * @return the JSON object with the specified entity
      */
     @Override
     public EntityModel<E> get(@PathVariable("id") int entityId) {
-        E entity = service.get(entityId);
-        if (entity == null) {
-            throw new NoSuchEntityException("There is no entity with ID = "
-                    + entityId + " in the database.");
-        } else {
-            return assembler.toModel(entity);
-        }
+        return assembler.toModel(service.getById(entityId));
     }
 
     /**
@@ -98,17 +88,13 @@ public abstract class AbstractController<E extends AbstractEntity,
      */
     @Override
     public ResponseEntity<?> update(@RequestBody E entity) {
-        if (service.get(entity.getId()) == null) {
-            throw new NoSuchEntityException("There is no entity with ID = "
-                    + entity.getId() + " in the database.");
-        } else {
-            EntityModel<E> entityModel = assembler
-                    .toModel(service.saveOrUpdate(entity));
+        EntityModel<E> entityModel = assembler
+                .toModel(service.saveOrUpdate(entity));
 
-            return ResponseEntity
-                    .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                    .body(entityModel);
-        }
+        return ResponseEntity
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(entityModel);
+
     }
 
     /**
@@ -116,17 +102,11 @@ public abstract class AbstractController<E extends AbstractEntity,
      * informative message.
      *
      * @param entityId specified ID of the entity
-     * @return operation status message
+     * @return HTTP 204
      */
     @Override
     public ResponseEntity<E> delete(@PathVariable("id") int entityId) {
-        E entity = service.get(entityId);
-        if (entity == null) {
-            throw new NoSuchEntityException("There is no entity with ID = "
-                    + entityId + " in the database.");
-        } else {
-            service.delete(entityId);
-            return ResponseEntity.noContent().build();
-        }
+        service.deleteById(entityId);
+        return ResponseEntity.noContent().build();
     }
 }

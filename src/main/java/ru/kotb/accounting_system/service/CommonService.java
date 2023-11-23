@@ -1,7 +1,9 @@
 package ru.kotb.accounting_system.service;
 
+import org.springframework.validation.annotation.Validated;
 import ru.kotb.accounting_system.entity.AbstractEntity;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -9,6 +11,7 @@ import java.util.List;
  * The generic interface that provides working with the specified
  * entity.
  */
+@Validated
 public interface CommonService<E extends AbstractEntity> {
 
     /**
@@ -23,7 +26,7 @@ public interface CommonService<E extends AbstractEntity> {
      *
      * @param entity new entity
      */
-    E saveOrUpdate(E entity);
+    E saveOrUpdate(@Valid E entity);
 
     /**
      * Returns the entity with the specified ID.
@@ -31,12 +34,12 @@ public interface CommonService<E extends AbstractEntity> {
      * @param entityId the ID of the entity
      * @return the entity with the specified ID
      */
-    E get(int entityId);
+    E getById(int entityId);
 
     /**
      * Deletes the entity with the specified ID in the table.
      *
      * @param entityId the ID of the entity
      */
-    void delete(int entityId);
+    void deleteById(int entityId);
 }

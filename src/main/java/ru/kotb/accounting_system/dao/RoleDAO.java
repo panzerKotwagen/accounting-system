@@ -1,9 +1,8 @@
-package ru.kotb.accounting_system.dao.impl;
+package ru.kotb.accounting_system.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.IRoleDAO;
 import ru.kotb.accounting_system.entity.Role;
 
 import javax.persistence.EntityManager;
@@ -12,17 +11,11 @@ import java.util.Optional;
 
 
 /**
- * The implementation of the RoleDAO interface.
+ * The DAO to work with the {@code Role} entity.
  */
 @Repository
-public class RoleDAO extends AbstractDAO<Role> implements IRoleDAO {
+public class RoleDAO extends AbstractDAO<Role> {
 
-    /**
-     * Creates the component and binds it with the entityManager
-     * object.
-     *
-     * @param entityManager the entityManager object
-     */
     @Autowired
     public RoleDAO(EntityManager entityManager) {
         super(entityManager);
@@ -34,7 +27,6 @@ public class RoleDAO extends AbstractDAO<Role> implements IRoleDAO {
      * @param authority the name of the role
      * @return the role with specified name
      */
-    @Override
     @Transactional
     public Optional<Role> findByAuthority(String authority) {
         Query query = entityManager.createQuery("from Role " +

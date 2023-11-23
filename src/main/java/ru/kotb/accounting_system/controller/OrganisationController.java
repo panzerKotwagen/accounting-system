@@ -15,12 +15,6 @@ import ru.kotb.accounting_system.service.CommonService;
 public class OrganisationController
         extends AbstractController<Organisation, CommonService<Organisation>> {
 
-
-    /**
-     * Constructs the controller and links it with the service bean.
-     *
-     * @param service the entity service bean
-     */
     public OrganisationController(
             CommonService<Organisation> service,
             CommonModelAssembler<Organisation> assembler) {

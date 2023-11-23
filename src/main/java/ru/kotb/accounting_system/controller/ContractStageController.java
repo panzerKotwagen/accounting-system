@@ -16,11 +16,6 @@ import ru.kotb.accounting_system.service.CommonService;
 public class ContractStageController
         extends AbstractController<ContractStage, CommonService<ContractStage>> {
 
-    /**
-     * Constructs the controller and links it with the service bean.
-     *
-     * @param service the contract stage service bean
-     */
     @Autowired
     public ContractStageController(
             CommonService<ContractStage> service,

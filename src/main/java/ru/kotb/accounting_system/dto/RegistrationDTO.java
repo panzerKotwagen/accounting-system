@@ -1,10 +1,10 @@
 package ru.kotb.accounting_system.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jdk.jfr.Name;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -14,7 +14,8 @@ import javax.validation.constraints.Pattern;
 /**
  * The DTO class that describes user input on register page.
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 //TODO: don't write full name of the filed in the exception message

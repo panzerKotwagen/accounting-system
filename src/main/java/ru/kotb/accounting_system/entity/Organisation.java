@@ -1,23 +1,33 @@
 package ru.kotb.accounting_system.entity;
 
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * The class that describes the contracting company.
  */
-@Data
+@Getter
+@Setter
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "organisations")
 public class Organisation extends AbstractEntity {
 
@@ -45,4 +55,12 @@ public class Organisation extends AbstractEntity {
     @Pattern(regexp = "^[0-9]*$", message = "Please provide the valid TIN")
     @Column(name = "TIN")
     private String TIN;
+
+    /**
+     * Counterparty contracts that linked with this organisation.
+     */
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="organisation_id")
+    private List<CounterpartyContract> contracts = new ArrayList<>();
 }

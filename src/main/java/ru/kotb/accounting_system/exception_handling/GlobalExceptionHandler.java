@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import ru.kotb.accounting_system.dto.ValidationErrorResponseDTO;
 import ru.kotb.accounting_system.dto.ViolationDTO;
 
@@ -63,6 +64,17 @@ public class GlobalExceptionHandler {
                             v.getMessage()));
         }
         return error;
+    }
+
+    /**
+     * Handles exception that occurred when user try to send not valid
+     * query parameters.
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    EntityIncorrectData handleNotValidParams(MethodArgumentTypeMismatchException e) {
+        return new EntityIncorrectData("Invalid value: " + e.getValue());
     }
 
     /**

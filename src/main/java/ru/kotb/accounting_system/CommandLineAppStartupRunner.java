@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.kotb.accounting_system.dao.impl.RoleDAO;
-import ru.kotb.accounting_system.dao.impl.UserDAO;
+import ru.kotb.accounting_system.dao.RoleDAO;
+import ru.kotb.accounting_system.dao.UserDAO;
 import ru.kotb.accounting_system.entity.Role;
 import ru.kotb.accounting_system.entity.User;
 
@@ -34,18 +34,17 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         if (!roleDAO.findByAuthority("USER").isPresent()) {
-            roleDAO.saveOrUpdate(new Role("USER"));
+            roleDAO.save(new Role("USER"));
         }
 
         if (roleDAO.findByAuthority("ADMIN").isPresent()) return;
-        Role adminRole = roleDAO.saveOrUpdate(new Role("ADMIN"));
-
+        Role adminRole = roleDAO.save(new Role("ADMIN"));
 
         Set<Role> roles = new HashSet<>();
         roles.add(adminRole);
 
         User admin = new User("Viktor", "admin", passwordEncoder.encode("password"), roles);
 
-        userDAO.saveOrUpdate(admin);
+        userDAO.save(admin);
     }
 }

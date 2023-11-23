@@ -16,11 +16,6 @@ import ru.kotb.accounting_system.service.impl.UserService;
 @RequestMapping("/api/users")
 public class UserController extends AbstractController<User, CommonService<User>> {
 
-    /**
-     * Constructs the controller and links it with the service bean.
-     *
-     * @param service the user service bean
-     */
     @Autowired
     public UserController(
             UserService service, CommonModelAssembler<User> assembler) {

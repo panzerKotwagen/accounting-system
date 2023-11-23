@@ -2,11 +2,16 @@ package ru.kotb.accounting_system.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,7 +22,8 @@ import java.sql.Date;
 /**
  * The class that describes the contract stage.
  */
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -108,4 +114,20 @@ public class ContractStage extends AbstractEntity {
     @PositiveOrZero(message = "The value cannot be below zero")
     @Column(name = "actual_salary_cost")
     private int actualSalaryCost;
+
+    @Override
+    public String toString() {
+        return "ContractStage{" +
+                "name='" + name + '\'' +
+                ", plannedStartDate=" + plannedStartDate +
+                ", actualStartDate=" + actualStartDate +
+                ", plannedEndDate=" + plannedEndDate +
+                ", actualEndDate=" + actualEndDate +
+                ", amount=" + amount +
+                ", plannedMaterialCost=" + plannedMaterialCost +
+                ", actualMaterialCost=" + actualMaterialCost +
+                ", plannedSalaryCost=" + plannedSalaryCost +
+                ", actualSalaryCost=" + actualSalaryCost +
+                '}';
+    }
 }

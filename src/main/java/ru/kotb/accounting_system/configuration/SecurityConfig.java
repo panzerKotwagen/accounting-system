@@ -14,9 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
+/**
+ * The web security configuration.
+ */
 @EnableWebSecurity
 @Configuration
-//TODO: Add comments
 public class SecurityConfig {
 
     @Bean

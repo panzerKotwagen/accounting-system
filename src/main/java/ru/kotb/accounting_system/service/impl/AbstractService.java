@@ -1,11 +1,15 @@
 package ru.kotb.accounting_system.service.impl;
 
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.ICommonDAO;
+import org.springframework.validation.annotation.Validated;
+import ru.kotb.accounting_system.dao.AbstractDAO;
 import ru.kotb.accounting_system.entity.AbstractEntity;
+import ru.kotb.accounting_system.exception_handling.NoSuchEntityException;
 import ru.kotb.accounting_system.service.CommonService;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 /**
@@ -18,13 +22,14 @@ import java.util.List;
  * @param <E> the class of the entity
  * @param <D> the class of the DAO
  */
+@Validated
 public abstract class AbstractService<E extends AbstractEntity,
-        D extends ICommonDAO<E>> implements CommonService<E> {
+        D extends AbstractDAO<E>> implements CommonService<E> {
 
     /**
-     * The DAO object for getting access to the specified table.
+     * The repository for getting access to the specified table.
      */
-    protected final D entityDAO;
+    protected final D DAO;
 
     /**
      * Links the specified DAO with the service.
@@ -32,7 +37,7 @@ public abstract class AbstractService<E extends AbstractEntity,
      * @param genericDAOImpl the DAO of the specified entity class
      */
     public AbstractService(D genericDAOImpl) {
-        this.entityDAO = genericDAOImpl;
+        this.DAO = genericDAOImpl;
     }
 
     /**
@@ -43,7 +48,7 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public List<E> getAll() {
-        return entityDAO.getAll();
+        return DAO.findAll();
     }
 
     /**
@@ -53,30 +58,37 @@ public abstract class AbstractService<E extends AbstractEntity,
      */
     @Override
     @Transactional
-    public E saveOrUpdate(E entity) {
-        return entityDAO.saveOrUpdate(entity);
+    public E saveOrUpdate(@Valid E entity) {
+        return DAO.save(entity);
     }
 
     /**
      * Returns the entity with the specified ID.
      *
-     * @param entityId the ID of the entity
+     * @param id the ID of the entity
      * @return the entity with the specified ID
      */
     @Override
     @Transactional
-    public E get(int entityId) {
-        return entityDAO.get(entityId);
+    public E getById(int id) {
+        return DAO.findById(id).orElseThrow(
+                () -> new NoSuchEntityException("There is no entity with ID = "
+                + id + " in the database."));
     }
 
     /**
      * Deletes the entity with the specified ID in the table.
      *
-     * @param entityId the ID of the entity
+     * @param id the ID of the entity
      */
     @Override
     @Transactional
-    public void delete(int entityId) {
-        entityDAO.delete(entityId);
+    public void deleteById(int id) {
+        try {
+            DAO.deleteById(id);
+        } catch (NoSuchElementException e) {
+            throw new NoSuchEntityException("There is no entity with ID = "
+                    + id + " in the database.");
+        }
     }
 }
