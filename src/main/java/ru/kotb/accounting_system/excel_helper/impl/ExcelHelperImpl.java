@@ -43,8 +43,8 @@ public class ExcelHelperImpl implements ExcelHelper {
              ByteArrayOutputStream out = new ByteArrayOutputStream()) {
 
             String[] HEADERS = {
-                    "Name", "Type", "Planned start date",
-                    "Actual start date", "Planned end date", "Actual end date", "Amount", "Type", "Main contract"
+                    "Name", "Work type", "Planned start date",
+                    "Actual start date", "Planned end date", "Actual end date", "Amount", "Contract type", "Main contract"
             };
             String SHEET = "Contracts";
             int rowIdx = 0;

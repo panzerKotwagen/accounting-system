@@ -38,7 +38,12 @@ public class ContractModelAssembler
                 linkTo(methodOn(controllerClass).allCounterpartyContracts(
                         entity.getId())).withRel("counterparty-contracts"),
 
-                linkTo(methodOn(controllerClass).all()).withRel(plural));
+                linkTo(methodOn(controllerClass).downloadStagesReport(entity.getId()))
+                        .withRel("Excel stages"),
 
+                linkTo(methodOn(controllerClass).all()).withRel(plural),
+
+                linkTo(methodOn(controllerClass).downloadContractsReport(null, null))
+                        .withRel("Excel contracts"));
     }
 }
