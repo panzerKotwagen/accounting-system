@@ -5,6 +5,9 @@ import ru.kotb.accounting_system.entity.AbstractContract;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Getter
 public class ContractDTO extends AbstractContract {
@@ -12,7 +15,7 @@ public class ContractDTO extends AbstractContract {
     /**
      * The contract type.
      */
-    private Type type;
+    private String type;
 
     /**
      * The name of the contract that the contract with counterparties
@@ -24,28 +27,46 @@ public class ContractDTO extends AbstractContract {
      * Constructs DTO from the {@code Contract} entity.
      */
     public ContractDTO(Contract contract) {
-        type = Type.MAIN_CONTRACT;
         setName(contract.getName());
+        type = "Main";
         setContractType(contract.getContractType());
-        setAmount(contract.getAmount());
         setActualStartDate(contract.getActualStartDate());
         setActualEndDate(contract.getActualEndDate());
         setPlannedStartDate(contract.getPlannedStartDate());
         setPlannedEndDate(contract.getPlannedEndDate());
+        setAmount(contract.getAmount());
     }
 
     /**
      * Constructs DTO from the {@code CounterpartyContract} entity.
      */
     public ContractDTO(CounterpartyContract contract) {
-        type = Type.COUNTERPARTY_CONTRACT;
         setName(contract.getName());
+        type = "Counterparty";
         setContractType(contract.getContractType());
-        setAmount(contract.getAmount());
         setActualStartDate(contract.getActualStartDate());
         setActualEndDate(contract.getActualEndDate());
         setPlannedStartDate(contract.getPlannedStartDate());
         setPlannedEndDate(contract.getPlannedEndDate());
+        setAmount(contract.getAmount());
         mainContractName = contract.getContract().getName();
+    }
+
+    /**
+     * Returns the list with values of object attributes in String
+     * format.
+     */
+    public List<String> getAttributesAsStringList() {
+        List<String> list = new ArrayList<>();
+        list.add(getName());
+        list.add(getType().toString());
+        list.add(getContractType().getName());
+        list.add(getPlannedStartDate().toString());
+        list.add(getActualStartDate().toString());
+        list.add(getPlannedEndDate().toString());
+        list.add(getActualEndDate().toString());
+        list.add(String.valueOf(getAmount()));
+        list.add(getMainContractName());
+        return list;
     }
 }

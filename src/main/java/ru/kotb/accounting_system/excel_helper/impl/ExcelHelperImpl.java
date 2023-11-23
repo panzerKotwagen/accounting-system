@@ -16,19 +16,34 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 /**
  * The class that provides convert the data in the "contracts"
  * table to MS Excel format file.
  */
-//TODO: Add comments
+//TODO: Refactor the code
 @Component
 public class ExcelHelperImpl implements ExcelHelper {
 
+    Sheet sheet;
+
+    private void create_cell(int rowNum, int colNum, String value) {
+        Optional<Row> optRow = Optional.ofNullable(sheet.getRow(rowNum));
+        Row row = optRow.orElseGet(() -> sheet.createRow(rowNum));
+        sheet.autoSizeColumn(colNum);
+        row.createCell(colNum).setCellValue(value);
+    }
+
+    private void create_row(int rowIdx, int startColIdx, List<String> values) {
+        for (String s : values) {
+            create_cell(rowIdx, startColIdx++, s);
+        }
+    }
 
     //TODO: Beautify the output
-
     /**
      * Converts contracts list into the Excel spreadsheet represented
      * by ByteArrayInputStream
@@ -42,50 +57,27 @@ public class ExcelHelperImpl implements ExcelHelper {
         try (Workbook workbook = new XSSFWorkbook();
              ByteArrayOutputStream out = new ByteArrayOutputStream()) {
 
-            String[] HEADERS = {
-                    "Name", "Work type", "Planned start date",
-                    "Actual start date", "Planned end date", "Actual end date", "Amount", "Contract type", "Main contract"
+            final String[] HEADERS = {
+                    "Name", "Contract type", "Work type", "Planned start date",
+                    "Actual start date", "Planned end date", "Actual end date",
+                    "Amount", "Main contract"
             };
+
             String SHEET = "Contracts";
+            List<List<String>> contractAttrLists = contracts.stream()
+                    .map(ContractDTO::getAttributesAsStringList)
+                    .collect(Collectors.toList());
             int rowIdx = 0;
 
-            Sheet sheet = workbook.createSheet(SHEET);
+            sheet = workbook.createSheet(SHEET);
 
-            Row headerRow = sheet.createRow(rowIdx++);
             for (int col = 0; col < HEADERS.length; col++) {
-                Cell cell = headerRow.createCell(col);
-                cell.setCellValue(HEADERS[col]);
+                create_cell(rowIdx, col, HEADERS[col]);
             }
+            rowIdx++;
 
-            for (ContractDTO contract : contracts) {
-                Row row = sheet.createRow(rowIdx++);
-
-                row.createCell(0).setCellValue(
-                        contract.getName());
-
-                row.createCell(1).setCellValue(
-                        contract.getContractType().getName());
-
-                row.createCell(2).setCellValue(String.valueOf(
-                        contract.getPlannedStartDate()));
-
-                row.createCell(3).setCellValue(String.valueOf(
-                        contract.getActualStartDate()));
-
-                row.createCell(4).setCellValue(String.valueOf(
-                        contract.getPlannedEndDate()));
-
-                row.createCell(5).setCellValue(String.valueOf(
-                        contract.getActualEndDate()));
-
-                row.createCell(6).setCellValue(
-                        contract.getAmount());
-
-                row.createCell(7).setCellValue(
-                        contract.getType().toString());
-
-                row.createCell(8).setCellValue(
-                        contract.getMainContractName());
+            for (List<String> contractAttrs : contractAttrLists) {
+                create_row(rowIdx++, 0, contractAttrs);
             }
 
             workbook.write(out);
