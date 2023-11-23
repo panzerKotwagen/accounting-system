@@ -8,10 +8,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import ru.kotb.accounting_system.dao.UserDAO;
 import ru.kotb.accounting_system.entity.User;
 import ru.kotb.accounting_system.exception_handling.DuplicateUsernameException;
 import ru.kotb.accounting_system.service.CommonService;
+
+import javax.validation.Valid;
 
 
 /**
@@ -19,6 +22,7 @@ import ru.kotb.accounting_system.service.CommonService;
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
+@Validated
 public class UserService extends AbstractService<User, UserDAO>
         implements CommonService<User>, UserDetailsService {
 
@@ -54,8 +58,7 @@ public class UserService extends AbstractService<User, UserDAO>
      * @param entity new entity
      */
     @Override
-    public User saveOrUpdate(User entity) {
-        //TODO: password check when update
+    public User saveOrUpdate(@Valid User entity) {
         User user = DAO.findByUsername(entity.getUsername())
                 .orElse(null);
 

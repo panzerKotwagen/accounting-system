@@ -72,6 +72,18 @@ public class User extends AbstractEntity implements UserDetails {
      * encoded format.
      */
     @NotBlank(message = "The field cannot be empty")
+    @Length(min = 8, message = "The password must contain at least 8 characters")
+    @Length(max = 20, message = "The password must contain less than 21 characters")
+    /*
+     * The password must contain at least one uppercase, one lowercase
+     * letter, one digit and consist of at least 8 characters.
+     */
+    @Pattern(regexp = "^(?=.*[A-Z]).+$",
+            message = "Please write at least one uppercase letter")
+    @Pattern(regexp = "^(?=.*[0-9]).+$",
+            message = "Please write at lest one digit")
+    @Pattern(regexp = "^(?=.*[a-z]).+$",
+            message = "Please write at lest one lowercase letter")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password")
     private String password;

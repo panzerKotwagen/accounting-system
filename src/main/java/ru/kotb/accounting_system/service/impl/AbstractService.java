@@ -1,11 +1,13 @@
 package ru.kotb.accounting_system.service.impl;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import ru.kotb.accounting_system.dao.AbstractDAO;
 import ru.kotb.accounting_system.entity.AbstractEntity;
 import ru.kotb.accounting_system.exception_handling.NoSuchEntityException;
 import ru.kotb.accounting_system.service.CommonService;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -20,6 +22,7 @@ import java.util.NoSuchElementException;
  * @param <E> the class of the entity
  * @param <D> the class of the DAO
  */
+@Validated
 public abstract class AbstractService<E extends AbstractEntity,
         D extends AbstractDAO<E>> implements CommonService<E> {
 
@@ -55,7 +58,7 @@ public abstract class AbstractService<E extends AbstractEntity,
      */
     @Override
     @Transactional
-    public E saveOrUpdate(E entity) {
+    public E saveOrUpdate(@Valid E entity) {
         return DAO.save(entity);
     }
 
