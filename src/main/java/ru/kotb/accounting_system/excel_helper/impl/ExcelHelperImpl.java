@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
+import ru.kotb.accounting_system.dto.ContractDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.excel_helper.ExcelHelper;
@@ -27,6 +28,7 @@ public class ExcelHelperImpl implements ExcelHelper {
 
 
     //TODO: Beautify the output
+
     /**
      * Converts contracts list into the Excel spreadsheet represented
      * by ByteArrayInputStream
@@ -35,14 +37,14 @@ public class ExcelHelperImpl implements ExcelHelper {
      * @return Excel file with the contract table
      */
     public ByteArrayInputStream convertContractsToExcel(
-            List<Contract> contracts) {
+            List<ContractDTO> contracts) {
 
         try (Workbook workbook = new XSSFWorkbook();
              ByteArrayOutputStream out = new ByteArrayOutputStream()) {
 
             String[] HEADERS = {
                     "Name", "Type", "Planned start date",
-                    "Actual start date", "Planned end date", "Actual end date"
+                    "Actual start date", "Planned end date", "Actual end date", "Amount", "Type", "Main contract"
             };
             String SHEET = "Contracts";
             int rowIdx = 0;
@@ -55,7 +57,7 @@ public class ExcelHelperImpl implements ExcelHelper {
                 cell.setCellValue(HEADERS[col]);
             }
 
-            for (Contract contract : contracts) {
+            for (ContractDTO contract : contracts) {
                 Row row = sheet.createRow(rowIdx++);
 
                 row.createCell(0).setCellValue(
@@ -78,6 +80,12 @@ public class ExcelHelperImpl implements ExcelHelper {
 
                 row.createCell(6).setCellValue(
                         contract.getAmount());
+
+                row.createCell(7).setCellValue(
+                        contract.getType().toString());
+
+                row.createCell(8).setCellValue(
+                        contract.getMainContractName());
             }
 
             workbook.write(out);
@@ -89,6 +97,7 @@ public class ExcelHelperImpl implements ExcelHelper {
     }
 
     //TODO: Beautify the output and refactor
+
     /**
      * Converts stages list into the Excel spreadsheet represented
      * by ByteArrayInputStream

@@ -57,7 +57,7 @@ public interface ContractService extends CommonService<Contract> {
      *
      * @return MS Excel file with all contracts
      */
-    ByteArrayInputStream getContractsReport();
+    ByteArrayInputStream getContractsReport(Date start, Date end);
 
     /**
      * Returns all stages of the specified contract in MS Excel file.

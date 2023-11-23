@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kotb.accounting_system.dao.ContractDAO;
+import ru.kotb.accounting_system.dto.ContractDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
@@ -14,6 +15,8 @@ import ru.kotb.accounting_system.service.ContractService;
 
 import java.io.ByteArrayInputStream;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -119,8 +122,22 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
      */
     @Override
     @Transactional
-    public ByteArrayInputStream getContractsReport() {
-        return excelHelper.convertContractsToExcel(DAO.findAll());
+    public ByteArrayInputStream getContractsReport(Date start, Date end) {
+        List<Contract> contracts = getAll(start, end);
+
+        List<ContractDTO> contractDTOList = new ArrayList<>();
+        for (Contract c : contracts) {
+            contractDTOList.add(new ContractDTO(c));
+
+            for (CounterpartyContract cc : c.getCounterpartyContracts()) {
+                contractDTOList.add(new ContractDTO(cc));
+            }
+        }
+
+        contractDTOList.sort((ContractDTO a1, ContractDTO a2)
+                -> a1.getPlannedStartDate().compareTo(a2.getActualStartDate()));
+
+        return excelHelper.convertContractsToExcel(contractDTOList);
     }
 
     /**

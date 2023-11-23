@@ -1,9 +1,12 @@
 package ru.kotb.accounting_system.dto;
 
+import lombok.Getter;
 import ru.kotb.accounting_system.entity.AbstractContract;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
 
+
+@Getter
 public class ContractDTO extends AbstractContract {
 
     /**
