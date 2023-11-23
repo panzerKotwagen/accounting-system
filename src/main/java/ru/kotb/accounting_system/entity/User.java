@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,6 +34,7 @@ import java.util.Set;
 @Setter
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "users")
 public class User extends AbstractEntity implements UserDetails {
 
@@ -91,15 +93,7 @@ public class User extends AbstractEntity implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     @JsonIgnore
-    private Set<Role> authorities;
-
-    /**
-     * The no args constructor.
-     */
-    public User() {
-        super();
-        authorities = new HashSet<>();
-    }
+    private Set<Role> authorities = new HashSet<>();
 
     /**
      * The constructor without the end date.

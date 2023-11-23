@@ -8,7 +8,7 @@ import ru.kotb.accounting_system.entity.Organisation;
 
 
 /**
- * The implementation of the OrganisationService interface.
+ * The service for working with {@code Organisation} entity.
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)

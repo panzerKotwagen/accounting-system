@@ -15,16 +15,13 @@ import ru.kotb.accounting_system.service.CommonService;
 
 
 /**
- * The implementation of the UserService interface.
+ * The service for working with {@code User} entity.
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
 public class UserService extends AbstractService<User, UserDAO>
         implements CommonService<User>, UserDetailsService {
 
-    /**
-     * The password encoder.
-     */
     private final PasswordEncoder passwordEncoder;
 
     @Autowired

@@ -8,7 +8,7 @@ import ru.kotb.accounting_system.entity.ContractStage;
 
 
 /**
- * The implementation of the ContractStageService interface.
+ * The service for working with {@code ContractStage} entity.
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)

@@ -8,7 +8,7 @@ import ru.kotb.accounting_system.entity.CounterpartyContract;
 
 
 /**
- * The implementation of the OrganisationContractService interface.
+ * The service for working with {@code CounterpartyContract} entity.
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)

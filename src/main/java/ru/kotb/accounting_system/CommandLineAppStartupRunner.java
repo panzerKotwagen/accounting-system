@@ -40,7 +40,6 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
         if (roleDAO.findByAuthority("ADMIN").isPresent()) return;
         Role adminRole = roleDAO.save(new Role("ADMIN"));
 
-
         Set<Role> roles = new HashSet<>();
         roles.add(adminRole);
 

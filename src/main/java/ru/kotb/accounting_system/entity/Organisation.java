@@ -4,6 +4,7 @@ package ru.kotb.accounting_system.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
@@ -26,6 +27,7 @@ import java.util.List;
 @Setter
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "organisations")
 public class Organisation extends AbstractEntity {
 
@@ -60,9 +62,5 @@ public class Organisation extends AbstractEntity {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="organisation_id")
-    private List<CounterpartyContract> contracts;
-
-    public Organisation() {
-        contracts = new ArrayList<>();
-    }
+    private List<CounterpartyContract> contracts = new ArrayList<>();
 }

@@ -18,7 +18,7 @@ import java.util.List;
 
 
 /**
- * The implementation of the ContractService interface.
+ * The service for working with {@code Contract} entity.
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
