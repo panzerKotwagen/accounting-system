@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
-import ru.kotb.accounting_system.exception_handling.NoSuchEntityException;
 import ru.kotb.accounting_system.model_assembler.CommonModelAssembler;
 import ru.kotb.accounting_system.model_assembler.ContractModelAssembler;
 import ru.kotb.accounting_system.model_assembler.ContractStageModelAssembler;
@@ -191,15 +190,18 @@ public class ContractController
      *
      * @return the Excel file with the all contracts
      */
+//    http://localhost:8082/api/contracts/report/download?startDate=2024-01-13&endDate=2024-02-02
     @GetMapping("/report/download")
-    public ResponseEntity<Resource> downloadContractsReport() {
+    public ResponseEntity<Resource> downloadContractsReport(
+            @RequestParam(value = "startDate") Optional<Date> startDate,
+            @RequestParam(value = "endDate") Optional<Date> endDate) {
+
         String filename = "contracts.xlsx";
         InputStreamResource file = new InputStreamResource(
-                service.getContractsReport());
+                service.getContractsReport(startDate.get(), endDate.get()));
 
         return ResponseEntity.ok()
-                .header(
-                        HttpHeaders.CONTENT_DISPOSITION,
+                .header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment; filename=" + filename)
                 .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
                 .body(file);

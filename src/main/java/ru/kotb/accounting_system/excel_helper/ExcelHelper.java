@@ -1,5 +1,6 @@
 package ru.kotb.accounting_system.excel_helper;
 
+import ru.kotb.accounting_system.dto.ContractDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 
@@ -21,7 +22,7 @@ public interface ExcelHelper {
      * @return Excel file with the contract table
      */
     ByteArrayInputStream convertContractsToExcel(
-            List<Contract> contracts);
+            List<ContractDTO> contracts);
 
     /**
      * Converts stages list into the Excel spreadsheet represented
