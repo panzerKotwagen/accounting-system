@@ -1,6 +1,5 @@
 package ru.kotb.accounting_system.excel_helper.impl;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -24,17 +23,36 @@ import java.util.stream.Collectors;
  * The class that provides convert the data in the "contracts"
  * table to MS Excel format file.
  */
-//TODO: Refactor the code
 @Component
 public class ExcelHelperImpl implements ExcelHelper {
 
     Sheet sheet;
 
-    private void create_cell(int rowNum, int colNum, String value) {
-        Optional<Row> optRow = Optional.ofNullable(sheet.getRow(rowNum));
-        Row row = optRow.orElseGet(() -> sheet.createRow(rowNum));
-        sheet.autoSizeColumn(colNum);
-        row.createCell(colNum).setCellValue(value);
+    /**
+     * Creates the cell with given value in the specified position.
+     *
+     * @param rowIdx the row index
+     * @param colIdx the col index
+     * @param value  the value to be placed in
+     */
+    private void create_cell(int rowIdx, int colIdx, String value) {
+        Optional<Row> optRow = Optional.ofNullable(sheet.getRow(rowIdx));
+        Row row = optRow.orElseGet(() -> sheet.createRow(rowIdx));
+        sheet.autoSizeColumn(colIdx);
+        row.createCell(colIdx).setCellValue(value);
+    }
+
+    /**
+     * Creates a cell of the specified size with given value in the
+     * specified position.
+     */
+    private void create_cell(int rowNum, int colNum, String value,
+                             int rowSize, int columnSize) {
+
+        create_cell(rowNum, colNum, value);
+        sheet.addMergedRegion(new CellRangeAddress(
+                rowNum, rowNum + rowSize - 1,
+                colNum, colNum + columnSize - 1));
     }
 
     private void create_row(int rowIdx, int startColIdx, List<String> values) {
@@ -43,7 +61,6 @@ public class ExcelHelperImpl implements ExcelHelper {
         }
     }
 
-    //TODO: Beautify the output
     /**
      * Converts contracts list into the Excel spreadsheet represented
      * by ByteArrayInputStream
@@ -57,22 +74,22 @@ public class ExcelHelperImpl implements ExcelHelper {
         try (Workbook workbook = new XSSFWorkbook();
              ByteArrayOutputStream out = new ByteArrayOutputStream()) {
 
-            final String[] HEADERS = {
+            final String[] headers = {
                     "Name", "Contract type", "Work type", "Planned start date",
                     "Actual start date", "Planned end date", "Actual end date",
                     "Amount", "Main contract"
             };
 
-            String SHEET = "Contracts";
+            String sheetName = "Contracts";
             List<List<String>> contractAttrLists = contracts.stream()
                     .map(ContractDTO::getAttributesAsStringList)
                     .collect(Collectors.toList());
             int rowIdx = 0;
 
-            sheet = workbook.createSheet(SHEET);
+            sheet = workbook.createSheet(sheetName);
 
-            for (int col = 0; col < HEADERS.length; col++) {
-                create_cell(rowIdx, col, HEADERS[col]);
+            for (int col = 0; col < headers.length; col++) {
+                create_cell(rowIdx, col, headers[col]);
             }
             rowIdx++;
 
@@ -88,8 +105,6 @@ public class ExcelHelperImpl implements ExcelHelper {
         }
     }
 
-    //TODO: Beautify the output and refactor
-
     /**
      * Converts stages list into the Excel spreadsheet represented
      * by ByteArrayInputStream
@@ -103,71 +118,29 @@ public class ExcelHelperImpl implements ExcelHelper {
         try (Workbook workbook = new XSSFWorkbook();
              ByteArrayOutputStream out = new ByteArrayOutputStream()) {
 
-            String SHEET = "Contract stage";
-            String[] twoRowsHeaders = {"Name", "Amount"};
-            String[] firstRowHeaders = {
+            String sheetName = "Contract stage";
+            String[] twoRowsSizeHead = {"Name", "Amount"};
+            String[] twoColSizeHead = {
                     "Start date", "End date", "Material cost", "Salary cost"};
-            String[] secondRowHeaders = {"Planned", "Actual"};
+            String[] subhead = {"Planned", "Actual"};
             int rowIdx = 0;
+            int colIdx = 0;
 
-            Sheet sheet = workbook.createSheet(SHEET);
+            sheet = workbook.createSheet(sheetName);
 
-            Row headerRow = sheet.createRow(rowIdx++);
-            headerRow.createCell(0).setCellValue(contract.getName());
-            sheet.addMergedRegion(CellRangeAddress.valueOf("A1:J1"));
+            create_cell(rowIdx, colIdx++, twoRowsSizeHead[0], 2, 1);
+            create_cell(rowIdx, colIdx++, twoRowsSizeHead[1], 2, 1);
 
-            headerRow = sheet.createRow(rowIdx++);
-            for (int col = 0; col < 2; col++) {
-                Cell cell = headerRow.createCell(col);
-                cell.setCellValue(twoRowsHeaders[col]);
+            for (String colName : twoColSizeHead) {
+                create_cell(rowIdx, colIdx, colName, 1, 2);
+                create_cell(rowIdx + 1, colIdx, subhead[0]);
+                create_cell(rowIdx + 1, colIdx + 1, subhead[1]);
+                colIdx += 2;
             }
 
-            for (int col = 0; col < 4; col++) {
-                Cell cell = headerRow.createCell(col * 2 + 2);
-                sheet.addMergedRegion(
-                        new CellRangeAddress(
-                                rowIdx - 1, rowIdx - 1,
-                                col * 2 + 2, col * 2 + 3));
-                cell.setCellValue(firstRowHeaders[col]);
-            }
-
-            headerRow = sheet.createRow(rowIdx++);
-            for (int col = 0; col < 8; col++) {
-                Cell cell = headerRow.createCell(col + 2);
-                cell.setCellValue(secondRowHeaders[col % 2]);
-            }
-
-            sheet.addMergedRegion(new CellRangeAddress(
-                    1, 2, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(
-                    1, 2, 1, 1));
-
+            rowIdx += 2;
             for (ContractStage stage : stages) {
-                Row row = sheet.createRow(rowIdx++);
-
-                row.createCell(0).setCellValue(stage.getName());
-
-                row.createCell(1).setCellValue(stage.getAmount());
-
-                row.createCell(2).setCellValue(String.valueOf(
-                        stage.getPlannedStartDate()));
-
-                row.createCell(3).setCellValue(String.valueOf(
-                        stage.getActualStartDate()));
-
-                row.createCell(4).setCellValue(String.valueOf(
-                        stage.getPlannedEndDate()));
-
-                row.createCell(5).setCellValue(String.valueOf(
-                        stage.getActualEndDate()));
-
-                row.createCell(6).setCellValue(stage.getPlannedMaterialCost());
-
-                row.createCell(7).setCellValue(stage.getActualMaterialCost());
-
-                row.createCell(8).setCellValue(stage.getPlannedSalaryCost());
-
-                row.createCell(9).setCellValue(stage.getActualSalaryCost());
+                create_stage_row(rowIdx++, stage);
             }
 
             workbook.write(out);
@@ -177,5 +150,22 @@ public class ExcelHelperImpl implements ExcelHelper {
             throw new RuntimeException(
                     "Fail to import data to Excel file: " + e.getMessage());
         }
+    }
+
+    /**
+     * Creates the row with the values of the stage attrs.
+     */
+    private void create_stage_row(int rowIdx, ContractStage stage) {
+        int colIdx = 0;
+        create_cell(rowIdx, colIdx++, stage.getName());
+        create_cell(rowIdx, colIdx++, String.valueOf(stage.getAmount()));
+        create_cell(rowIdx, colIdx++, String.valueOf(stage.getPlannedStartDate()));
+        create_cell(rowIdx, colIdx++, String.valueOf(stage.getActualStartDate()));
+        create_cell(rowIdx, colIdx++, String.valueOf(stage.getPlannedEndDate()));
+        create_cell(rowIdx, colIdx++, String.valueOf(stage.getActualEndDate()));
+        create_cell(rowIdx, colIdx++, String.valueOf(stage.getPlannedMaterialCost()));
+        create_cell(rowIdx, colIdx++, String.valueOf(stage.getActualMaterialCost()));
+        create_cell(rowIdx, colIdx++, String.valueOf(stage.getPlannedSalaryCost()));
+        create_cell(rowIdx, colIdx, String.valueOf(stage.getActualSalaryCost()));
     }
 }
