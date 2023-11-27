@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.sql.Date;
 import java.util.Collection;
@@ -105,6 +106,7 @@ public class User extends AbstractEntity implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     @JsonIgnore
+    @NotEmpty
     private Set<Role> authorities = new HashSet<>();
 
     /**
@@ -128,7 +130,6 @@ public class User extends AbstractEntity implements UserDetails {
      * @return the roles of the user
      */
     @Override
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
