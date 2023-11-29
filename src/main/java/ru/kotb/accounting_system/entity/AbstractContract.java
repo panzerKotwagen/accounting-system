@@ -1,6 +1,8 @@
 package ru.kotb.accounting_system.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
@@ -21,6 +23,8 @@ import java.sql.Date;
 @Getter
 @Setter
 @MappedSuperclass
+@NoArgsConstructor
+@AllArgsConstructor
 public class AbstractContract extends AbstractEntity {
 
     /**
@@ -29,7 +33,7 @@ public class AbstractContract extends AbstractEntity {
     @NotBlank(message = "The field cannot be empty")
     @Length(max=100, message = "The maximum field length is limited to 100 characters")
     @Column(name = "name")
-    private String name;
+    protected String name;
 
     /**
      * The contract amount.
@@ -37,7 +41,7 @@ public class AbstractContract extends AbstractEntity {
     @NotNull(message = "The field cannot be empty")
     @PositiveOrZero(message = "The value cannot be below zero")
     @Column(name = "amount")
-    private int amount;
+    protected int amount;
 
     /**
      * The type of the contract.
@@ -45,7 +49,7 @@ public class AbstractContract extends AbstractEntity {
     @NotNull(message = "The field cannot be empty")
     @ManyToOne()
     @JoinColumn(name = "contract_type_id")
-    private ContractType contractType;
+    protected ContractType contractType;
 
     /**
      * Expected date when does the contract enter into force.
@@ -53,14 +57,14 @@ public class AbstractContract extends AbstractEntity {
     @NotNull(message = "The field cannot be empty")
     @Column(name = "planned_start_date")
     @FutureOrPresent
-    private Date plannedStartDate;
+    protected Date plannedStartDate;
 
     /**
      * Actual date when does the contract enter into force.
      */
     @Column(name = "actual_start_date")
     @FutureOrPresent
-    private Date actualStartDate;
+    protected Date actualStartDate;
 
     /**
      * Expected date when does the contract end.
@@ -68,12 +72,20 @@ public class AbstractContract extends AbstractEntity {
     @NotNull(message = "The field cannot be empty")
     @Column(name = "planned_end_date")
     @FutureOrPresent
-    private Date plannedEndDate;
+    protected Date plannedEndDate;
 
     /**
      * Actual date when does the contract end.
      */
     @Column(name = "actual_end_date")
     @FutureOrPresent
-    private Date actualEndDate;
+    protected Date actualEndDate;
+
+    public AbstractContract(String name, int amount, ContractType contractType, Date plannedStartDate, Date plannedEndDate) {
+        this.name = name;
+        this.amount = amount;
+        this.contractType = contractType;
+        this.plannedStartDate = plannedStartDate;
+        this.plannedEndDate = plannedEndDate;
+    }
 }
