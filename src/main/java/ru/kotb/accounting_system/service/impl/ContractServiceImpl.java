@@ -4,15 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import ru.kotb.accounting_system.dao.ContractDAO;
 import ru.kotb.accounting_system.dto.ContractDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
+import ru.kotb.accounting_system.entity.group.ContractNull;
 import ru.kotb.accounting_system.excel_helper.ExcelHelper;
 import ru.kotb.accounting_system.service.CommonService;
 import ru.kotb.accounting_system.service.ContractService;
 
+import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -29,25 +32,16 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
 
     private final ExcelHelper excelHelper;
 
-    private CommonService<CounterpartyContract> counterpartyService;
+    private final CommonService<CounterpartyContract> counterpartyService;
 
-    private CommonService<ContractStage> stageService;
-
-    @Autowired
-    public void setStageService(CommonService<ContractStage> stageService) {
-        this.stageService = stageService;
-    }
+    private final CommonService<ContractStage> stageService;
 
     @Autowired
-    public void setCounterpartyService(CommonService<CounterpartyContract> counterpartyService) {
-        this.counterpartyService = counterpartyService;
-    }
-
-    @Autowired
-    public ContractServiceImpl(ContractDAO contractDAO, ExcelHelper excelHelper) {
+    public ContractServiceImpl(ContractDAO contractDAO, ExcelHelper excelHelper, CommonService<CounterpartyContract> counterpartyService, CommonService<ContractStage> stageService) {
         super(contractDAO);
-        contractDAO.setClass(Contract.class);
         this.excelHelper = excelHelper;
+        this.counterpartyService = counterpartyService;
+        this.stageService = stageService;
     }
 
     /**
@@ -93,7 +87,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
 
     @Override
     @Transactional
-    public ContractStage addStage(int contractId, ContractStage stage)  {
+    public ContractStage addStage(int contractId, @Validated({ContractNull.class}) ContractStage stage)  {
         Contract contract = getById(contractId);
         stage.setContract(contract);
 
@@ -106,7 +100,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
     @Override
     @Transactional
     public CounterpartyContract addCounterpartyContract(
-            int contractId, CounterpartyContract counterpartyContract) {
+            int contractId, @Validated({ContractNull.class}) CounterpartyContract counterpartyContract) {
 
         Contract contract = getById(contractId);
         counterpartyContract.setContract(contract);
