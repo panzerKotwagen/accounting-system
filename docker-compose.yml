@@ -1,29 +1,29 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql:8.0
-    environment:
-      DATABASE_HOST: docker-mysql
-      DATABASE_PORT: 3306
-      MYSQL_ROOT_PASSWORD: 12345678
-      MYSQL_DATABASE: accounting_system
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
+  mysqldb:
+    container_name: db_container
+    env_file: .env
+    build:
+      context: ./docker/db
+      args:
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "${MYSQL_PORT}:3306"
 
   app:
+    container_name: app_container
+    env_file: .env
     build:
-      context: .
-      dockerfile: Dockerfile
-    image: accounting-system
+      context: ./docker/app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/accounting_system?allowPublicKeyRetrieval=true&serverTimezone=UTC
-      SPRING_DATASOURCE_PASSWORD: admin
-      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3307/accounting_system?allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_USER}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_PASSWORD}
     ports:
-      - "8082:8082"
+      - "${SPRING_BOOT_LOCAL_PORT}:8082"
     depends_on:
-      - mysql
-
-volumes:
-  db-data:
+      - mysqldb
