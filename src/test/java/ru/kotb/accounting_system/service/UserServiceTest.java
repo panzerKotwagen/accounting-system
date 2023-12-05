@@ -1,4 +1,4 @@
-package ru.kotb.accounting_system.service.impl;
+package ru.kotb.accounting_system.service;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.kotb.accounting_system.dao.UserDAO;
 import ru.kotb.accounting_system.entity.User;
 import ru.kotb.accounting_system.exception_handling.DuplicateUsernameException;
+import ru.kotb.accounting_system.service.impl.UserService;
 
 import java.util.HashSet;
 import java.util.Optional;
