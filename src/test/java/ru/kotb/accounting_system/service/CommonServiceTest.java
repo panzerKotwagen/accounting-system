@@ -1,4 +1,4 @@
-package ru.kotb.accounting_system.api.service;
+package ru.kotb.accounting_system.service;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.kotb.accounting_system.api.entity.TestEntity;
+import ru.kotb.accounting_system.entity.TestEntity;
 import ru.kotb.accounting_system.dao.CommonDAO;
 import ru.kotb.accounting_system.exception_handling.NoSuchEntityException;
 

@@ -1,4 +1,4 @@
-package ru.kotb.accounting_system.api.service;
+package ru.kotb.accounting_system.service;
 
 
 import org.assertj.core.api.Assertions;

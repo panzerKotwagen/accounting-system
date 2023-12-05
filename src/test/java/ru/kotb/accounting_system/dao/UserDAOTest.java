@@ -1,4 +1,4 @@
-package ru.kotb.accounting_system.api.repository;
+package ru.kotb.accounting_system.dao;
 
 
 import org.assertj.core.api.Assertions;
@@ -8,7 +8,6 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.dao.UserDAO;
 import ru.kotb.accounting_system.entity.User;
 
 import java.util.HashSet;

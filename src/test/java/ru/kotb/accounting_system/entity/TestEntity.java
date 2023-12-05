@@ -1,8 +1,7 @@
-package ru.kotb.accounting_system.api.entity;
+package ru.kotb.accounting_system.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import ru.kotb.accounting_system.entity.AbstractEntity;
 
 import javax.persistence.Entity;
 

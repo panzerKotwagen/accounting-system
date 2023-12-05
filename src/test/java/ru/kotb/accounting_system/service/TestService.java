@@ -1,6 +1,6 @@
-package ru.kotb.accounting_system.api.service;
+package ru.kotb.accounting_system.service;
 
-import ru.kotb.accounting_system.api.entity.TestEntity;
+import ru.kotb.accounting_system.entity.TestEntity;
 import ru.kotb.accounting_system.dao.CommonDAO;
 import ru.kotb.accounting_system.service.impl.AbstractService;
 
