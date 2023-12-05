@@ -5,14 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kotb.accounting_system.configuration.TestConfig;
 import ru.kotb.accounting_system.entity.Role;
 
 import java.util.Optional;
 
 
-@SpringBootTest
+@DataJpaTest
+@Import(TestConfig.class)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @Transactional
 public class RoleDAOTest {
@@ -28,9 +31,9 @@ public class RoleDAOTest {
 
     @Test
     public void findByExistedAuthorityReturnNonEmptyOptional() {
-        Role role = new Role("ADMIN");
+        Role role = new Role("ADMIN1");
         roleDAO.save(role);
-        Optional<Role> optionalRole = roleDAO.findByAuthority("ADMIN");
+        Optional<Role> optionalRole = roleDAO.findByAuthority("ADMIN1");
         Assertions.assertThat(optionalRole).isNotEmpty();
     }
 }
