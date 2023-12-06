@@ -1,29 +1,26 @@
-insert into accounting_system.contract_types (name)
-values ('Shipment'), ('Purchase'), ('Work');
-
 insert into accounting_system.organisations (name, address, TIN)
 values
     ('CAT Supplier', 'Chlumínská 12/721 904 18 Český Těšín Česká republika', '1234657891'),
     ('Company Buyer', 'Via Jelena 8 Appartamento 25 San Bibiana lido, 36610 Ragusa (BA)', '3214657891'),
     ('RTY Worker', 'Baranjska ulica 76, 58011 Mali Lošinj', '9874657891');
 
-insert into accounting_system.contracts (name, contract_type_id, amount,
+insert into accounting_system.contracts (name, contract_type, amount,
                                          planned_start_date, planned_end_date,
                                          actual_start_date, actual_end_date)
-values ('contract №1', 1, 50000, '2024-1-13', '2024-02-02', '2024-1-13', '2024-02-02'),
-       ('contract №2', 2, 125000, '2024-1-13', '2024-02-02', '2024-1-13', '2024-02-02'),
-       ('contract №3', 3, 9565000, '2024-1-13', '2024-02-02', '2024-1-13', '2024-02-02');
+values ('contract №1', 'SHIPMENT', 50000, '2024-1-13', '2024-02-02', '2024-1-13', '2024-02-02'),
+       ('contract №2', 'WORK', 125000, '2024-1-13', '2024-02-02', '2024-1-13', '2024-02-02'),
+       ('contract №3', 'PURCHASE', 9565000, '2024-1-13', '2024-02-02', '2024-1-13', '2024-02-02');
 
 insert into accounting_system.organisation_contracts(
-    name, contract_type_id, organisation_id, contract_id, amount,
+    name, contract_type, organisation_id, contract_id, amount,
     planned_start_date, planned_end_date,
     actual_start_date, actual_end_date)
 
-values ('Counterparty contract №1', 1, 1, 1, 30060, '2023-05-25', '2023-05-25', '2023-05-25', '2023-05-25'),
-       ('Counterparty contract №2', 2, 2, 1, 64060, '2023-05-25', '2023-05-25', '2023-05-25', '2023-05-25'),
-       ('Counterparty contract №3', 2, 2, 2, 90990, '2023-05-25', '2023-05-25', '2023-05-25', '2023-05-25'),
-       ('Counterparty contract №4', 3, 3, 3, 12360, '2023-05-25', '2023-05-25', '2023-05-25', '2023-05-25'),
-       ('Counterparty contract №5', 2, 2, 1, 45670, '2023-05-25', '2023-05-25', '2023-05-25', '2023-05-25');
+values ('Counterparty contract №1', 'WORK', 1, 1, 30060, '2023-05-25', '2023-05-25', '2023-05-25', '2023-05-25'),
+       ('Counterparty contract №2', 'WORK', 2, 1, 64060, '2023-05-25', '2023-05-25', '2023-05-25', '2023-05-25'),
+       ('Counterparty contract №3', 'WORK', 2, 2, 90990, '2023-05-25', '2023-05-25', '2023-05-25', '2023-05-25'),
+       ('Counterparty contract №4', 'WORK', 3, 3, 12360, '2023-05-25', '2023-05-25', '2023-05-25', '2023-05-25'),
+       ('Counterparty contract №5', 'WORK', 2, 1, 45670, '2023-05-25', '2023-05-25', '2023-05-25', '2023-05-25');
 
 insert into accounting_system.contract_stages(
     name, contract_id, amount,
