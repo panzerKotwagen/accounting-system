@@ -11,8 +11,8 @@ services:
         - MYSQL_USER=${MYSQL_USER}
         - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    ports:
-      - "${MYSQL_PORT}:3306"
+    expose:
+      - "3306"
 
   app:
     container_name: app_container
@@ -20,7 +20,7 @@ services:
     build:
       context: ./docker/app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3307/accounting_system?allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: ${MY_SQL_URL}
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_USER}
       SPRING_DATASOURCE_USERNAME: ${MYSQL_PASSWORD}
     ports:
