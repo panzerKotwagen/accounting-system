@@ -60,7 +60,7 @@ public class ContractDTO extends AbstractContract {
         List<String> list = new ArrayList<>();
         list.add(getName());
         list.add(getType().toString());
-        list.add(getContractType().getName());
+        list.add(getContractType().toString());
         list.add(getPlannedStartDate().toString());
         list.add(getActualStartDate().toString());
         list.add(getPlannedEndDate().toString());

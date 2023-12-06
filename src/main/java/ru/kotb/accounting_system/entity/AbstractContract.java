@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -26,6 +23,23 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AbstractContract extends AbstractEntity {
+
+    public enum ContractType {
+        SHIPMENT("Shipment"),
+        PURCHASE("Purchase"),
+        WORK("Work");
+
+        private final String text;
+
+        ContractType(final String text) {
+            this.text = text;
+        }
+
+        @Override
+        public String toString() {
+            return text;
+        }
+    }
 
     /**
      * The contract name.
@@ -47,8 +61,8 @@ public class AbstractContract extends AbstractEntity {
      * The type of the contract.
      */
     @NotNull(message = "The field cannot be empty")
-    @ManyToOne()
-    @JoinColumn(name = "contract_type_id")
+    @Column(name="contract_type")
+    @Enumerated(EnumType.STRING)
     protected ContractType contractType;
 
     /**
