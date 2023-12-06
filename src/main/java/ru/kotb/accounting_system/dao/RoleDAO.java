@@ -19,6 +19,7 @@ public class RoleDAO extends AbstractDAO<Role> {
     @Autowired
     public RoleDAO(EntityManager entityManager) {
         super(entityManager);
+        setClass(Role.class);
     }
 
     /**
