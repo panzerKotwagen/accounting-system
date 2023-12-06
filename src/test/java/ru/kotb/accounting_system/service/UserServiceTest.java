@@ -76,7 +76,7 @@ class UserServiceTest {
         given(userDAO.save(user)).willReturn(user);
 
         // when
-        User savedUser = userService.saveOrUpdate(user);
+        User savedUser = userService.save(user);
 
         // then
         Assertions.assertThat(savedUser).isEqualTo(user);
@@ -103,7 +103,7 @@ class UserServiceTest {
                 .willReturn(Optional.of(existingUser));
 
         // then
-        Assertions.assertThatThrownBy(() -> userService.saveOrUpdate(savedUser))
+        Assertions.assertThatThrownBy(() -> userService.update(savedUser))
                 .isInstanceOf(DuplicateUsernameException.class);
 
         verify(userDAO, never()).save(any());

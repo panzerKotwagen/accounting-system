@@ -1,5 +1,6 @@
 package ru.kotb.accounting_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -105,7 +106,6 @@ public class User extends AbstractEntity implements UserDetails {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
-    @JsonIgnore
     @NotEmpty
     private Set<Role> authorities = new HashSet<>();
 

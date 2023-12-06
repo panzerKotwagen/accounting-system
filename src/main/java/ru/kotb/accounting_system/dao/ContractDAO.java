@@ -19,6 +19,7 @@ public class ContractDAO extends AbstractDAO<Contract> {
     @Autowired
     public ContractDAO(EntityManager entityManager) {
         super(entityManager);
+        setClass(Contract.class);
     }
 
     public List<Contract> findAllWhereDateBetween(Date start, Date end) {

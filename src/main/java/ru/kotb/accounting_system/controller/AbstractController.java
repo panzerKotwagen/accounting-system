@@ -71,7 +71,7 @@ public abstract class AbstractController<E extends AbstractEntity,
     @Override
     public ResponseEntity<?> add(@RequestBody E entity) {
         EntityModel<E> entityModel = assembler.toModel(
-                service.saveOrUpdate(entity));
+                service.save(entity));
 
         return ResponseEntity
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
@@ -89,7 +89,7 @@ public abstract class AbstractController<E extends AbstractEntity,
     @Override
     public ResponseEntity<?> update(@RequestBody E entity) {
         EntityModel<E> entityModel = assembler
-                .toModel(service.saveOrUpdate(entity));
+                .toModel(service.update(entity));
 
         return ResponseEntity
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())

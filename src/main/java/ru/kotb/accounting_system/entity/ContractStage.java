@@ -1,11 +1,13 @@
 package ru.kotb.accounting_system.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import ru.kotb.accounting_system.entity.group.ContractNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.PositiveOrZero;
 import java.sql.Date;
 
@@ -35,8 +38,9 @@ public class ContractStage extends AbstractEntity {
      */
     @ManyToOne()
     @JoinColumn(name = "contract_id")
+    @Null(groups={ContractNull.class})
     @NotNull
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Contract contract;
 
     /**
