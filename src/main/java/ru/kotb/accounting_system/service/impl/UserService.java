@@ -58,14 +58,32 @@ public class UserService extends AbstractService<User, UserDAO>
      * @param entity new entity
      */
     @Override
-    public User saveOrUpdate(@Valid User entity) {
-        User user = DAO.findByUsername(entity.getUsername())
-                .orElse(null);
-
-        if (user != null && entity.getId() != user.getId())
+    public User save(@Valid User entity) {
+        if (DAO.findByUsername(entity.getUsername()).isPresent())
             throw new DuplicateUsernameException("This username is already taken");
 
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
-        return super.saveOrUpdate(entity);
+        return super.save(entity);
+    }
+
+    /**
+     * Updates the specified entity. When the entity with given id
+     * was not found then throw {@code NoSuchEntityException}.
+     *
+     * @param entity
+     */
+    @Override
+    public User update(@Valid User entity) {
+        User userWithSameUsername = DAO.findByUsername(entity.getUsername())
+                .orElse(null);
+
+        if (userWithSameUsername != null
+                && entity.getId() != userWithSameUsername.getId()) {
+
+            throw new DuplicateUsernameException("This username is already taken");
+        }
+
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        return super.update(entity);
     }
 }
