@@ -58,7 +58,21 @@ public abstract class AbstractService<E extends AbstractEntity,
      */
     @Override
     @Transactional
-    public E saveOrUpdate(@Valid E entity) {
+    public E save(@Valid E entity) {
+        return DAO.save(entity);
+    }
+
+    /**
+     * Updates the specified entity. When the entity with given id
+     * was not found then throw {@code NoSuchEntityException}.
+     */
+    @Override
+    @Transactional
+    public E update(@Valid E entity) {
+        DAO.findById(entity.getId()).orElseThrow(
+                () -> new NoSuchEntityException("There is no entity with ID = "
+                        + entity.getId() + " in the database."));
+
         return DAO.save(entity);
     }
 

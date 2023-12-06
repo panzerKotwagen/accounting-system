@@ -26,7 +26,13 @@ public interface CommonService<E extends AbstractEntity> {
      *
      * @param entity new entity
      */
-    E saveOrUpdate(@Valid E entity);
+    E save(@Valid E entity);
+
+    /**
+     * Updates the specified entity. When the entity with given id
+     * was not found then throw {@code NoSuchEntityException}.
+     */
+    E update(@Valid E entity);
 
     /**
      * Returns the entity with the specified ID.

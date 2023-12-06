@@ -33,7 +33,7 @@ public class CommonServiceTest {
 
         when(dao.save(Mockito.any(TestEntity.class))).thenReturn(entity);
 
-        TestEntity savedTestEntity = service.saveOrUpdate(entity);
+        TestEntity savedTestEntity = service.save(entity);
 
         Assertions.assertThat(savedTestEntity).isNotNull();
     }
@@ -69,7 +69,7 @@ public class CommonServiceTest {
 
         when(dao.save(prevUpdate)).thenReturn(prevUpdate);
 
-        TestEntity updateReturn = service.saveOrUpdate(prevUpdate);
+        TestEntity updateReturn = service.save(prevUpdate);
 
         Assertions.assertThat(updateReturn).isNotNull();
         Assertions.assertThat(updateReturn.getName())

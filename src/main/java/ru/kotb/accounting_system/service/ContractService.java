@@ -1,8 +1,10 @@
 package ru.kotb.accounting_system.service;
 
+import org.springframework.validation.annotation.Validated;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
+import ru.kotb.accounting_system.entity.group.ContractNull;
 
 import java.io.ByteArrayInputStream;
 import java.sql.Date;
@@ -44,13 +46,13 @@ public interface ContractService extends CommonService<Contract> {
     /**
      * Adds stage to the specified contract.
      */
-    ContractStage addStage(int contractId, ContractStage stage);
+    ContractStage addStage(int contractId, @Validated({ContractNull.class}) ContractStage stage);
 
     /**
      * Adds counterparty contract to the specified contract.
      */
     CounterpartyContract addCounterpartyContract(
-            int contractId, CounterpartyContract counterpartyContract);
+            int contractId, @Validated({ContractNull.class}) CounterpartyContract counterpartyContract);
 
     /**
      * Returns all contract in MS Excel file.

@@ -8,7 +8,14 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
@@ -120,11 +127,12 @@ public class ContractController
      * @return HTTP 201 response with added stage
      */
     @PostMapping("/{id}/stages")
-    public EntityModel<ContractStage> addStage(
+    public ResponseEntity<?> addStage(
             @PathVariable("id") int contractId, @RequestBody ContractStage stage) {
 
         stage = service.addStage(contractId, stage);
-        return stageAssembler.toModel(stage);
+
+        return stageController.add(stage);
     }
 
     /**
@@ -155,14 +163,14 @@ public class ContractController
      * @return HTTP 201 response with added counterparty contract
      */
     @PostMapping("/{id}/counterparty-contracts")
-    public EntityModel<CounterpartyContract> addCounterparty(
+    public ResponseEntity<?> addCounterparty(
             @PathVariable("id") int contractId,
             @RequestBody CounterpartyContract counterpartyContract) {
 
         counterpartyContract = service.addCounterpartyContract(
                 contractId, counterpartyContract);
 
-        return counterpartyAssembler.toModel(counterpartyContract);
+        return counterpartyContractController.add(counterpartyContract);
     }
 
     /**
@@ -190,7 +198,6 @@ public class ContractController
      *
      * @return the Excel file with the all contracts
      */
-//    http://localhost:8082/api/contracts/report/download?startDate=2024-01-13&endDate=2024-02-02
     @GetMapping("/report/download")
     public ResponseEntity<Resource> downloadContractsReport(
             @RequestParam(value = "startDate") Optional<Date> startDate,
