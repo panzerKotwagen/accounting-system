@@ -1,6 +1,7 @@
 package ru.kotb.accounting_system.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,7 @@ public class CounterpartyContract extends AbstractContract {
     @JoinColumn(name = "contract_id")
     @Null(groups={ContractNull.class})
     @NotNull
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Contract contract;
 
     /**
