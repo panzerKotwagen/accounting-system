@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 
 /**
@@ -25,6 +26,8 @@ public class Role extends AbstractEntity implements GrantedAuthority {
     /**
      * The name of the role.
      */
+    @Pattern(regexp = "^[A-Z]*$",
+            message = "Please provide role consisting only of uppercase letters")
     @Column(name = "authority", nullable = false, unique = true)
     private String authority;
 

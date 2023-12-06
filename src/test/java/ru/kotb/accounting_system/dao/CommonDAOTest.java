@@ -1,14 +1,15 @@
-package ru.kotb.accounting_system.api.repository;
+package ru.kotb.accounting_system.dao;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accounting_system.api.entity.TestEntity;
-import ru.kotb.accounting_system.dao.CommonDAO;
+import ru.kotb.accounting_system.configuration.TestConfig;
+import ru.kotb.accounting_system.entity.TestEntity;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -20,7 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 /**
  * Tests for {@code CommonDAO<E>}.
  */
-@SpringBootTest
+@DataJpaTest
+@Import(TestConfig.class)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @Transactional
 public class CommonDAOTest {

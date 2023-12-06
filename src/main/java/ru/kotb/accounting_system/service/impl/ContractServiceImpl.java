@@ -1,5 +1,6 @@
 package ru.kotb.accounting_system.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +9,7 @@ import ru.kotb.accounting_system.dao.CommonDAO;
 import ru.kotb.accounting_system.dao.ContractDAO;
 import ru.kotb.accounting_system.dao.StageDAO;
 import ru.kotb.accounting_system.dto.ContractDTO;
+import ru.kotb.accounting_system.entity.AbstractContract;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
@@ -18,6 +20,7 @@ import ru.kotb.accounting_system.service.ContractService;
 import java.io.ByteArrayInputStream;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -35,12 +38,13 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
 
     private final StageDAO stageDAO;
 
-    public ContractServiceImpl(ContractDAO genericDAOImpl,
+    @Autowired
+    public ContractServiceImpl(ContractDAO contractDAO,
                                ExcelHelper excelHelper,
                                CommonDAO<CounterpartyContract> counterpartyDAO,
                                StageDAO stageDAO) {
 
-        super(genericDAOImpl);
+        super(contractDAO);
         this.excelHelper = excelHelper;
         this.counterpartyDAO = counterpartyDAO;
         this.stageDAO = stageDAO;
@@ -129,8 +133,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
             }
         }
 
-        contractDTOList.sort((ContractDTO a1, ContractDTO a2)
-                -> a1.getPlannedStartDate().compareTo(a2.getActualStartDate()));
+        contractDTOList.sort(Comparator.comparing(AbstractContract::getPlannedStartDate));
 
         return excelHelper.convertContractsToExcel(contractDTOList);
     }

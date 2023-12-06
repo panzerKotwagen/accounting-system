@@ -1,4 +1,4 @@
-package ru.kotb.accounting_system.api.service;
+package ru.kotb.accounting_system.service;
 
 
 import org.assertj.core.api.Assertions;
@@ -14,12 +14,15 @@ import ru.kotb.accounting_system.dao.UserDAO;
 import ru.kotb.accounting_system.dto.RegistrationDTO;
 import ru.kotb.accounting_system.entity.Role;
 import ru.kotb.accounting_system.entity.User;
+import ru.kotb.accounting_system.exception_handling.DuplicateUsernameException;
 import ru.kotb.accounting_system.service.impl.AuthenticationService;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -58,5 +61,17 @@ public class AuthenticationServiceTest {
         User savedUser = service.registerUser(dto);
 
         Assertions.assertThat(savedUser).isNotNull();
+    }
+
+    @Test
+    public void registerUserWithExistingUsernameThrowsException() {
+        // given
+        given(userDAO.findByUsername(any()))
+                .willReturn(Optional.of(new User()));
+
+        // then
+        Assertions.assertThatThrownBy(
+                () -> service.registerUser(new RegistrationDTO()))
+                .isInstanceOf(DuplicateUsernameException.class);
     }
 }
