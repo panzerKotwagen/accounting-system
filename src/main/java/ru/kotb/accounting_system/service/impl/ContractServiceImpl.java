@@ -1,21 +1,20 @@
 package ru.kotb.accounting_system.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import ru.kotb.accounting_system.dao.CommonDAO;
 import ru.kotb.accounting_system.dao.ContractDAO;
+import ru.kotb.accounting_system.dao.StageDAO;
 import ru.kotb.accounting_system.dto.ContractDTO;
 import ru.kotb.accounting_system.entity.Contract;
 import ru.kotb.accounting_system.entity.ContractStage;
 import ru.kotb.accounting_system.entity.CounterpartyContract;
 import ru.kotb.accounting_system.entity.group.ContractNull;
 import ru.kotb.accounting_system.excel_helper.ExcelHelper;
-import ru.kotb.accounting_system.service.CommonService;
 import ru.kotb.accounting_system.service.ContractService;
 
-import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -32,16 +31,19 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
 
     private final ExcelHelper excelHelper;
 
-    private final CommonService<CounterpartyContract> counterpartyService;
+    private final CommonDAO<CounterpartyContract> counterpartyDAO;
 
-    private final CommonService<ContractStage> stageService;
+    private final StageDAO stageDAO;
 
-    @Autowired
-    public ContractServiceImpl(ContractDAO contractDAO, ExcelHelper excelHelper, CommonService<CounterpartyContract> counterpartyService, CommonService<ContractStage> stageService) {
-        super(contractDAO);
+    public ContractServiceImpl(ContractDAO genericDAOImpl,
+                               ExcelHelper excelHelper,
+                               CommonDAO<CounterpartyContract> counterpartyDAO,
+                               StageDAO stageDAO) {
+
+        super(genericDAOImpl);
         this.excelHelper = excelHelper;
-        this.counterpartyService = counterpartyService;
-        this.stageService = stageService;
+        this.counterpartyDAO = counterpartyDAO;
+        this.stageDAO = stageDAO;
     }
 
     /**
@@ -91,7 +93,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
         Contract contract = getById(contractId);
         stage.setContract(contract);
 
-        return stageService.saveOrUpdate(stage);
+        return stageDAO.save(stage);
     }
 
     /**
@@ -105,7 +107,7 @@ public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
         Contract contract = getById(contractId);
         counterpartyContract.setContract(contract);
 
-        return counterpartyService.saveOrUpdate(counterpartyContract);
+        return counterpartyDAO.save(counterpartyContract);
     }
 
     /**
