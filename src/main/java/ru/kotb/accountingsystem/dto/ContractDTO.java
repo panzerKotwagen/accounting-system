@@ -15,7 +15,7 @@ public class ContractDTO extends AbstractContract {
     /**
      * The contract type.
      */
-    private String type;
+    private ContractType type;
 
     /**
      * The name of the contract that the contract with counterparties
@@ -28,8 +28,8 @@ public class ContractDTO extends AbstractContract {
      */
     public ContractDTO(Contract contract) {
         setName(contract.getName());
-        type = "Main";
-        setContractType(contract.getContractType());
+        type = ContractType.MAIN_CONTRACT;
+        setKindOfWork(contract.getKindOfWork());
         setActualStartDate(contract.getActualStartDate());
         setActualEndDate(contract.getActualEndDate());
         setPlannedStartDate(contract.getPlannedStartDate());
@@ -42,8 +42,8 @@ public class ContractDTO extends AbstractContract {
      */
     public ContractDTO(CounterpartyContract contract) {
         setName(contract.getName());
-        type = "Counterparty";
-        setContractType(contract.getContractType());
+        type = ContractType.COUNTERPARTY_CONTRACT;
+        setKindOfWork(contract.getKindOfWork());
         setActualStartDate(contract.getActualStartDate());
         setActualEndDate(contract.getActualEndDate());
         setPlannedStartDate(contract.getPlannedStartDate());
@@ -60,7 +60,7 @@ public class ContractDTO extends AbstractContract {
         List<String> list = new ArrayList<>();
         list.add(getName());
         list.add(getType().toString());
-        list.add(getContractType().toString());
+        list.add(getKindOfWork().toString());
         list.add(getPlannedStartDate().toString());
         list.add(getActualStartDate().toString());
         list.add(getPlannedEndDate().toString());

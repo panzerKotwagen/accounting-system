@@ -40,7 +40,7 @@ public class Contract extends AbstractContract {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<CounterpartyContract> counterpartyContracts = new ArrayList<>();
 
-    public Contract(String name, int amount, ContractType contractType,  Date plannedStartDate, Date plannedEndDate) {
+    public Contract(String name, int amount, KindOfWork contractType, Date plannedStartDate, Date plannedEndDate) {
         super(name, amount, contractType, plannedStartDate, plannedEndDate);
     }
 }

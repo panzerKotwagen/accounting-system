@@ -24,14 +24,17 @@ import java.sql.Date;
 @AllArgsConstructor
 public class AbstractContract extends AbstractEntity {
 
-    public enum ContractType {
+    /**
+     * The enum that describes kind of work performed under the contract.
+     */
+    public enum KindOfWork {
         SHIPMENT("Shipment"),
         PURCHASE("Purchase"),
         WORK("Work");
 
         private final String text;
 
-        ContractType(final String text) {
+        KindOfWork(final String text) {
             this.text = text;
         }
 
@@ -63,7 +66,7 @@ public class AbstractContract extends AbstractEntity {
     @NotNull(message = "The field cannot be empty")
     @Column(name="contract_type")
     @Enumerated(EnumType.STRING)
-    protected ContractType contractType;
+    protected AbstractContract.KindOfWork kindOfWork;
 
     /**
      * Expected date when does the contract enter into force.
@@ -95,10 +98,10 @@ public class AbstractContract extends AbstractEntity {
     @FutureOrPresent
     protected Date actualEndDate;
 
-    public AbstractContract(String name, int amount, ContractType contractType, Date plannedStartDate, Date plannedEndDate) {
+    public AbstractContract(String name, int amount, KindOfWork kindOfWork, Date plannedStartDate, Date plannedEndDate) {
         this.name = name;
         this.amount = amount;
-        this.contractType = contractType;
+        this.kindOfWork = kindOfWork;
         this.plannedStartDate = plannedStartDate;
         this.plannedEndDate = plannedEndDate;
     }
