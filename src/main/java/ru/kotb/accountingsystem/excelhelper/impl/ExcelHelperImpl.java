@@ -35,7 +35,7 @@ public class ExcelHelperImpl implements ExcelHelper {
      * @param colIdx the col index
      * @param value  the value to be placed in
      */
-    private void create_cell(int rowIdx, int colIdx, String value) {
+    private void createCell(int rowIdx, int colIdx, String value) {
         Optional<Row> optRow = Optional.ofNullable(sheet.getRow(rowIdx));
         Row row = optRow.orElseGet(() -> sheet.createRow(rowIdx));
         sheet.autoSizeColumn(colIdx);
@@ -46,18 +46,18 @@ public class ExcelHelperImpl implements ExcelHelper {
      * Creates a cell of the specified size with given value in the
      * specified position.
      */
-    private void create_cell(int rowNum, int colNum, String value,
-                             int rowSize, int columnSize) {
+    private void createCell(int rowNum, int colNum, String value,
+                            int rowSize, int columnSize) {
 
-        create_cell(rowNum, colNum, value);
+        createCell(rowNum, colNum, value);
         sheet.addMergedRegion(new CellRangeAddress(
                 rowNum, rowNum + rowSize - 1,
                 colNum, colNum + columnSize - 1));
     }
 
-    private void create_row(int rowIdx, int startColIdx, List<String> values) {
+    private void createRow(int rowIdx, int startColIdx, List<String> values) {
         for (String s : values) {
-            create_cell(rowIdx, startColIdx++, s);
+            createCell(rowIdx, startColIdx++, s);
         }
     }
 
@@ -89,12 +89,12 @@ public class ExcelHelperImpl implements ExcelHelper {
             sheet = workbook.createSheet(sheetName);
 
             for (int col = 0; col < headers.length; col++) {
-                create_cell(rowIdx, col, headers[col]);
+                createCell(rowIdx, col, headers[col]);
             }
             rowIdx++;
 
             for (List<String> contractAttrs : contractAttrLists) {
-                create_row(rowIdx++, 0, contractAttrs);
+                createRow(rowIdx++, 0, contractAttrs);
             }
 
             workbook.write(out);
@@ -128,19 +128,19 @@ public class ExcelHelperImpl implements ExcelHelper {
 
             sheet = workbook.createSheet(sheetName);
 
-            create_cell(rowIdx, colIdx++, twoRowsSizeHead[0], 2, 1);
-            create_cell(rowIdx, colIdx++, twoRowsSizeHead[1], 2, 1);
+            createCell(rowIdx, colIdx++, twoRowsSizeHead[0], 2, 1);
+            createCell(rowIdx, colIdx++, twoRowsSizeHead[1], 2, 1);
 
             for (String colName : twoColSizeHead) {
-                create_cell(rowIdx, colIdx, colName, 1, 2);
-                create_cell(rowIdx + 1, colIdx, subhead[0]);
-                create_cell(rowIdx + 1, colIdx + 1, subhead[1]);
+                createCell(rowIdx, colIdx, colName, 1, 2);
+                createCell(rowIdx + 1, colIdx, subhead[0]);
+                createCell(rowIdx + 1, colIdx + 1, subhead[1]);
                 colIdx += 2;
             }
 
             rowIdx += 2;
             for (ContractStage stage : stages) {
-                create_stage_row(rowIdx++, stage);
+                createStageRow(rowIdx++, stage);
             }
 
             workbook.write(out);
@@ -155,17 +155,17 @@ public class ExcelHelperImpl implements ExcelHelper {
     /**
      * Creates the row with the values of the stage attrs.
      */
-    private void create_stage_row(int rowIdx, ContractStage stage) {
+    private void createStageRow(int rowIdx, ContractStage stage) {
         int colIdx = 0;
-        create_cell(rowIdx, colIdx++, stage.getName());
-        create_cell(rowIdx, colIdx++, String.valueOf(stage.getAmount()));
-        create_cell(rowIdx, colIdx++, String.valueOf(stage.getPlannedStartDate()));
-        create_cell(rowIdx, colIdx++, String.valueOf(stage.getActualStartDate()));
-        create_cell(rowIdx, colIdx++, String.valueOf(stage.getPlannedEndDate()));
-        create_cell(rowIdx, colIdx++, String.valueOf(stage.getActualEndDate()));
-        create_cell(rowIdx, colIdx++, String.valueOf(stage.getPlannedMaterialCost()));
-        create_cell(rowIdx, colIdx++, String.valueOf(stage.getActualMaterialCost()));
-        create_cell(rowIdx, colIdx++, String.valueOf(stage.getPlannedSalaryCost()));
-        create_cell(rowIdx, colIdx, String.valueOf(stage.getActualSalaryCost()));
+        createCell(rowIdx, colIdx++, stage.getName());
+        createCell(rowIdx, colIdx++, String.valueOf(stage.getAmount()));
+        createCell(rowIdx, colIdx++, String.valueOf(stage.getPlannedStartDate()));
+        createCell(rowIdx, colIdx++, String.valueOf(stage.getActualStartDate()));
+        createCell(rowIdx, colIdx++, String.valueOf(stage.getPlannedEndDate()));
+        createCell(rowIdx, colIdx++, String.valueOf(stage.getActualEndDate()));
+        createCell(rowIdx, colIdx++, String.valueOf(stage.getPlannedMaterialCost()));
+        createCell(rowIdx, colIdx++, String.valueOf(stage.getActualMaterialCost()));
+        createCell(rowIdx, colIdx++, String.valueOf(stage.getPlannedSalaryCost()));
+        createCell(rowIdx, colIdx, String.valueOf(stage.getActualSalaryCost()));
     }
 }
