@@ -16,7 +16,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 /**
@@ -55,12 +54,6 @@ public class ExcelHelperImpl implements ExcelHelper {
                 colNum, colNum + columnSize - 1));
     }
 
-    private void createRow(int rowIdx, int startColIdx, List<String> values) {
-        for (String s : values) {
-            createCell(rowIdx, startColIdx++, s);
-        }
-    }
-
     /**
      * Converts contracts list into the Excel spreadsheet represented
      * by ByteArrayInputStream
@@ -81,9 +74,6 @@ public class ExcelHelperImpl implements ExcelHelper {
             };
 
             String sheetName = "Contracts";
-            List<List<String>> contractAttrLists = contracts.stream()
-                    .map(ContractDTO::getAttributesAsStringList)
-                    .collect(Collectors.toList());
             int rowIdx = 0;
 
             sheet = workbook.createSheet(sheetName);
@@ -93,8 +83,8 @@ public class ExcelHelperImpl implements ExcelHelper {
             }
             rowIdx++;
 
-            for (List<String> contractAttrs : contractAttrLists) {
-                createRow(rowIdx++, 0, contractAttrs);
+            for (ContractDTO contract : contracts) {
+                createContractRow(rowIdx++, contract);
             }
 
             workbook.write(out);
@@ -150,6 +140,22 @@ public class ExcelHelperImpl implements ExcelHelper {
             throw new RuntimeException(
                     "Fail to import data to Excel file: " + e.getMessage());
         }
+    }
+
+    /**
+     * Creates the row with the values of the contract attrs.
+     */
+    private void createContractRow(int rowIdx, ContractDTO contract) {
+        int colIdx = 0;
+        createCell(rowIdx, colIdx++, contract.getName());
+        createCell(rowIdx, colIdx++, String.valueOf(contract.getType()));
+        createCell(rowIdx, colIdx++, String.valueOf(contract.getKindOfWork()));
+        createCell(rowIdx, colIdx++, String.valueOf(contract.getPlannedStartDate()));
+        createCell(rowIdx, colIdx++, String.valueOf(contract.getActualStartDate()));
+        createCell(rowIdx, colIdx++, String.valueOf(contract.getPlannedEndDate()));
+        createCell(rowIdx, colIdx++, String.valueOf(contract.getActualEndDate()));
+        createCell(rowIdx, colIdx++, String.valueOf(contract.getAmount()));
+        createCell(rowIdx, colIdx, String.valueOf(contract.getMainContractName()));
     }
 
     /**

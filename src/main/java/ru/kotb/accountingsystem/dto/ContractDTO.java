@@ -1,15 +1,14 @@
 package ru.kotb.accountingsystem.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 import ru.kotb.accountingsystem.entity.AbstractContract;
 import ru.kotb.accountingsystem.entity.Contract;
 import ru.kotb.accountingsystem.entity.CounterpartyContract;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 @Getter
+@Setter
 public class ContractDTO extends AbstractContract {
 
     /**
@@ -35,6 +34,7 @@ public class ContractDTO extends AbstractContract {
         setPlannedStartDate(contract.getPlannedStartDate());
         setPlannedEndDate(contract.getPlannedEndDate());
         setAmount(contract.getAmount());
+        setMainContractName("");
     }
 
     /**
@@ -50,23 +50,5 @@ public class ContractDTO extends AbstractContract {
         setPlannedEndDate(contract.getPlannedEndDate());
         setAmount(contract.getAmount());
         mainContractName = contract.getContract().getName();
-    }
-
-    /**
-     * Returns the list with values of object attributes in String
-     * format.
-     */
-    public List<String> getAttributesAsStringList() {
-        List<String> list = new ArrayList<>();
-        list.add(getName());
-        list.add(getType().toString());
-        list.add(getKindOfWork().toString());
-        list.add(getPlannedStartDate().toString());
-        list.add(getActualStartDate().toString());
-        list.add(getPlannedEndDate().toString());
-        list.add(getActualEndDate().toString());
-        list.add(String.valueOf(getAmount()));
-        list.add(getMainContractName());
-        return list;
     }
 }
