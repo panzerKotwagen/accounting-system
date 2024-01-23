@@ -200,12 +200,12 @@ public class ContractController
      */
     @GetMapping("/report/download")
     public ResponseEntity<Resource> downloadContractsReport(
-            @RequestParam(value = "startDate") Optional<Date> startDate,
-            @RequestParam(value = "endDate") Optional<Date> endDate) {
+            @RequestParam(value = "startDate") Date startDate,
+            @RequestParam(value = "endDate") Date endDate) {
 
         String filename = "contracts.xlsx";
         InputStreamResource file = new InputStreamResource(
-                service.getContractsReport(startDate.get(), endDate.get()));
+                service.getContractsReport(startDate, endDate));
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
