@@ -18,7 +18,6 @@ import javax.validation.constraints.Pattern;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//TODO: don't write full name of the filed in the exception message
 public class RegistrationDTO {
 
     /**

@@ -66,9 +66,9 @@ public class AuthenticationService {
      */
     @Transactional
     public User registerUser(@Valid RegistrationDTO registrationDTO) {
-        if (userDAO.findByUsername(registrationDTO.getUsername()).isPresent())
+        if (userDAO.findByUsername(registrationDTO.getUsername()).isPresent()) {
             throw new DuplicateUsernameException("This username is already taken");
-
+        }
 
         if (!roleDAO.findByAuthority("USER").isPresent()) {
             roleDAO.save(new Role("USER"));
