@@ -5,7 +5,8 @@ services:
     container_name: db_container
     env_file: .env
     build:
-      context: ./docker/db
+      context: .
+      dockerfile: ./docker/app/Dockerfile
       args:
         - MYSQL_DATABASE=${MYSQL_DATABASE}
         - MYSQL_USER=${MYSQL_USER}
