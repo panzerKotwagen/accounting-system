@@ -1,6 +1,5 @@
 package ru.kotb.accountingsystem.service;
 
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
+
 @ExtendWith(MockitoExtension.class)
 public class AuthenticationServiceTest {
 
@@ -42,7 +42,7 @@ public class AuthenticationServiceTest {
 
     @Test
     public void registerUserReturnNewUser() {
-        Role role = new Role("USER");
+        Role role = new Role(Role.RoleType.USER);
         RegistrationDTO dto = new RegistrationDTO(
                 "Name", "Username", "123456Aa");
         Set<Role> authorities = new HashSet<>();

@@ -70,10 +70,6 @@ public class AuthenticationService {
             throw new DuplicateUsernameException("This username is already taken");
         }
 
-        if (!roleDAO.findByAuthority("USER").isPresent()) {
-            roleDAO.save(new Role("USER"));
-        }
-
         Role userRole = roleDAO.findByAuthority("USER").get();
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);

@@ -25,15 +25,15 @@ public class RoleDAOTest {
 
     @Test
     public void findByNonExistedAuthorityReturnsEmptyOptional() {
-        Optional<Role> roleOptional = roleDAO.findByAuthority("USER_1");
+        Optional<Role> roleOptional = roleDAO.findByAuthority("USER");
         Assertions.assertThat(roleOptional).isEmpty();
     }
 
     @Test
     public void findByExistedAuthorityReturnNonEmptyOptional() {
-        Role role = new Role("ADMIN1");
+        Role role = new Role(Role.RoleType.ADMIN);
         roleDAO.save(role);
-        Optional<Role> optionalRole = roleDAO.findByAuthority("ADMIN1");
+        Optional<Role> optionalRole = roleDAO.findByAuthority("ADMIN");
         Assertions.assertThat(optionalRole).isNotEmpty();
     }
 }

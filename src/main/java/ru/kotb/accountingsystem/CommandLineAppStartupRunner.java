@@ -31,14 +31,21 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Creates the possible roles of the users.
+     * @param args
+     */
     @Override
     public void run(String... args) {
         if (!roleDAO.findByAuthority("USER").isPresent()) {
-            roleDAO.save(new Role("USER"));
+            roleDAO.save(new Role(Role.RoleType.USER));
         }
 
-        if (roleDAO.findByAuthority("ADMIN").isPresent()) return;
-        Role adminRole = roleDAO.save(new Role("ADMIN"));
+        if (roleDAO.findByAuthority("ADMIN").isPresent()) {
+            return;
+        }
+
+        Role adminRole = roleDAO.save(new Role(Role.RoleType.ADMIN));
 
         Set<Role> roles = new HashSet<>();
         roles.add(adminRole);
