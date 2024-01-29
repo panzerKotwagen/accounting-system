@@ -18,7 +18,7 @@ public class UserValidationTest {
 
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-    private final Set<Role> authorities = Collections.singleton(new Role(Role.RoleType.USER));
+    private final Set<Role> authorities = Collections.singleton(new Role(Role.Authority.USER));
 
     @Test
     void fullNameMustNotBeNull() {

@@ -33,19 +33,18 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
     /**
      * Creates the possible roles of the users.
-     * @param args
      */
     @Override
     public void run(String... args) {
         if (!roleDAO.findByAuthority("USER").isPresent()) {
-            roleDAO.save(new Role(Role.RoleType.USER));
+            roleDAO.save(new Role(Role.Authority.USER));
         }
 
         if (roleDAO.findByAuthority("ADMIN").isPresent()) {
             return;
         }
 
-        Role adminRole = roleDAO.save(new Role(Role.RoleType.ADMIN));
+        Role adminRole = roleDAO.save(new Role(Role.Authority.ADMIN));
 
         Set<Role> roles = new HashSet<>();
         roles.add(adminRole);

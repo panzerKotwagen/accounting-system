@@ -42,7 +42,7 @@ public class AuthenticationServiceTest {
 
     @Test
     public void registerUserReturnNewUser() {
-        Role role = new Role(Role.RoleType.USER);
+        Role role = new Role(Role.Authority.USER);
         RegistrationDTO dto = new RegistrationDTO(
                 "Name", "Username", "123456Aa");
         Set<Role> authorities = new HashSet<>();

@@ -26,15 +26,15 @@ import javax.persistence.Table;
 public class Role extends AbstractEntity implements GrantedAuthority {
 
     /**
-     * The available role types for users.
+     * The available role authorities for users.
      */
-    public enum RoleType {
+    public enum Authority {
         ADMIN("ADMIN"),
         USER("USER");
 
         private final String text;
 
-        RoleType(final String text) {
+        Authority(final String text) {
             this.text = text;
         }
 
@@ -45,17 +45,17 @@ public class Role extends AbstractEntity implements GrantedAuthority {
     }
 
     /**
-     * The type of the role.
+     * The authority of the role.
      */
     @Column(name = "authority", nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private RoleType roleType;
+    private Authority authority;
 
     /**
-     * Returns the role type name.
+     * Returns the role authority.
      */
     public String getAuthority() {
-        return roleType.toString();
+        return authority.toString();
     }
 }

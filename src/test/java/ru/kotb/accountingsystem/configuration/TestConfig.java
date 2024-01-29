@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import ru.kotb.accountingsystem.dao.CommonDAO;
 import ru.kotb.accountingsystem.dao.ContractDAO;
-import ru.kotb.accountingsystem.dao.RoleDAO;
 import ru.kotb.accountingsystem.dao.StageDAO;
 import ru.kotb.accountingsystem.dao.UserDAO;
 
@@ -28,11 +27,6 @@ public class TestConfig {
     @Bean
     public ContractDAO contractDAO() {
         return new ContractDAO(entityManager);
-    }
-
-    @Bean
-    public RoleDAO roleDAO() {
-        return new RoleDAO(entityManager);
     }
 
     @Bean
