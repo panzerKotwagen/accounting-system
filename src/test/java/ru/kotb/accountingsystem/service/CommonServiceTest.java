@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.kotb.accountingsystem.entity.TestEntity;
-import ru.kotb.accountingsystem.dao.CommonDAO;
+import ru.kotb.accountingsystem.repository.CommonDAO;
 import ru.kotb.accountingsystem.exception.handling.NoSuchEntityException;
 
 import java.util.NoSuchElementException;

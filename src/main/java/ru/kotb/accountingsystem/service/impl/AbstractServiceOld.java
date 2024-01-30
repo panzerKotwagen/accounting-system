@@ -2,7 +2,7 @@ package ru.kotb.accountingsystem.service.impl;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import ru.kotb.accountingsystem.dao.AbstractDAO;
+import ru.kotb.accountingsystem.repository.AbstractDAO;
 import ru.kotb.accountingsystem.entity.AbstractEntity;
 import ru.kotb.accountingsystem.exception.handling.NoSuchEntityException;
 import ru.kotb.accountingsystem.service.CommonService;

@@ -1,7 +1,7 @@
 package ru.kotb.accountingsystem.service;
 
 import ru.kotb.accountingsystem.entity.TestEntity;
-import ru.kotb.accountingsystem.dao.CommonDAO;
+import ru.kotb.accountingsystem.repository.CommonDAO;
 import ru.kotb.accountingsystem.service.impl.AbstractServiceOld;
 
 

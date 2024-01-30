@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.kotb.accountingsystem.dao.UserDAO;
+import ru.kotb.accountingsystem.repository.UserDAO;
 import ru.kotb.accountingsystem.entity.User;
 import ru.kotb.accountingsystem.exception.handling.DuplicateUsernameException;
 import ru.kotb.accountingsystem.service.impl.UserService;

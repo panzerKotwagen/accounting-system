@@ -3,7 +3,7 @@ package ru.kotb.accountingsystem.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.kotb.accountingsystem.dao.CommonDAO;
+import ru.kotb.accountingsystem.repository.CommonRepository;
 import ru.kotb.accountingsystem.entity.Organisation;
 
 
@@ -13,11 +13,10 @@ import ru.kotb.accountingsystem.entity.Organisation;
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
 public class OrganisationService
-        extends AbstractServiceOld<Organisation, CommonDAO<Organisation>> {
+        extends AbstractService<Organisation, CommonRepository<Organisation>> {
 
     @Autowired
-    public OrganisationService(CommonDAO<Organisation> organisationDAO) {
+    public OrganisationService(CommonRepository<Organisation> organisationDAO) {
         super(organisationDAO);
-        organisationDAO.setClass(Organisation.class);
     }
 }

@@ -1,4 +1,4 @@
-package ru.kotb.accountingsystem.dao;
+package ru.kotb.accountingsystem.repository;
 
 
 import org.springframework.stereotype.Repository;

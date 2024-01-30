@@ -3,7 +3,7 @@ package ru.kotb.accountingsystem.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.kotb.accountingsystem.dao.CommonDAO;
+import ru.kotb.accountingsystem.repository.CommonDAO;
 import ru.kotb.accountingsystem.entity.CounterpartyContract;
 
 

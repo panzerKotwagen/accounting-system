@@ -1,6 +1,5 @@
-package ru.kotb.accountingsystem.dao;
+package ru.kotb.accountingsystem.repository;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.kotb.accountingsystem.entity.ContractStage;
 
@@ -16,7 +15,7 @@ public interface StageRepository extends CommonRepository<ContractStage> {
      * @param contractId the id of the contract
      * @return list of the stages of the specified contract
      */
-    @Query("SELECT FROM CONTRACT_STAGES WHERE CONTRACT_ID = ?1")
+//    @Query("SELECT FROM CONTRACT_STAGES WHERE CONTRACT_ID = ?1")
     List<ContractStage> findByContractId(int contractId);
 
     /**

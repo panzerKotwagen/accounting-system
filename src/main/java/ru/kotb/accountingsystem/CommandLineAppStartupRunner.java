@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.kotb.accountingsystem.dao.RoleRepository;
-import ru.kotb.accountingsystem.dao.UserDAO;
+import ru.kotb.accountingsystem.repository.RoleRepository;
+import ru.kotb.accountingsystem.repository.UserDAO;
 import ru.kotb.accountingsystem.entity.Role;
 import ru.kotb.accountingsystem.entity.User;
 
