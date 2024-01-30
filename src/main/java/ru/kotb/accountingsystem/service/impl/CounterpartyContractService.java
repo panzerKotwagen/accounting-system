@@ -13,8 +13,8 @@ import ru.kotb.accountingsystem.entity.CounterpartyContract;
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
 public class CounterpartyContractService
-        extends AbstractService<CounterpartyContract,
-        CommonDAO<CounterpartyContract>> {
+        extends AbstractServiceOld<CounterpartyContract,
+                CommonDAO<CounterpartyContract>> {
 
     @Autowired
     public CounterpartyContractService(CommonDAO<CounterpartyContract> counterpartyContractDAO) {

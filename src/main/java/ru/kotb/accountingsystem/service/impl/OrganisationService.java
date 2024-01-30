@@ -13,7 +13,7 @@ import ru.kotb.accountingsystem.entity.Organisation;
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
 public class OrganisationService
-        extends AbstractService<Organisation, CommonDAO<Organisation>> {
+        extends AbstractServiceOld<Organisation, CommonDAO<Organisation>> {
 
     @Autowired
     public OrganisationService(CommonDAO<Organisation> organisationDAO) {

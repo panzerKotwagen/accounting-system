@@ -13,7 +13,7 @@ import ru.kotb.accountingsystem.entity.ContractStage;
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
 public class ContractStageService
-        extends AbstractService<ContractStage, CommonDAO<ContractStage>> {
+        extends AbstractServiceOld<ContractStage, CommonDAO<ContractStage>> {
 
     @Autowired
     public ContractStageService(CommonDAO<ContractStage> contractStageDAO) {

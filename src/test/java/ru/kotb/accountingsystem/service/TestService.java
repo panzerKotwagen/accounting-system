@@ -2,11 +2,11 @@ package ru.kotb.accountingsystem.service;
 
 import ru.kotb.accountingsystem.entity.TestEntity;
 import ru.kotb.accountingsystem.dao.CommonDAO;
-import ru.kotb.accountingsystem.service.impl.AbstractService;
+import ru.kotb.accountingsystem.service.impl.AbstractServiceOld;
 
 
 public class TestService
-        extends AbstractService<TestEntity, CommonDAO<TestEntity>> {
+        extends AbstractServiceOld<TestEntity, CommonDAO<TestEntity>> {
 
     /**
      * Links the specified DAO with the service.

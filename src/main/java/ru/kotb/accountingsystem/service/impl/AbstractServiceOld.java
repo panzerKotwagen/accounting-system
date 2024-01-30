@@ -2,7 +2,7 @@ package ru.kotb.accountingsystem.service.impl;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import ru.kotb.accountingsystem.dao.CommonRepository;
+import ru.kotb.accountingsystem.dao.AbstractDAO;
 import ru.kotb.accountingsystem.entity.AbstractEntity;
 import ru.kotb.accountingsystem.exception.handling.NoSuchEntityException;
 import ru.kotb.accountingsystem.service.CommonService;
@@ -20,24 +20,24 @@ import java.util.NoSuchElementException;
  * setter in the constructor.
  *
  * @param <E> the class of the entity
- * @param <R> the class of the repository
+ * @param <D> the class of the DAO
  */
 @Validated
-public abstract class AbstractService<E extends AbstractEntity,
-        R extends CommonRepository<E>> implements CommonService<E> {
+public abstract class AbstractServiceOld<E extends AbstractEntity,
+        D extends AbstractDAO<E>> implements CommonService<E> {
 
     /**
      * The repository for getting access to the specified table.
      */
-    protected final R repository;
+    protected final D DAO;
 
     /**
-     * Links the specified repository with the service.
+     * Links the specified DAO with the service.
      *
-     * @param genericRepository the repository of the specified entity class
+     * @param genericDAOImpl the DAO of the specified entity class
      */
-    public AbstractService(R genericRepository) {
-        this.repository = genericRepository;
+    public AbstractServiceOld(D genericDAOImpl) {
+        this.DAO = genericDAOImpl;
     }
 
     /**
@@ -48,7 +48,7 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public List<E> getAll() {
-        return repository.findAll();
+        return DAO.findAll();
     }
 
     /**
@@ -59,7 +59,7 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public E save(@Valid E entity) {
-        return repository.save(entity);
+        return DAO.save(entity);
     }
 
     /**
@@ -69,11 +69,11 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public E update(@Valid E entity) {
-        repository.findById(entity.getId()).orElseThrow(
+        DAO.findById(entity.getId()).orElseThrow(
                 () -> new NoSuchEntityException("There is no entity with ID = "
                         + entity.getId() + " in the database."));
 
-        return repository.save(entity);
+        return DAO.save(entity);
     }
 
     /**
@@ -85,9 +85,9 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Override
     @Transactional
     public E getById(int id) {
-        return repository.findById(id).orElseThrow(
+        return DAO.findById(id).orElseThrow(
                 () -> new NoSuchEntityException("There is no entity with ID = "
-                        + id + " in the database."));
+                + id + " in the database."));
     }
 
     /**
@@ -99,7 +99,7 @@ public abstract class AbstractService<E extends AbstractEntity,
     @Transactional
     public void deleteById(int id) {
         try {
-            repository.deleteById(id);
+            DAO.deleteById(id);
         } catch (NoSuchElementException e) {
             throw new NoSuchEntityException("There is no entity with ID = "
                     + id + " in the database.");

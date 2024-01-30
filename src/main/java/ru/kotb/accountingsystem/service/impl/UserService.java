@@ -23,7 +23,7 @@ import javax.validation.Valid;
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
 @Validated
-public class UserService extends AbstractService<User, UserDAO>
+public class UserService extends AbstractServiceOld<User, UserDAO>
         implements CommonService<User>, UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;

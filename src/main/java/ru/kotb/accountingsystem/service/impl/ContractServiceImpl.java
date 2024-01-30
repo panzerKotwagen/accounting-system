@@ -29,7 +29,7 @@ import java.util.List;
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
-public class ContractServiceImpl extends AbstractService<Contract, ContractDAO>
+public class ContractServiceImpl extends AbstractServiceOld<Contract, ContractDAO>
         implements ContractService {
 
     private final ExcelHelper excelHelper;
