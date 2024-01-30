@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotb.accountingsystem.configuration.TestConfig;
 import ru.kotb.accountingsystem.entity.TestEntity;
 
 import java.util.List;
@@ -22,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
  * Tests for {@code CommonRepository<E>}.
  */
 @DataJpaTest
-@Import(TestConfig.class)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @Transactional
 public class CommonRepositoryTest {

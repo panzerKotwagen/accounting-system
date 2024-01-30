@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.kotb.accountingsystem.repository.RoleRepository;
-import ru.kotb.accountingsystem.repository.UserDAO;
 import ru.kotb.accountingsystem.entity.Role;
 import ru.kotb.accountingsystem.entity.User;
+import ru.kotb.accountingsystem.repository.RoleRepository;
+import ru.kotb.accountingsystem.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
@@ -18,16 +18,16 @@ import java.util.Set;
 @Transactional
 public class CommandLineAppStartupRunner implements CommandLineRunner {
 
-    UserDAO userDAO;
+    UserRepository userRep;
 
-    RoleRepository roleDAO;
+    RoleRepository roleRep;
 
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CommandLineAppStartupRunner(UserDAO userDAO, RoleRepository roleDAO, PasswordEncoder passwordEncoder) {
-        this.userDAO = userDAO;
-        this.roleDAO = roleDAO;
+    public CommandLineAppStartupRunner(UserRepository userRep, RoleRepository roleRep, PasswordEncoder passwordEncoder) {
+        this.userRep = userRep;
+        this.roleRep = roleRep;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -36,21 +36,21 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
      */
     @Override
     public void run(String... args) {
-        if (!roleDAO.findByAuthority("USER").isPresent()) {
-            roleDAO.save(new Role(Role.Authority.USER));
+        if (!roleRep.findByAuthority("USER").isPresent()) {
+            roleRep.save(new Role(Role.Authority.USER));
         }
 
-        if (roleDAO.findByAuthority("ADMIN").isPresent()) {
+        if (roleRep.findByAuthority("ADMIN").isPresent()) {
             return;
         }
 
-        Role adminRole = roleDAO.save(new Role(Role.Authority.ADMIN));
+        Role adminRole = roleRep.save(new Role(Role.Authority.ADMIN));
 
         Set<Role> roles = new HashSet<>();
         roles.add(adminRole);
 
         User admin = new User("Viktor", "admin", passwordEncoder.encode("password"), roles);
 
-        userDAO.save(admin);
+        userRep.save(admin);
     }
 }
