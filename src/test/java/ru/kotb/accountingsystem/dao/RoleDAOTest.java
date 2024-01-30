@@ -21,7 +21,7 @@ import java.util.Optional;
 public class RoleDAOTest {
 
     @Autowired
-    private RoleDAO roleDAO;
+    private RoleRepository roleDAO;
 
     @Test
     public void findByNonExistedAuthorityReturnsEmptyOptional() {

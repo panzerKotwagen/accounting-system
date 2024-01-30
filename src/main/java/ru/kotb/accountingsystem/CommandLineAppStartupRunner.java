@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.kotb.accountingsystem.dao.RoleDAO;
+import ru.kotb.accountingsystem.dao.RoleRepository;
 import ru.kotb.accountingsystem.dao.UserDAO;
 import ru.kotb.accountingsystem.entity.Role;
 import ru.kotb.accountingsystem.entity.User;
@@ -20,12 +20,12 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
     UserDAO userDAO;
 
-    RoleDAO roleDAO;
+    RoleRepository roleDAO;
 
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CommandLineAppStartupRunner(UserDAO userDAO, RoleDAO roleDAO, PasswordEncoder passwordEncoder) {
+    public CommandLineAppStartupRunner(UserDAO userDAO, RoleRepository roleDAO, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
         this.roleDAO = roleDAO;
         this.passwordEncoder = passwordEncoder;

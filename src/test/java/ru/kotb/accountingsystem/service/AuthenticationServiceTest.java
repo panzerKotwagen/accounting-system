@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.kotb.accountingsystem.dao.RoleDAO;
+import ru.kotb.accountingsystem.dao.RoleRepository;
 import ru.kotb.accountingsystem.dao.UserDAO;
 import ru.kotb.accountingsystem.dto.RegistrationDTO;
 import ru.kotb.accountingsystem.entity.Role;
@@ -32,7 +32,7 @@ public class AuthenticationServiceTest {
     private UserDAO userDAO;
 
     @Mock
-    private RoleDAO roleDAO;
+    private RoleRepository roleDAO;
 
     @Mock
     private PasswordEncoder passwordEncoder;

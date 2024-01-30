@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import ru.kotb.accountingsystem.dao.RoleDAO;
+import ru.kotb.accountingsystem.dao.RoleRepository;
 import ru.kotb.accountingsystem.dao.UserDAO;
 import ru.kotb.accountingsystem.dto.RegistrationDTO;
 import ru.kotb.accountingsystem.entity.Role;
@@ -35,7 +35,7 @@ public class AuthenticationService {
     /**
      * The DAO object for getting access to the "roles" table.
      */
-    private final RoleDAO roleDAO;
+    private final RoleRepository roleDAO;
 
     /**
      * The password encoder.
@@ -50,7 +50,7 @@ public class AuthenticationService {
      * @param passwordEncoder the password encoder
      */
     @Autowired
-    public AuthenticationService(UserDAO userDAO, RoleDAO roleDAO, PasswordEncoder passwordEncoder) {
+    public AuthenticationService(UserDAO userDAO, RoleRepository roleDAO, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
         this.roleDAO = roleDAO;
         this.passwordEncoder = passwordEncoder;

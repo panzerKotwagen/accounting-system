@@ -12,7 +12,7 @@ import java.util.Optional;
  * The repository to work with the {@code Role} entity.
  */
 @Repository
-public interface RoleDAO extends CommonRepository<Role> {
+public interface RoleRepository extends CommonRepository<Role> {
 
     /**
      * Returns the role with specified name.
