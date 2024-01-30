@@ -9,8 +9,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kotb.accountingsystem.configuration.TestConfig;
-import ru.kotb.accountingsystem.entity.Role;
+import ru.kotb.accountingsystem.entity.User;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 
@@ -18,22 +19,23 @@ import java.util.Optional;
 @Import(TestConfig.class)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @Transactional
-public class RoleDAOTest {
+public class UserRepositoryTest {
 
     @Autowired
-    private RoleRepository roleDAO;
+    private UserRepository userRep;
 
     @Test
-    public void findByNonExistedAuthorityReturnsEmptyOptional() {
-        Optional<Role> roleOptional = roleDAO.findByAuthority("USER");
-        Assertions.assertThat(roleOptional).isEmpty();
+    public void findByUsernameReturnUserNotEmpty() {
+        User user = new User("Test", "Test", "Test", new HashSet<>());
+        userRep.save(user);
+
+        Optional<User> optionalUser = userRep.findByUsername("Test");
+        Assertions.assertThat(optionalUser).isNotEmpty();
     }
 
     @Test
-    public void findByExistedAuthorityReturnNonEmptyOptional() {
-        Role role = new Role(Role.Authority.ADMIN);
-        roleDAO.save(role);
-        Optional<Role> optionalRole = roleDAO.findByAuthority("ADMIN");
-        Assertions.assertThat(optionalRole).isNotEmpty();
+    public void findByUsernameReturnUserEmpty() {
+        Optional<User> optionalUser = userRep.findByUsername("ERROR");
+        Assertions.assertThat(optionalUser).isEmpty();
     }
 }

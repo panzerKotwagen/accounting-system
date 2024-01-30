@@ -19,10 +19,10 @@ import java.util.List;
 @Import(TestConfig.class)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @Transactional
-public class ContractDAOTest {
+public class ContractRepositoryTest {
 
     @Autowired
-    ContractDAO contractDAO;
+    ContractRepository contractRep;
 
     @Test
     void findAllWhereDateBetween() {
@@ -36,13 +36,29 @@ public class ContractDAOTest {
         contract3.setPlannedStartDate(Date.valueOf("2023-12-05"));
         contract3.setPlannedEndDate(Date.valueOf("2023-12-30"));
 
-        contractDAO.save(contract1);
-        contractDAO.save(contract2);
-        contractDAO.save(contract3);
+        contractRep.save(contract1);
+        contractRep.save(contract2);
+        contractRep.save(contract3);
 
         Date start = Date.valueOf("2023-12-05");
         Date end = Date.valueOf("2023-12-30");
-        List<Contract> list = contractDAO.findAllWhereDateBetween(start, end);
+        List<Contract> list = contractRep.findByPlannedStartDateGreaterThanEqualAndPlannedEndDateLessThanEqual(start, end);
+
+        Assertions.assertThat(list.size()).isEqualTo(1);
+    }
+
+    @Test
+    void findWhereDateGetsBoundaryValues() {
+        Contract contract1 = new Contract();
+
+        contract1.setPlannedStartDate(Date.valueOf("1812-12-12"));
+        contract1.setPlannedEndDate(Date.valueOf("1813-12-13"));
+
+        contractRep.save(contract1);
+
+        Date start = Date.valueOf("1812-12-12");
+        Date end = Date.valueOf("1813-12-13");
+        List<Contract> list = contractRep.findByPlannedStartDateGreaterThanEqualAndPlannedEndDateLessThanEqual(start, end);
 
         Assertions.assertThat(list.size()).isEqualTo(1);
     }

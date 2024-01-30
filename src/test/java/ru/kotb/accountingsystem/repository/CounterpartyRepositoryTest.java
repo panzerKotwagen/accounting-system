@@ -18,48 +18,46 @@ import ru.kotb.accountingsystem.entity.Organisation;
 @Import(TestConfig.class)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @Transactional
-public class CounterpartyDAOTest {
+public class CounterpartyRepositoryTest {
 
-    private final CommonDAO<CounterpartyContract> contractDAO;
+    private final CounterpartyContractRepository contractRep;
 
-    private final CommonDAO<Organisation> orgDAO;
+    private final OrganisationRepository orgRep;
 
     private Organisation org;
 
     private CounterpartyContract contract;
 
     @Autowired
-    public CounterpartyDAOTest(CommonDAO<CounterpartyContract> contractDAO, CommonDAO<Organisation> orgDAO) {
-        this.contractDAO = contractDAO;
-        this.orgDAO = orgDAO;
-        contractDAO.setClass(CounterpartyContract.class);
-        orgDAO.setClass(Organisation.class);
+    public CounterpartyRepositoryTest(CounterpartyContractRepository contractRep, OrganisationRepository orgRep) {
+        this.contractRep = contractRep;
+        this.orgRep = orgRep;
     }
 
 
     @BeforeEach
     public void init()  {
         org = new Organisation();
-        org = orgDAO.save(org);
+        org = orgRep.save(org);
 
         contract = new CounterpartyContract();
         contract.setOrganisation(org);
-        contract = contractDAO.save(contract);
+        contract = contractRep.save(contract);
         org.getContracts().add(contract);
     }
 
     @Test
     public void deleteOrganisationDeletesContracts() {
-        orgDAO.deleteById(org.getId());
+        orgRep.deleteById(org.getId());
 
-        Assertions.assertThat(contractDAO.findById(contract.getId())).isEmpty();
+        Assertions.assertThat(contractRep.findById(contract.getId())).isEmpty();
     }
 
     @Test
     public void updateOrganisation() {
         org.setName("Test");
 
-        orgDAO.save(org);
+        orgRep.save(org);
 
         Assertions.assertThat(contract.getOrganisation().getName())
                 .isEqualTo("Test");
@@ -67,9 +65,9 @@ public class CounterpartyDAOTest {
 
     @Test
     public void deleteContractDontDeleteOrganisation() {
-        contractDAO.deleteById(contract.getId());
+        contractRep.deleteById(contract.getId());
 
-        Assertions.assertThat(orgDAO.findById(org.getId())).isNotEmpty();
-        Assertions.assertThat(contractDAO.findById(contract.getId())).isEmpty();
+        Assertions.assertThat(orgRep.findById(org.getId())).isNotEmpty();
+        Assertions.assertThat(contractRep.findById(contract.getId())).isEmpty();
     }
 }
