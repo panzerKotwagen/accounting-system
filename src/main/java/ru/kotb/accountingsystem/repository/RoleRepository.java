@@ -1,6 +1,5 @@
 package ru.kotb.accountingsystem.repository;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kotb.accountingsystem.entity.Role;

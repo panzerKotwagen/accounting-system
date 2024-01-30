@@ -28,12 +28,12 @@ import java.util.Set;
 public class AuthenticationService {
 
     /**
-     * The DAO object for getting access to the "users" table.
+     * The repository object for getting access to the "users" table.
      */
     private final UserRepository userRep;
 
     /**
-     * The DAO object for getting access to the "roles" table.
+     * The repository object for getting access to the "roles" table.
      */
     private final RoleRepository roleRep;
 
@@ -45,8 +45,8 @@ public class AuthenticationService {
     /**
      * Constructs the bean and inject the dependencies.
      *
-     * @param userRep         the user DAO
-     * @param roleRep         the role DAO
+     * @param userRep         the user repository
+     * @param roleRep         the role repository
      * @param passwordEncoder the password encoder
      */
     @Autowired

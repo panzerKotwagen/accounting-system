@@ -1,6 +1,5 @@
 package ru.kotb.accountingsystem.repository;
 
-
 import org.springframework.stereotype.Repository;
 import ru.kotb.accountingsystem.entity.User;
 
