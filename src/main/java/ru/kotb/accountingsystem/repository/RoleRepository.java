@@ -21,6 +21,5 @@ public interface RoleRepository extends CommonRepository<Role> {
      * @return the role with specified name
      */
     @Transactional
-    @Query(value = "SELECT * FROM ROLES WHERE AUTHORITY = ?1", nativeQuery = true)
-    Optional<Role> findByAuthority(String authority);
+    Optional<Role> findByAuthority(Role.Authority authority);
 }

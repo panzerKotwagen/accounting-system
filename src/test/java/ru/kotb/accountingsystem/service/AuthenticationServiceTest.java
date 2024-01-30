@@ -55,7 +55,7 @@ public class AuthenticationServiceTest {
                 authorities);
 
         when(userRep.save(Mockito.any(User.class))).thenReturn(newUser);
-        when(roleRep.findByAuthority("USER")).thenReturn(Optional.of(role));
+        when(roleRep.findByAuthority(Role.Authority.valueOf("USER"))).thenReturn(Optional.of(role));
         when(passwordEncoder.encode(Mockito.any(String.class))).thenReturn(dto.getPassword());
 
         User savedUser = service.registerUser(dto);

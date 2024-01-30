@@ -70,7 +70,7 @@ public class AuthenticationService {
             throw new DuplicateUsernameException("This username is already taken");
         }
 
-        Role userRole = roleRep.findByAuthority("USER").get();
+        Role userRole = roleRep.findByAuthority(Role.Authority.valueOf("USER")).get();
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);
 

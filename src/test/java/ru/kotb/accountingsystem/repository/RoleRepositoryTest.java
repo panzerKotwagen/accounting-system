@@ -22,7 +22,7 @@ public class RoleRepositoryTest {
 
     @Test
     public void findByNonExistedAuthorityReturnsEmptyOptional() {
-        Optional<Role> roleOptional = roleRep.findByAuthority("USER");
+        Optional<Role> roleOptional = roleRep.findByAuthority(Role.Authority.valueOf("USER"));
         Assertions.assertThat(roleOptional).isEmpty();
     }
 
@@ -30,7 +30,7 @@ public class RoleRepositoryTest {
     public void findByExistedAuthorityReturnNonEmptyOptional() {
         Role role = new Role(Role.Authority.ADMIN);
         roleRep.save(role);
-        Optional<Role> optionalRole = roleRep.findByAuthority("ADMIN");
+        Optional<Role> optionalRole = roleRep.findByAuthority(Role.Authority.valueOf("ADMIN"));
         Assertions.assertThat(optionalRole).isNotEmpty();
     }
 }

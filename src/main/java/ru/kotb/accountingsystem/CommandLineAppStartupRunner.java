@@ -36,11 +36,11 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
      */
     @Override
     public void run(String... args) {
-        if (!roleRep.findByAuthority("USER").isPresent()) {
+        if (!roleRep.findByAuthority(Role.Authority.valueOf("USER")).isPresent()) {
             roleRep.save(new Role(Role.Authority.USER));
         }
 
-        if (roleRep.findByAuthority("ADMIN").isPresent()) {
+        if (roleRep.findByAuthority(Role.Authority.valueOf("ADMIN")).isPresent()) {
             return;
         }
 
