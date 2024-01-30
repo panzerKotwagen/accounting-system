@@ -28,8 +28,9 @@ public class Contract extends AbstractContract {
     /**
      * The stages of the contract.
      */
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH,
-            CascadeType.REMOVE}, mappedBy = "contract")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.DETACH, CascadeType.REMOVE}, mappedBy = "contract",
+            orphanRemoval = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<ContractStage> contractStages = new ArrayList<>();
 

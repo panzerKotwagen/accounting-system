@@ -21,13 +21,13 @@ import java.util.List;
 @Import(TestConfig.class)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @Transactional
-public class StageDAOTest {
+public class StageRepositoryTest {
 
     @Autowired
-    private StageDAO stageDAO;
+    private StageRepository stageRep;
 
     @Autowired
-    private ContractDAO contractDAO;
+    private ContractRepository contractRep;
 
     private Contract contract;
 
@@ -43,21 +43,21 @@ public class StageDAOTest {
         contract.getContractStages().add(stage1);
         contract.getContractStages().add(stage2);
 
-        contract = contractDAO.save(contract);
+        contract = contractRep.save(contract);
     }
 
     @Test
-    public void findAllByContractIdReturnStages() {
-        List<ContractStage> stages = stageDAO.findAllByContractId(contract.getId());
+    public void findByContractIdReturnStages() {
+        List<ContractStage> stages = stageRep.findByContractId(contract.getId());
 
         Assertions.assertThat(stages.size()).isEqualTo(2);
     }
 
     @Test
     public void deleteContractDeleteStages() {
-        contractDAO.deleteById(contract.getId());
+        contractRep.deleteById(contract.getId());
 
-        List<ContractStage> stages = stageDAO.findAllByContractId(contract.getId());
+        List<ContractStage> stages = stageRep.findByContractId(contract.getId());
 
         Assertions.assertThat(stages.size()).isEqualTo(0);
     }
@@ -66,10 +66,10 @@ public class StageDAOTest {
     public void deleteStageDeleteStageFromContract() {
         int stageId = contract.getContractStages().get(0).getId();
 
-        stageDAO.deleteById(stageId);
+        stageRep.deleteById(stageId);
 
-        List<ContractStage> stages = stageDAO.findAllByContractId(contract.getId());
-        contract = contractDAO.findById(contract.getId()).get();
+        List<ContractStage> stages = stageRep.findByContractId(contract.getId());
+        contract = contractRep.findById(contract.getId()).get();
 
         Assertions.assertThat(stages.size()).isEqualTo(1);
         Assertions.assertThat(contract.getContractStages().size()).isEqualTo(1);
@@ -80,7 +80,7 @@ public class StageDAOTest {
         ContractStage stage = contract.getContractStages().get(0);
 
         stage.setName("Test");
-        stageDAO.save(stage);
+        stageRep.save(stage);
 
         ContractStage updatedStage = contract.getContractStages().get(0);
         Assertions.assertThat(updatedStage.getName()).isEqualTo("Test");

@@ -23,5 +23,8 @@ public interface StageRepository extends CommonRepository<ContractStage> {
      *
      * @param id the ID of the stage
      */
-    void deleteById(int id);
+    default void deleteById(int id) {
+        ContractStage stage = findById(id).get();
+        stage.getContract().getContractStages().remove(stage);
+    }
 }
