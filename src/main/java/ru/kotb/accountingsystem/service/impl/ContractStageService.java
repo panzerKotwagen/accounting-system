@@ -3,8 +3,8 @@ package ru.kotb.accountingsystem.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.kotb.accountingsystem.repository.CommonDAO;
 import ru.kotb.accountingsystem.entity.ContractStage;
+import ru.kotb.accountingsystem.repository.StageRepository;
 
 
 /**
@@ -13,11 +13,10 @@ import ru.kotb.accountingsystem.entity.ContractStage;
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
 public class ContractStageService
-        extends AbstractServiceOld<ContractStage, CommonDAO<ContractStage>> {
+        extends AbstractService<ContractStage, StageRepository> {
 
     @Autowired
-    public ContractStageService(CommonDAO<ContractStage> contractStageDAO) {
-        super(contractStageDAO);
-        contractStageDAO.setClass(ContractStage.class);
+    public ContractStageService(StageRepository stageRep) {
+        super(stageRep);
     }
 }

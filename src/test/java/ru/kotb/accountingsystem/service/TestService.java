@@ -1,20 +1,19 @@
 package ru.kotb.accountingsystem.service;
 
 import ru.kotb.accountingsystem.entity.TestEntity;
-import ru.kotb.accountingsystem.repository.CommonDAO;
-import ru.kotb.accountingsystem.service.impl.AbstractServiceOld;
+import ru.kotb.accountingsystem.repository.TestEntityRepository;
+import ru.kotb.accountingsystem.service.impl.AbstractService;
 
 
 public class TestService
-        extends AbstractServiceOld<TestEntity, CommonDAO<TestEntity>> {
+        extends AbstractService<TestEntity, TestEntityRepository> {
 
     /**
      * Links the specified DAO with the service.
      *
-     * @param genericDAOImpl the DAO of the specified entity class
+     * @param testRep the DAO of the specified entity class
      */
-    public TestService(CommonDAO<TestEntity> genericDAOImpl) {
-        super(genericDAOImpl);
-        genericDAOImpl.setClass(TestEntity.class);
+    public TestService(TestEntityRepository testRep) {
+        super(testRep);
     }
 }

@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import ru.kotb.accountingsystem.repository.CommonDAO;
-import ru.kotb.accountingsystem.repository.ContractDAO;
-import ru.kotb.accountingsystem.repository.StageDAO;
+import ru.kotb.accountingsystem.repository.*;
 import ru.kotb.accountingsystem.dto.ContractDTO;
 import ru.kotb.accountingsystem.entity.AbstractContract;
 import ru.kotb.accountingsystem.entity.Contract;
@@ -29,25 +27,25 @@ import java.util.List;
  */
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
-public class ContractServiceImpl extends AbstractServiceOld<Contract, ContractDAO>
+public class ContractServiceImpl extends AbstractService<Contract, ContractRepository>
         implements ContractService {
 
     private final ExcelHelper excelHelper;
 
-    private final CommonDAO<CounterpartyContract> counterpartyDAO;
+    private final CounterpartyContractRepository counterpartyRep;
 
-    private final StageDAO stageDAO;
+    private final StageRepository stageRep;
 
     @Autowired
-    public ContractServiceImpl(ContractDAO contractDAO,
+    public ContractServiceImpl(ContractRepository contractRep,
                                ExcelHelper excelHelper,
-                               CommonDAO<CounterpartyContract> counterpartyDAO,
-                               StageDAO stageDAO) {
+                               CounterpartyContractRepository counterpartyRep,
+                               StageRepository stageRep) {
 
-        super(contractDAO);
+        super(contractRep);
         this.excelHelper = excelHelper;
-        this.counterpartyDAO = counterpartyDAO;
-        this.stageDAO = stageDAO;
+        this.counterpartyRep = counterpartyRep;
+        this.stageRep = stageRep;
     }
 
     /**
@@ -60,7 +58,8 @@ public class ContractServiceImpl extends AbstractServiceOld<Contract, ContractDA
     @Override
     @Transactional
     public List<Contract> getAll(Date start, Date end) {
-        return DAO.findAllWhereDateBetween(start, end);
+        return repository
+                .findByPlannedStartDateGreaterThanEqualAndPlannedEndDateLessThanEqual(start, end);
     }
 
     /**
@@ -93,11 +92,13 @@ public class ContractServiceImpl extends AbstractServiceOld<Contract, ContractDA
 
     @Override
     @Transactional
-    public ContractStage addStage(int contractId, @Validated({ContractNull.class}) ContractStage stage)  {
+    public ContractStage addStage(
+            int contractId, @Validated({ContractNull.class}) ContractStage stage)  {
+
         Contract contract = getById(contractId);
         stage.setContract(contract);
 
-        return stageDAO.save(stage);
+        return stageRep.save(stage);
     }
 
     /**
@@ -106,12 +107,13 @@ public class ContractServiceImpl extends AbstractServiceOld<Contract, ContractDA
     @Override
     @Transactional
     public CounterpartyContract addCounterpartyContract(
-            int contractId, @Validated({ContractNull.class}) CounterpartyContract counterpartyContract) {
+            int contractId,
+            @Validated({ContractNull.class}) CounterpartyContract counterpartyContract) {
 
         Contract contract = getById(contractId);
         counterpartyContract.setContract(contract);
 
-        return counterpartyDAO.save(counterpartyContract);
+        return counterpartyRep.save(counterpartyContract);
     }
 
     /**

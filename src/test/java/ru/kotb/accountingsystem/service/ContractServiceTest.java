@@ -7,9 +7,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.kotb.accountingsystem.repository.CommonDAO;
-import ru.kotb.accountingsystem.repository.ContractDAO;
-import ru.kotb.accountingsystem.repository.StageDAO;
+import ru.kotb.accountingsystem.repository.*;
 import ru.kotb.accountingsystem.dto.ContractDTO;
 import ru.kotb.accountingsystem.entity.Contract;
 import ru.kotb.accountingsystem.entity.ContractStage;
@@ -33,13 +31,13 @@ public class ContractServiceTest {
     private ExcelHelper excelHelper;
 
     @Mock
-    private ContractDAO contractDAO;
+    private ContractRepository contractRep;
 
     @Mock
-    private StageDAO stageDAO;
+    private StageRepository stageRep;
 
     @Mock
-    private CommonDAO<CounterpartyContract> counterpartyContractDAO;
+    private CounterpartyContractRepository counterpartyRep;
 
     @InjectMocks
     private ContractServiceImpl contractService;
@@ -47,7 +45,7 @@ public class ContractServiceTest {
     @Test
     void getAll() {
         contractService.getAll();
-        verify(contractDAO).findAll();
+        verify(contractRep).findAll();
     }
 
     @Test
@@ -60,7 +58,7 @@ public class ContractServiceTest {
         contractService.getAll(start, end);
 
         // then
-        verify(contractDAO).findAllWhereDateBetween(start, end);
+        verify(contractRep).findByPlannedStartDateGreaterThanEqualAndPlannedEndDateLessThanEqual(start, end);
     }
 
     @Test
@@ -71,7 +69,7 @@ public class ContractServiceTest {
         Contract contract = new Contract();
         contract.getContractStages().add(stage);
         contract.setId(contractId);
-        given(contractDAO.findById(contractId)).willReturn(Optional.of(contract));
+        given(contractRep.findById(contractId)).willReturn(Optional.of(contract));
 
         // when
         List<ContractStage> stages = contractService.getAllStages(contractId);
@@ -88,7 +86,7 @@ public class ContractServiceTest {
         Contract contract = new Contract();
         contract.getCounterpartyContracts().add(cc);
         contract.setId(contractId);
-        given(contractDAO.findById(contractId)).willReturn(Optional.of(contract));
+        given(contractRep.findById(contractId)).willReturn(Optional.of(contract));
 
         // when
         List<CounterpartyContract> contracts = contractService.getAllOrganisationContracts(contractId);
@@ -104,8 +102,8 @@ public class ContractServiceTest {
         ContractStage stage = new ContractStage();
         Contract contract = new Contract();
         contract.setId(contractId);
-        given(contractDAO.findById(contractId)).willReturn(Optional.of(contract));
-        given(stageDAO.save(stage)).willReturn(stage);
+        given(contractRep.findById(contractId)).willReturn(Optional.of(contract));
+        given(stageRep.save(stage)).willReturn(stage);
 
         // when
         contractService.addStage(contractId, stage);
@@ -113,7 +111,7 @@ public class ContractServiceTest {
         // then
         ArgumentCaptor<ContractStage> stageArgumentCaptor = ArgumentCaptor.forClass(ContractStage.class);
 
-        verify(stageDAO).save(stageArgumentCaptor.capture());
+        verify(stageRep).save(stageArgumentCaptor.capture());
 
         ContractStage captorValue = stageArgumentCaptor.getValue();
 
@@ -127,8 +125,8 @@ public class ContractServiceTest {
         CounterpartyContract cc = new CounterpartyContract();
         Contract contract = new Contract();
         contract.setId(contractId);
-        given(contractDAO.findById(contractId)).willReturn(Optional.of(contract));
-        given(counterpartyContractDAO.save(cc)).willReturn(cc);
+        given(contractRep.findById(contractId)).willReturn(Optional.of(contract));
+        given(counterpartyRep.save(cc)).willReturn(cc);
 
         // when
         contractService.addCounterpartyContract(contractId, cc);
@@ -136,7 +134,7 @@ public class ContractServiceTest {
         // then
         ArgumentCaptor<CounterpartyContract> stageArgumentCaptor = ArgumentCaptor.forClass(CounterpartyContract.class);
 
-        verify(counterpartyContractDAO).save(stageArgumentCaptor.capture());
+        verify(counterpartyRep).save(stageArgumentCaptor.capture());
 
         CounterpartyContract captorValue = stageArgumentCaptor.getValue();
 
@@ -160,7 +158,7 @@ public class ContractServiceTest {
         contract2.setPlannedStartDate(Date.valueOf("2023-12-05"));
         cc1.setPlannedStartDate(Date.valueOf("1023-12-05"));
 
-        given(contractDAO.findAllWhereDateBetween(start, end)).willReturn(Arrays.asList(contract1, contract2));
+        given(contractRep.findByPlannedStartDateGreaterThanEqualAndPlannedEndDateLessThanEqual(start, end)).willReturn(Arrays.asList(contract1, contract2));
 
         // when
         contractService.getContractsReport(start, end);

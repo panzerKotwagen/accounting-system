@@ -9,11 +9,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.kotb.accountingsystem.repository.RoleRepository;
-import ru.kotb.accountingsystem.repository.UserDAO;
 import ru.kotb.accountingsystem.dto.RegistrationDTO;
 import ru.kotb.accountingsystem.entity.Role;
 import ru.kotb.accountingsystem.entity.User;
 import ru.kotb.accountingsystem.exception.handling.DuplicateUsernameException;
+import ru.kotb.accountingsystem.repository.UserRepository;
 import ru.kotb.accountingsystem.service.impl.AuthenticationService;
 
 import java.util.HashSet;
@@ -29,10 +29,10 @@ import static org.mockito.Mockito.when;
 public class AuthenticationServiceTest {
 
     @Mock
-    private UserDAO userDAO;
+    private UserRepository userRep;
 
     @Mock
-    private RoleRepository roleDAO;
+    private RoleRepository roleRep;
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -54,8 +54,8 @@ public class AuthenticationServiceTest {
                 dto.getPassword(),
                 authorities);
 
-        when(userDAO.save(Mockito.any(User.class))).thenReturn(newUser);
-        when(roleDAO.findByAuthority("USER")).thenReturn(Optional.of(role));
+        when(userRep.save(Mockito.any(User.class))).thenReturn(newUser);
+        when(roleRep.findByAuthority("USER")).thenReturn(Optional.of(role));
         when(passwordEncoder.encode(Mockito.any(String.class))).thenReturn(dto.getPassword());
 
         User savedUser = service.registerUser(dto);
@@ -66,7 +66,7 @@ public class AuthenticationServiceTest {
     @Test
     public void registerUserWithExistingUsernameThrowsException() {
         // given
-        given(userDAO.findByUsername(any()))
+        given(userRep.findByUsername(any()))
                 .willReturn(Optional.of(new User()));
 
         // then

@@ -10,9 +10,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.kotb.accountingsystem.repository.UserDAO;
 import ru.kotb.accountingsystem.entity.User;
 import ru.kotb.accountingsystem.exception.handling.DuplicateUsernameException;
+import ru.kotb.accountingsystem.repository.UserRepository;
 import ru.kotb.accountingsystem.service.impl.UserService;
 
 import java.util.HashSet;
@@ -33,7 +33,7 @@ class UserServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @Mock
-    private UserDAO userDAO;
+    private UserRepository userRep;
 
     @InjectMocks
     private UserService userService;
@@ -42,13 +42,13 @@ class UserServiceTest {
     void loadUserByUsername() {
         // given
         String username = "username";
-        given(userDAO.findByUsername(username)).willReturn(Optional.of(new User()));
+        given(userRep.findByUsername(username)).willReturn(Optional.of(new User()));
 
         // when
         userService.loadUserByUsername(username);
 
         // then
-        verify(userDAO).findByUsername(username);
+        verify(userRep).findByUsername(username);
     }
 
     @Test
@@ -73,7 +73,7 @@ class UserServiceTest {
         given(passwordEncoder.encode(Mockito.anyString()))
                 .willReturn(localPasswordEncoder.encode(user.getPassword()));
         user.setPassword(localPasswordEncoder.encode(user.getPassword()));
-        given(userDAO.save(user)).willReturn(user);
+        given(userRep.save(user)).willReturn(user);
 
         // when
         User savedUser = userService.save(user);
@@ -99,13 +99,13 @@ class UserServiceTest {
                 new HashSet<>());
         existingUser.setId(1);
 
-        given(userDAO.findByUsername(savedUser.getUsername()))
+        given(userRep.findByUsername(savedUser.getUsername()))
                 .willReturn(Optional.of(existingUser));
 
         // then
         Assertions.assertThatThrownBy(() -> userService.update(savedUser))
                 .isInstanceOf(DuplicateUsernameException.class);
 
-        verify(userDAO, never()).save(any());
+        verify(userRep, never()).save(any());
     }
 }

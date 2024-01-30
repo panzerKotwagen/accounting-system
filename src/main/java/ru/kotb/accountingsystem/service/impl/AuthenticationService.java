@@ -6,12 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import ru.kotb.accountingsystem.repository.RoleRepository;
-import ru.kotb.accountingsystem.repository.UserDAO;
 import ru.kotb.accountingsystem.dto.RegistrationDTO;
 import ru.kotb.accountingsystem.entity.Role;
 import ru.kotb.accountingsystem.entity.User;
 import ru.kotb.accountingsystem.exception.handling.DuplicateUsernameException;
+import ru.kotb.accountingsystem.repository.RoleRepository;
+import ru.kotb.accountingsystem.repository.UserRepository;
 
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -30,12 +30,12 @@ public class AuthenticationService {
     /**
      * The DAO object for getting access to the "users" table.
      */
-    private final UserDAO userDAO;
+    private final UserRepository userRep;
 
     /**
      * The DAO object for getting access to the "roles" table.
      */
-    private final RoleRepository roleDAO;
+    private final RoleRepository roleRep;
 
     /**
      * The password encoder.
@@ -45,14 +45,14 @@ public class AuthenticationService {
     /**
      * Constructs the bean and inject the dependencies.
      *
-     * @param userDAO         the user DAO
-     * @param roleDAO         the role DAO
+     * @param userRep         the user DAO
+     * @param roleRep         the role DAO
      * @param passwordEncoder the password encoder
      */
     @Autowired
-    public AuthenticationService(UserDAO userDAO, RoleRepository roleDAO, PasswordEncoder passwordEncoder) {
-        this.userDAO = userDAO;
-        this.roleDAO = roleDAO;
+    public AuthenticationService(UserRepository userRep, RoleRepository roleRep, PasswordEncoder passwordEncoder) {
+        this.userRep = userRep;
+        this.roleRep = roleRep;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -66,11 +66,11 @@ public class AuthenticationService {
      */
     @Transactional
     public User registerUser(@Valid RegistrationDTO registrationDTO) {
-        if (userDAO.findByUsername(registrationDTO.getUsername()).isPresent()) {
+        if (userRep.findByUsername(registrationDTO.getUsername()).isPresent()) {
             throw new DuplicateUsernameException("This username is already taken");
         }
 
-        Role userRole = roleDAO.findByAuthority("USER").get();
+        Role userRole = roleRep.findByAuthority("USER").get();
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);
 
@@ -81,6 +81,6 @@ public class AuthenticationService {
                 registrationDTO.getUsername(),
                 encodedPassword,
                 authorities);
-        return userDAO.save(newUser);
+        return userRep.save(newUser);
     }
 }

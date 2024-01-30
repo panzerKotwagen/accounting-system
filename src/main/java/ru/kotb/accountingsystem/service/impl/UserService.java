@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import ru.kotb.accountingsystem.repository.UserDAO;
 import ru.kotb.accountingsystem.entity.User;
 import ru.kotb.accountingsystem.exception.handling.DuplicateUsernameException;
+import ru.kotb.accountingsystem.repository.UserRepository;
 import ru.kotb.accountingsystem.service.CommonService;
 
 import javax.validation.Valid;
@@ -23,14 +23,14 @@ import javax.validation.Valid;
 @Service
 @EnableTransactionManagement(proxyTargetClass = true)
 @Validated
-public class UserService extends AbstractServiceOld<User, UserDAO>
+public class UserService extends AbstractService<User, UserRepository>
         implements CommonService<User>, UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder) {
-        super(userDAO);
+    public UserService(UserRepository userRep, PasswordEncoder passwordEncoder) {
+        super(userRep);
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -48,7 +48,7 @@ public class UserService extends AbstractServiceOld<User, UserDAO>
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        return DAO.findByUsername(username).orElseThrow(
+        return repository.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("User is not valid"));
     }
 
@@ -59,7 +59,7 @@ public class UserService extends AbstractServiceOld<User, UserDAO>
      */
     @Override
     public User save(@Valid User entity) {
-        if (DAO.findByUsername(entity.getUsername()).isPresent())
+        if (repository.findByUsername(entity.getUsername()).isPresent())
             throw new DuplicateUsernameException("This username is already taken");
 
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
@@ -69,12 +69,10 @@ public class UserService extends AbstractServiceOld<User, UserDAO>
     /**
      * Updates the specified entity. When the entity with given id
      * was not found then throw {@code NoSuchEntityException}.
-     *
-     * @param entity
      */
     @Override
     public User update(@Valid User entity) {
-        User userWithSameUsername = DAO.findByUsername(entity.getUsername())
+        User userWithSameUsername = repository.findByUsername(entity.getUsername())
                 .orElse(null);
 
         if (userWithSameUsername != null
